@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Folder,
   HardDrive,
@@ -28,16 +28,32 @@ import { ModernizationPlanPage } from '../modernization/ModernizationPlanPage'
 import { TransformationStudioPage } from '../modernization/TransformationStudioPage'
 import { ValidationWorkspacePage } from '../modernization/ValidationWorkspacePage'
 
+type WorkspaceTab =
+  | 'overview'
+  | 'manifest'
+  | 'files'
+  | 'xray'
+  | 'rules'
+  | 'impact'
+  | 'modernization'
+  | 'plan'
+  | 'transform'
+  | 'validation'
+
 export function ProjectWorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [project, setProject] = useState<Project | null>(null)
   const [repository, setRepository] = useState<Repository | null>(null)
   const [manifest, setManifest] = useState<RepositoryManifest | null>(null)
-  const [activeTab, setActiveTab] = useState<
-    'overview' | 'manifest' | 'files' | 'xray' | 'rules' | 'impact' | 'modernization' | 'plan' | 'transform' | 'validation'
-  >('overview')
   const [loading, setLoading] = useState(true)
+
+  const activeTab: WorkspaceTab = (searchParams.get('tab') as WorkspaceTab) || 'overview'
+
+  const handleTabChange = (tab: WorkspaceTab) => {
+    setSearchParams({ tab })
+  }
 
   const loadWorkspaceData = useCallback(async () => {
     if (!projectId) return
@@ -95,7 +111,7 @@ export function ProjectWorkspacePage() {
     )
   }
 
-  const tabs = [
+  const tabs: Array<{ id: WorkspaceTab; label: string; icon: React.ComponentType<{ className?: string }>; badge?: string }> = [
     { id: 'overview', label: 'Overview', icon: HardDrive },
     { id: 'manifest', label: 'Manifest', icon: Code2 },
     { id: 'files', label: 'File Explorer', icon: FileText },
@@ -109,39 +125,48 @@ export function ProjectWorkspacePage() {
   ]
 
   return (
-    <div className="space-y-6">
-      {/* Workspace Header */}
-      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-2xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/projects')}
-              className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer"
-              title="Back to Projects"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <div>
-              <div className="flex items-center gap-2.5">
-                <Folder className="w-5 h-5 text-teal-600" />
-                <h1 className="text-xl font-extrabold text-slate-900">{project.name}</h1>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                  {project.status}
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                {project.description || 'Legacy application repository workspace'}
-              </p>
-            </div>
-          </div>
-
+    <div className="space-y-5">
+      {/* Workspace Header — consistent with PageHeader pattern */}
+      <div className="bg-white border border-slate-200/90 rounded-2xl px-6 py-5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
           <button
-            onClick={loadWorkspaceData}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer self-start sm:self-auto"
+            onClick={() => navigate('/projects')}
+            className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer shrink-0"
+            title="Back to Projects"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-slate-500" /> Refresh State
+            <ArrowLeft className="w-4 h-4" />
           </button>
+          <div>
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-[10px] font-extrabold tracking-widest text-teal-700 uppercase">
+                Project Workspace
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Folder className="w-4.5 h-4.5 text-teal-600 shrink-0" />
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">{project.name}</h1>
+              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase ${
+                project.status === 'ANALYZED' || project.status === 'READY'
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                  : project.status === 'FAILED'
+                    ? 'bg-rose-50 text-rose-700 border-rose-300'
+                    : 'bg-blue-50 text-blue-700 border-blue-300'
+              }`}>
+                {project.status}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {project.description || 'Legacy application repository workspace'}
+            </p>
+          </div>
         </div>
+
+        <button
+          onClick={loadWorkspaceData}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer shadow-2xs shrink-0"
+        >
+          <RefreshCw className="w-3.5 h-3.5 text-slate-500" /> Refresh State
+        </button>
       </div>
 
       {/* Main Content Area */}
@@ -153,29 +178,34 @@ export function ProjectWorkspacePage() {
           <IngestionProgressCard repository={repository} onReingest={handleReingest} />
 
           {/* Segmented Pipeline Workspace Navigation Tabs */}
-          <div className="bg-white border border-slate-200 rounded-xl p-1.5 shadow-2xs flex items-center gap-1 overflow-x-auto scrollbar-none">
+          <div className="bg-slate-100/90 border border-slate-200/80 rounded-2xl p-1.5 shadow-2xs flex items-center gap-1 overflow-x-auto scrollbar-none">
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs whitespace-nowrap transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-slate-900 text-white shadow-xs font-bold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-white text-slate-900 shadow-2xs font-extrabold ring-1 ring-slate-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50 font-semibold'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-teal-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-teal-600' : 'text-slate-400'}`} />
                   <span>{tab.label}</span>
+                  {tab.badge && (
+                    <span className={`px-1.5 py-0.2 text-[9px] font-mono rounded font-extrabold ${isActive ? 'bg-teal-50 text-teal-700 border border-teal-200' : 'bg-slate-200/80 text-slate-600'}`}>
+                      {tab.badge}
+                    </span>
+                  )}
                 </button>
               )
             })}
           </div>
 
           {/* Active Tab Component Container */}
-          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-2xs">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-2xs">
             {activeTab === 'overview' && (
               <RepositoryOverviewTab repository={repository} manifest={manifest} />
             )}

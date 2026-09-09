@@ -1,8 +1,163 @@
+/**
+ * LEGACYX — Projects & Repositories Page.
+ *
+ * Displays a rich card grid of all projects.
+ * Card design mirrors the dashboard project cards exactly:
+ *  - Dark thumbnail header with visual art + status badge
+ *  - Name, description, progress bar
+ *  - CTA button
+ *
+ * Layer: Presentation (AGENTS.md §1.3)
+ */
+
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FolderPlus, Layers, Search, Server, ArrowRight, Folder } from 'lucide-react'
+import {
+  FolderPlus,
+  Layers,
+  Search,
+  Server,
+  ArrowRight,
+  MoreHorizontal,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react'
 import { api, type Project } from '@/services/api'
 import { CreateProjectModal } from './CreateProjectModal'
+import { PageHeader } from '@/components/ui/PageHeader'
+
+// ── Status helpers ─────────────────────────────────────────────────────────────
+
+function statusBadgeClass(status: Project['status']) {
+  if (status === 'ANALYZED' || status === 'READY')
+    return 'bg-emerald-100 text-emerald-800 border-emerald-300'
+  if (status === 'INGESTING' || status === 'ANALYZING')
+    return 'bg-amber-100 text-amber-800 border-amber-300'
+  if (status === 'FAILED')
+    return 'bg-rose-100 text-rose-800 border-rose-300'
+  return 'bg-blue-100 text-blue-800 border-blue-300'
+}
+
+function statusIcon(status: Project['status']) {
+  if (status === 'ANALYZED' || status === 'READY')
+    return <CheckCircle2 className="w-3 h-3" />
+  if (status === 'INGESTING' || status === 'ANALYZING')
+    return <Clock className="w-3 h-3 animate-spin" />
+  if (status === 'FAILED')
+    return <AlertCircle className="w-3 h-3" />
+  return null
+}
+
+function progressPercent(status: Project['status']) {
+  switch (status) {
+    case 'CREATED': return 5
+    case 'INGESTING': return 15
+    case 'ANALYZING': return 45
+    case 'ANALYZED':
+    case 'READY': return 75
+    case 'FAILED': return 20
+    default: return 5
+  }
+}
+
+function progressColor(status: Project['status']) {
+  if (status === 'ANALYZED' || status === 'READY') return 'bg-emerald-500'
+  if (status === 'FAILED') return 'bg-rose-500'
+  if (status === 'INGESTING' || status === 'ANALYZING') return 'bg-amber-500'
+  return 'bg-blue-500'
+}
+
+// ── Project Card ───────────────────────────────────────────────────────────────
+
+interface ProjectCardProps {
+  project: Project
+  onClick: () => void
+}
+
+function ProjectCard({ project, onClick }: ProjectCardProps) {
+  const isAnalyzed = project.status === 'ANALYZED' || project.status === 'READY'
+  const pct = progressPercent(project.status)
+
+  // Visual art background gradient per-project (deterministic from name length)
+  const gradients = [
+    'from-blue-900 via-teal-900 to-slate-900',
+    'from-indigo-900 via-purple-900 to-slate-900',
+    'from-teal-900 via-cyan-900 to-slate-900',
+    'from-slate-900 via-blue-900 to-teal-900',
+  ]
+  const gradient = gradients[project.name.length % gradients.length]
+
+  return (
+    <div
+      onClick={onClick}
+      className="group bg-white border border-slate-200 hover:border-teal-400 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col"
+    >
+      {/* Dark thumbnail header */}
+      <div className="relative h-28 bg-slate-900 overflow-hidden shrink-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent z-10" />
+        {/* Status badge */}
+        <div className="absolute top-2.5 left-3 z-20">
+          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wide ${statusBadgeClass(project.status)}`}>
+            {statusIcon(project.status)}
+            {project.status}
+          </span>
+        </div>
+        {/* More options */}
+        <button
+          className="absolute top-2.5 right-2.5 z-20 text-slate-400 hover:text-white p-1 rounded transition-colors"
+          aria-label="More options"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <MoreHorizontal className="w-4 h-4" />
+        </button>
+        {/* Visual art */}
+        <div className={`w-full h-full opacity-40 bg-gradient-to-tr ${gradient} flex items-center justify-center`}>
+          <Layers className="w-10 h-10 text-white/40" />
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div className="p-4 flex-1 flex flex-col gap-3 min-h-0">
+        <div>
+          <h3 className="font-bold text-sm text-slate-900 group-hover:text-teal-700 transition-colors truncate">
+            {project.name}
+          </h3>
+          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mt-1">
+            {project.description || 'Legacy application repository modernization workspace'}
+          </p>
+        </div>
+
+        {/* Progress bar */}
+        <div className="space-y-1 mt-auto">
+          <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all ${progressColor(project.status)}`}
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          <div className="flex justify-between text-[10px] text-slate-400 font-medium">
+            <span>{isAnalyzed ? '6/8 phases done' : project.status === 'CREATED' ? 'Awaiting ingestion' : 'Processing...'}</span>
+            <span>Created {new Date(project.created_at).toLocaleDateString()}</span>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <button
+          className={`w-full py-1.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer border ${
+            isAnalyzed
+              ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-200 group-hover:border-emerald-400'
+              : 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200 group-hover:border-blue-400'
+          }`}
+        >
+          Open Workspace <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ── Projects Page ──────────────────────────────────────────────────────────────
 
 export function ProjectsPage() {
   const navigate = useNavigate()
@@ -16,15 +171,13 @@ export function ProjectsPage() {
       const data = await api.projects.list()
       setProjects(data)
     } catch {
-      // Ignore errors for initial state
+      // swallow — empty state handles it
     } finally {
       setLoading(false)
     }
   }
 
-  useEffect(() => {
-    fetchProjects()
-  }, [])
+  useEffect(() => { fetchProjects() }, [])
 
   const filteredProjects = projects.filter(
     (p) =>
@@ -32,105 +185,69 @@ export function ProjectsPage() {
       (p.description && p.description.toLowerCase().includes(search.toLowerCase()))
   )
 
-  const getStatusBadge = (status: Project['status']) => {
-    switch (status) {
-      case 'READY':
-      case 'ANALYZED':
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">ANALYZED</span>
-      case 'INGESTING':
-      case 'ANALYZING':
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300 animate-pulse">IN PROGRESS</span>
-      case 'FAILED':
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 border border-rose-300">FAILED</span>
-      default:
-        return <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">{status}</span>
-    }
-  }
-
   return (
-    <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-xl border border-slate-200 bg-white shadow-2xs">
-        <div>
-          <div className="flex items-center gap-2 text-teal-600 font-extrabold text-xs tracking-wider uppercase mb-1">
-            <Layers className="w-4 h-4" /> Enterprise Project Repository Management
-          </div>
-          <h1 className="text-2xl font-extrabold text-slate-900">Projects & Repositories</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Create or select a legacy application project to manage repository ingestion, system analysis, and modernization pipelines.
-          </p>
-        </div>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all cursor-pointer shrink-0"
-        >
-          <FolderPlus className="w-4 h-4" /> New Project
-        </button>
-      </div>
+    <div className="space-y-5">
+      {/* Page Header */}
+      <PageHeader
+        eyebrowIcon={<Layers className="w-3.5 h-3.5" />}
+        eyebrow="Enterprise Project Repository Management"
+        title="Projects & Repositories"
+        subtitle="Create or select a legacy application project to manage repository ingestion, system analysis, and modernization pipelines."
+        actions={
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-colors cursor-pointer"
+          >
+            <FolderPlus className="w-4 h-4" /> New Project
+          </button>
+        }
+      />
 
       {/* Search Bar */}
-      <div className="flex items-center gap-3">
-        <div className="relative flex-1">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search projects by name or description..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 shadow-2xs"
-          />
-        </div>
+      <div className="relative">
+        <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <input
+          type="text"
+          placeholder="Search projects by name or description..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 shadow-sm"
+        />
       </div>
 
-      {/* Projects Grid */}
+      {/* Project Grid / States */}
       {loading ? (
-        <div className="p-12 text-center text-slate-400 text-xs">Loading projects...</div>
+        <div className="py-16 text-center text-xs text-slate-400 border border-slate-200 rounded-xl bg-white">
+          Loading projects...
+        </div>
       ) : filteredProjects.length === 0 ? (
-        <div className="p-12 rounded-xl border border-dashed border-slate-300 text-center bg-white shadow-2xs">
-          <Server className="w-10 h-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-sm font-bold text-slate-900">No projects found</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-4">
-            {search ? 'No projects matched your search query.' : 'Create your first legacy application project to start repository ingestion.'}
+        <div className="py-16 text-center border border-dashed border-slate-300 rounded-xl bg-white space-y-3">
+          <Server className="w-10 h-10 text-slate-300 mx-auto" />
+          <h3 className="text-sm font-bold text-slate-800">
+            {search ? 'No projects matched' : 'No projects yet'}
+          </h3>
+          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            {search
+              ? 'Try a different search term.'
+              : 'Create your first legacy application project to start repository ingestion.'}
           </p>
           {!search && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700"
+              className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors cursor-pointer"
             >
               Create Project
             </button>
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredProjects.map((project) => (
-            <div
+            <ProjectCard
               key={project.id}
+              project={project}
               onClick={() => navigate(`/projects/${project.id}`)}
-              className="group p-5 rounded-xl border border-slate-200 bg-white hover:border-teal-500 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <div className="flex items-center gap-2">
-                    <Folder className="w-4 h-4 text-teal-600 shrink-0" />
-                    <h3 className="font-bold text-sm text-slate-900 group-hover:text-teal-700 transition-colors line-clamp-1">
-                      {project.name}
-                    </h3>
-                  </div>
-                  {getStatusBadge(project.status)}
-                </div>
-                <p className="text-xs text-slate-500 line-clamp-2 mb-4 leading-relaxed">
-                  {project.description || 'No description provided.'}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-                <span>Created {new Date(project.created_at).toLocaleDateString()}</span>
-                <span className="flex items-center gap-1 font-bold text-teal-700 opacity-80 group-hover:opacity-100 transition-opacity">
-                  Open Workspace <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </div>
-            </div>
+            />
           ))}
         </div>
       )}

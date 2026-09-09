@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
-/* ── Design Tokens (Approved Enterprise Theme) ──────────────────────────────── */
+/* ── Design Tokens (Enterprise Clean Theme) ──────────────────────────────── */
 :root {
   /* Main Backgrounds & Surfaces */
-  --background:        #ebf1f6;
+  --background:        #f8fafc;
   --surface:           #ffffff;
-  --surface-raised:    #f8fafc;
+  --surface-raised:    #ffffff;
   --surface-overlay:   #f1f5f9;
   --border:            #e2e8f0;
   --border-subtle:     #f1f5f9;
 
-  /* Sidebar Theme (Dark Navy) */
-  --sidebar-bg:        #0b192c;
+  /* Sidebar Theme (Slate/Navy Dual Tone) */
+  --sidebar-bg:        #0f172a;
   --sidebar-text:      #94a3b8;
   --sidebar-hover:     #1e293b;
   --sidebar-active-bg: #0d9488;
@@ -19,8 +19,8 @@
 
   /* Brand / Primary Accents */
   --accent:            #0d9488;
-  --accent-hover:      #059669;
-  --accent-muted:      rgba(13, 148, 136, 0.12);
+  --accent-hover:      #0f766e;
+  --accent-muted:      rgba(13, 148, 136, 0.10);
   --brand-blue:        #2563eb;
   --brand-navy:        #0f172a;
 
@@ -30,16 +30,9 @@
   --text-muted:        #64748b;
   --text-inverse:      #ffffff;
 
-  /* Status Colors */
-  --status-ok:         #10b981;
-  --status-warn:       #f59e0b;
-  --status-error:      #ef4444;
-  --status-info:       #2563eb;
-  --status-neutral:    #64748b;
-
   /* Layout Dimensions */
   --sidebar-width:     250px;
-  --header-height:     60px;
+  --header-height:     56px;
 }
 
 /* ── Base Reset & Defaults ─────────────────────────────────────────────────── */
@@ -66,7 +59,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.25;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 code, pre, kbd, samp {
@@ -74,12 +67,12 @@ code, pre, kbd, samp {
   font-size: 0.875em;
 }
 
-/* ── Scrollbars ────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--background); }
+/* ── Custom Scrollbars ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
@@ -88,44 +81,13 @@ code, pre, kbd, samp {
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  transition: box-shadow 150ms ease, border-color 150ms ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: all 150ms ease;
 }
 
 .card-enterprise:hover {
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-}
-
-.btn-primary-emerald {
-  background-color: #059669;
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 150ms ease, transform 100ms ease;
-}
-
-.btn-primary-emerald:hover {
-  background-color: #047857;
-}
-
-.btn-soft-blue {
-  background-color: #eff6ff;
-  color: #2563eb;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 150ms ease;
-}
-
-.btn-soft-blue:hover {
-  background-color: #dbeafe;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
 }
 
 .truncate {

@@ -4,7 +4,15 @@
  * All API calls from the frontend must go through this client.
  */
 
-const API_BASE = '/api/v1'
+const getApiBase = (): string => {
+  const envBase = import.meta.env.VITE_API_BASE_URL
+  if (envBase) {
+    return envBase.replace(/\/+$/, '') + '/api/v1'
+  }
+  return '/api/v1'
+}
+
+const API_BASE = getApiBase()
 
 export interface ApiError {
   name: 'ApiError'

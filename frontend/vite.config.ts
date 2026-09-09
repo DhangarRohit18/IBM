@@ -19,7 +19,7 @@ export default defineConfig({
     host: true, // needed for Docker
     proxy: {
       '/api': {
-        target: process.env.VITE_API_BASE_URL ?? 'http://localhost:8002',
+        target: process.env.VITE_API_TARGET || 'http://backend:8000',
         changeOrigin: true,
       },
     },
