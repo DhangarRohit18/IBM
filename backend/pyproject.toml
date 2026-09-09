@@ -1,0 +1,63 @@
+[project]
+name = "legacyx-backend"
+version = "0.1.0"
+description = "LEGACYX Backend — Legacy Application Modernization Platform"
+requires-python = ">=3.11"
+
+# NOTE ON VERSIONS:
+# Versions are pinned to those with binary wheels for Python 3.11–3.14.
+# Do NOT downgrade to versions without pre-built wheels for the target Python.
+# In production (Docker), Python 3.11 is always used.
+# Local dev may use Python 3.11+ depending on host OS.
+
+dependencies = [
+    # Web framework
+    "fastapi>=0.111.0",            # FastAPI async web framework
+    "uvicorn[standard]>=0.29.0",   # ASGI server with websocket + reload support
+
+    # Configuration
+    "pydantic>=2.7.1",             # Data validation (v2)
+    "pydantic-settings>=2.2.1",    # Settings from environment variables
+
+    # Database (async)
+    "sqlalchemy>=2.0.30",          # ORM (2.x async)
+    "asyncpg>=0.29.0",             # Async PostgreSQL driver (used by SQLAlchemy async)
+    # psycopg2-binary: pre-built binary wheel — no pg_config needed.
+    # If build-from-source is attempted (host without pg_config), install via:
+    #   pip install psycopg2-binary --only-binary=:all:
+    # In Docker (python:3.11-slim + libpq-dev), it builds cleanly.
+    "psycopg2-binary>=2.9.9",      # Sync PostgreSQL driver (used by Alembic only)
+    "alembic>=1.13.1",             # Database migrations
+
+    # Redis
+    "redis>=5.0.4",                # Redis client (sync + async)
+
+    # Utilities
+    "python-jose[cryptography]>=3.3.0",  # JWT encoding/decoding
+    "passlib[bcrypt]>=1.7.4",            # Password hashing (Phase 2+)
+    "python-multipart>=0.0.9",           # Multipart form data (file upload, Phase 2+)
+    "structlog>=24.1.0",                 # Structured logging (JSON output)
+    "javalang>=0.13.0",                  # Java AST parser (Phase 3 System X-Ray)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.6",
+    "httpx>=0.27.0",         # async test client for FastAPI
+    "pytest-cov>=5.0.0",
+]
+
+# Explicitly include only the 'app' package.
+# Without this, setuptools finds both app/ and alembic/ at the top level
+# and refuses to proceed with flat-layout auto-discovery.
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

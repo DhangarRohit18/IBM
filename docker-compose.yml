@@ -1,0 +1,125 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# LEGACYX — Docker Compose (Development)
+#
+# Services:
+#   postgres   — PostgreSQL 15 (primary database)
+#   redis      — Redis 7 (job queue + cache)
+#   backend    — FastAPI application (uvicorn, hot-reload)
+#   worker     — Background job worker stub (Phase 1: placeholder)
+#   frontend   — Vite dev server (hot-reload)
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: legacyx_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-legacyx}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-legacyx_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-legacyx}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-legacyx} -d ${POSTGRES_DB:-legacyx}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Redis ───────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: legacyx_redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Backend (FastAPI) ──────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: legacyx_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-legacyx}:${POSTGRES_PASSWORD:-legacyx_dev_password}@postgres:5432/${POSTGRES_DB:-legacyx}
+      DATABASE_SYNC_URL: postgresql+psycopg2://${POSTGRES_USER:-legacyx}:${POSTGRES_PASSWORD:-legacyx_dev_password}@postgres:5432/${POSTGRES_DB:-legacyx}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_ROOT: /app/storage
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./backend:/app
+      - storage_data:/app/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8000/api/v1/health\")'"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # ── Worker ──────────────────────────────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: legacyx_worker
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-legacyx}:${POSTGRES_PASSWORD:-legacyx_dev_password}@postgres:5432/${POSTGRES_DB:-legacyx}
+      DATABASE_SYNC_URL: postgresql+psycopg2://${POSTGRES_USER:-legacyx}:${POSTGRES_PASSWORD:-legacyx_dev_password}@postgres:5432/${POSTGRES_DB:-legacyx}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_ROOT: /app/storage
+    volumes:
+      - ./backend:/app
+      - storage_data:/app/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: python -m app.workers.worker_main
+
+  # ── Frontend ────────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: legacyx_frontend
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: http://localhost:8002
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  storage_data:
+    driver: local
