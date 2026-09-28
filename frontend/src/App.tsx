@@ -803,32 +803,50 @@ export default function App() {
 
       {/* ── Main Content Area ─────────────────────────────────────────────── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: '#f8fafc' }}>
-        {/* Sticky Header */}
+        {/* Sticky Header with Glassmorphism */}
         <header
           style={{
-            height: '54px',
-            backgroundColor: '#ffffff',
-            borderBottom: '1px solid #e2e8f0',
-            padding: '0 24px',
+            height: '56px',
+            backgroundColor: 'rgba(255, 255, 255, 0.88)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+            padding: '0 28px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             position: 'sticky',
             top: 0,
             zIndex: 30,
-            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)',
+            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
           }}
         >
-          {/* Left: View Breadcrumbs */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#64748b' }}>
-            <span style={{ fontWeight: 600, color: '#0f172a' }}>LegacyBank Core</span>
+          {/* Left: View Breadcrumbs with Status Indicator */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '7px',
+                padding: '3px 10px',
+                borderRadius: '999px',
+                backgroundColor: '#071525',
+                color: '#f8fafc',
+                fontSize: '11.5px',
+                fontWeight: 700,
+              }}
+            >
+              <span className="pulse-indicator" />
+              <span>LegacyBank Core</span>
+              <span style={{ fontSize: '10px', color: '#38bdf8', fontFamily: 'monospace' }}>v2.4.1</span>
+            </div>
             <ChevronRight size={14} color="#94a3b8" />
-            <span style={{ textTransform: 'capitalize', fontWeight: 600, color: '#0d9488' }}>
+            <span style={{ textTransform: 'capitalize', fontWeight: 800, color: '#0d9488', fontSize: '13px' }}>
               {activeTab.replace('_', ' ')}
             </span>
           </div>
 
-          {/* Right: Controls */}
+          {/* Right: Controls & Seals */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Quick Search */}
             <button
@@ -837,56 +855,82 @@ export default function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '5px 12px',
-                borderRadius: '6px',
+                padding: '6px 14px',
+                borderRadius: '8px',
                 backgroundColor: '#f1f5f9',
                 border: '1px solid #e2e8f0',
                 color: '#64748b',
                 fontSize: '12px',
                 cursor: 'pointer',
+                transition: 'all 140ms ease',
               }}
             >
               <Search size={13} color="#94a3b8" />
               <span>Search classes, rules, specs...</span>
-              <kbd style={{ fontSize: '9px', fontWeight: 700, padding: '1px 5px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '4px' }}>
+              <kbd style={{ fontSize: '9px', fontWeight: 700, padding: '2px 5px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '4px', color: '#475569' }}>
                 Ctrl K
               </kbd>
             </button>
 
-            {/* Verified Badge */}
+            {/* IBM watsonx AI Gateway Pill */}
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '4px 10px',
-                borderRadius: '6px',
-                backgroundColor: '#ecfdf5',
-                border: '1px solid #a7f3d0',
-                color: '#065f46',
+                padding: '5px 10px',
+                borderRadius: '999px',
+                backgroundColor: '#f5f3ff',
+                border: '1px solid #ddd6fe',
+                color: '#6d28d9',
                 fontSize: '11px',
-                fontWeight: 700,
+                fontWeight: 800,
+                letterSpacing: '0.02em',
               }}
             >
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-              <span>Deterministic Verified</span>
+              <Sparkles size={12} color="#7c3aed" />
+              <span>watsonx.ai</span>
             </div>
 
-            {/* User Avatar */}
-            <div
-              title="Sarvesh K — Lead Auditor"
+            {/* Assurance Hash Seal */}
+            <button
+              onClick={() => setActiveTab('report')}
               style={{
-                width: '30px',
-                height: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '5px 12px',
+                borderRadius: '999px',
+                backgroundColor: '#fff1f2',
+                border: '1px solid #fecdd3',
+                color: '#9f1239',
+                fontSize: '11px',
+                fontWeight: 800,
+                cursor: 'pointer',
+              }}
+              title="Click to view full Assurance Certificate"
+            >
+              <AlertTriangle size={12} color="#e11d48" />
+              <span>CONDITIONAL ASSURANCE</span>
+              <span style={{ fontFamily: 'monospace', color: '#be123c', fontSize: '10px' }}>8d4a...91c2</span>
+            </button>
+
+            {/* Auditor Avatar */}
+            <div
+              title="Sarvesh K — Lead Modernization Auditor"
+              style={{
+                width: '32px',
+                height: '32px',
                 borderRadius: '50%',
-                backgroundColor: '#0d9488',
+                background: 'linear-gradient(135deg, #0d9488 0%, #0c645d 100%)',
                 color: '#ffffff',
                 fontWeight: 800,
-                fontSize: '11px',
+                fontSize: '11.5px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
+                boxShadow: '0 2px 6px rgba(13, 148, 136, 0.3)',
               }}
             >
               SK

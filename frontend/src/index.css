@@ -1,29 +1,34 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   LEGACYX 2.0 — ROADGUARD X / MEETIQ ENTERPRISE DESIGN SYSTEM
-   Modernize the Code. Preserve the Decision. Prove the Difference.
+   LEGACYX — MODERNIZATION ASSURANCE PLATFORM
+   Master Enterprise Design System: World-Class Aesthetics
+   Philosophy: Modernize the Code. Preserve the Decision. Prove the Difference.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Canvas Background: RoadGuard X soft clean mint aura */
-  --bg-gradient:       linear-gradient(180deg, #e8f5f4 0%, #f4fbfb 100%);
-  --background:        #f4fbfb;
+  /* Canvas Background: Crisp, ambient atmospheric mesh */
+  --bg-canvas:         #f8fafc;
+  --bg-gradient:       radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.04) 0px, transparent 40%),
+                       radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.04) 0px, transparent 40%),
+                       #f8fafc;
+  
   --surface:           #ffffff;
   --surface-raised:    #ffffff;
-  --surface-subtle:    #f0f8f7;
-  --surface-hover:     #eaf6f4;
+  --surface-subtle:    #f1f5f9;
+  --surface-hover:     #f8fafc;
   
   /* Borders */
-  --border:            #cbe6e3;
-  --border-subtle:     #e3f2f0;
-  --border-strong:     #9fd4ce;
-  --border-focus:      #0c645d;
+  --border:            #e2e8f0;
+  --border-subtle:     #edf2f7;
+  --border-strong:     #cbd5e1;
+  --border-focus:      #0d9488;
 
-  /* Brand / Authoritative Teal */
-  --brand-teal:        #0c645d;
-  --brand-teal-hover:  #084c46;
-  --brand-teal-light:  #e6f5f3;
-  --brand-teal-border: #a8ded7;
-  --brand-dark:        #0b2321;
+  /* Brand / Authoritative Palette */
+  --brand-teal:        #0d9488;
+  --brand-teal-hover:  #0f766e;
+  --brand-teal-light:  #f0fdfa;
+  --brand-teal-border: #99f6e4;
+  --brand-navy:        #070f1e;
+  --brand-navy-light:  #0b192c;
 
   /* Semantic Accents */
   --success-bg:        #ecfdf5;
@@ -43,16 +48,17 @@
   --info-text:         #1e40af;
 
   /* Text Hierarchy */
-  --text-primary:      #0b2321;
-  --text-secondary:    #305551;
-  --text-muted:        #5f837f;
-  --text-subtle:       #8ea8a5;
+  --text-primary:      #0f172a;
+  --text-secondary:    #334155;
+  --text-muted:        #64748b;
+  --text-subtle:       #94a3b8;
 
   /* Elevations */
-  --shadow-2xs:        0 1px 2px rgba(12, 100, 93, 0.04);
-  --shadow-xs:         0 1px 4px rgba(12, 100, 93, 0.06), 0 2px 6px rgba(12, 100, 93, 0.02);
-  --shadow-md:         0 4px 16px -2px rgba(12, 100, 93, 0.08), 0 2px 6px -1px rgba(12, 100, 93, 0.04);
-  --shadow-lg:         0 12px 32px -4px rgba(12, 100, 93, 0.12);
+  --shadow-2xs:        0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-xs:         0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md:         0 4px 16px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg:         0 12px 32px -4px rgba(15, 23, 42, 0.12);
+  --shadow-glow-teal:  0 4px 14px rgba(13, 148, 136, 0.35);
 }
 
 *, *::before, *::after {
@@ -69,10 +75,10 @@ html, body {
   background: var(--bg-gradient);
   background-attachment: fixed;
   color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
   font-size: 13.5px;
   line-height: 1.5;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -91,7 +97,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.25;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
 code, pre, kbd, samp {
@@ -103,155 +109,84 @@ code, pre, kbd, samp {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: #b2dbd6;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover { background: #85c2bb; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-/* ── RoadGuard X Card Utilities ───────────────────────────────────────────── */
-.card-clean {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  box-shadow: var(--shadow-xs);
-  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+/* ── App Shell Layout ─────────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
 }
 
-.card-clean:hover {
-  border-color: var(--brand-teal-border);
-  box-shadow: var(--shadow-md);
+/* Deep Navy Enterprise Sidebar */
+.sidebar-navy {
+  width: 260px;
+  background: linear-gradient(180deg, #070f1e 0%, #0b192c 100%);
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(30, 41, 59, 0.8);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  z-index: 40;
 }
 
-.card-luxury {
-  background: linear-gradient(135deg, #ffffff 0%, #f4fbfb 60%, #e6f5f3 100%);
-  border: 1px solid var(--brand-teal-border);
-  border-radius: 24px;
-  box-shadow: var(--shadow-xs);
+.sidebar-navy::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-navy::-webkit-scrollbar-thumb {
+  background: #1e293b;
 }
 
-/* ── RoadGuard X Pill Badges & Buttons ─────────────────────────────────────── */
-.pill-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1;
+.sidebar-heading {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: var(--brand-teal-light);
-  color: var(--brand-teal);
-  border: 1px solid var(--brand-teal-border);
+  color: #64748b;
+  padding: 14px 14px 6px;
 }
 
-.pill-button {
-  display: inline-flex;
+.sidebar-nav-item {
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 160ms ease;
-  border: 1px solid var(--border);
-  background: #ffffff;
-  color: var(--text-secondary);
-}
-
-.nav-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 0.85rem;
+  gap: 10px;
+  padding: 8px 12px;
+  margin: 1px 8px;
   border-radius: 8px;
   font-size: 12.5px;
   font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 140ms ease;
-  border: 1px solid transparent;
+  color: #94a3b8;
   background: transparent;
-  color: #475569;
-}
-
-.nav-tab:hover {
-  color: #0b2321;
-  background: #eaf6f4;
-}
-
-.nav-tab.active {
-  background: #0c645d;
-  color: #ffffff;
-  font-weight: 700;
-  border-color: #0c645d;
-  box-shadow: 0 1px 3px rgba(12, 100, 93, 0.25);
-}
-
-.pill-button:hover {
-  background: var(--surface-hover);
-  color: var(--text-primary);
-  border-color: var(--brand-teal-border);
-}
-
-.pill-button.active {
-  background: var(--brand-teal);
-  color: #ffffff;
-  border-color: var(--brand-teal);
-  box-shadow: 0 2px 6px rgba(12, 100, 93, 0.25);
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 1rem;
-  background: var(--brand-teal);
-  color: #ffffff;
-  font-size: 12.5px;
-  font-weight: 700;
-  border-radius: 12px;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 160ms ease;
-  box-shadow: var(--shadow-2xs);
+  width: calc(100% - 16px);
+  text-align: left;
+  transition: all 140ms cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
 }
 
-.btn-primary:hover {
-  background: var(--brand-teal-hover);
-  box-shadow: var(--shadow-xs);
+.sidebar-nav-item:hover {
+  color: #f8fafc;
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(2px);
 }
 
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 1rem;
-  background: #ffffff;
-  color: var(--text-primary);
-  font-size: 12.5px;
+.sidebar-nav-item.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
   font-weight: 700;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 160ms ease;
-  box-shadow: var(--shadow-2xs);
-}
-
-.btn-secondary:hover {
-  background: var(--surface-hover);
-  border-color: var(--brand-teal-border);
-}
-
-.tag-mono {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  border-color: rgba(20, 184, 166, 0.3);
+  box-shadow: var(--shadow-glow-teal);
 }
 
 /* ── Container Layout ─────────────────────────────────────────────────────── */
@@ -259,7 +194,7 @@ code, pre, kbd, samp {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 28px;
+  padding: 24px 32px;
   flex: 1;
 }
 
@@ -269,79 +204,189 @@ code, pre, kbd, samp {
   }
 }
 
-/* ── Sidebar Layout & Enterprise Design ──────────────────────────────────── */
-.app-shell {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-  background-color: #f8fafc;
+/* ── World-Class Card Utilities ───────────────────────────────────────────── */
+.card-clean {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sidebar-navy {
-  width: 250px;
-  background-color: #0b192c;
-  color: #94a3b8;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  border-right: 1px solid #1e293b;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
+.card-clean:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
 }
 
-.sidebar-nav-item {
-  display: flex;
+.card-glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  box-shadow: var(--shadow-xs);
+}
+
+.card-hero-dark {
+  background: linear-gradient(135deg, #070f1e 0%, #0b192c 60%, #0e2238 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px -4px rgba(7, 15, 30, 0.35);
+  color: #f8fafc;
+}
+
+/* ── Badges & Buttons ─────────────────────────────────────────────────────── */
+.pill-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  border-radius: 8px;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--brand-teal-light);
+  color: var(--brand-teal);
+  border: 1px solid var(--brand-teal-border);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.05rem;
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  color: #ffffff;
   font-size: 12.5px;
-  font-weight: 500;
-  color: #94a3b8;
-  background: transparent;
+  font-weight: 700;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
-  width: 100%;
-  text-align: left;
-  transition: all 120ms ease;
-  white-space: nowrap;
+  transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-2xs);
 }
 
-.sidebar-nav-item:hover {
-  color: #ffffff;
-  background-color: #162942;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+  box-shadow: var(--shadow-glow-teal);
+  transform: translateY(-1px);
 }
 
-.sidebar-nav-item.active {
-  color: #ffffff;
-  background-color: #0d9488;
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.05rem;
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 12.5px;
   font-weight: 700;
-  box-shadow: 0 1px 3px rgba(13, 148, 136, 0.4);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-2xs);
 }
 
-.sidebar-heading {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #475569;
-  padding: 14px 12px 6px;
+.btn-secondary:hover {
+  background: #f8fafc;
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
 }
 
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* ── Live Pulse Indicators ────────────────────────────────────────────────── */
+.pulse-indicator {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.pulse-indicator-red {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: pulseGlowRed 2s infinite;
+}
+
+@keyframes pulseGlowRed {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* Spin animation for refresh buttons */
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Code Diffs ───────────────────────────────────────────────────────────── */
 .diff-add {
   background-color: #f0fdf4;
   color: #166534;
-  padding: 2px 6px;
+  padding: 3px 6px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 11px;
+  border-radius: 3px;
 }
 
 .diff-del {
   background-color: #fef2f2;
   color: #991b1b;
-  padding: 2px 6px;
+  padding: 3px 6px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 11px;
+  border-radius: 3px;
+}
+
+/* ── IDE Terminal Styling ─────────────────────────────────────────────────── */
+.ide-terminal-text {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11.5px;
+  line-height: 1.6;
 }
