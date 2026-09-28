@@ -634,6 +634,102 @@ export const api = {
         method: 'POST',
       }),
   },
+
+  // LegacyX Guard (IDE Extension API)
+  guard: {
+    analyzeMethod: (filePath = 'FeeCalculation.java', methodName = 'calculateTransferFee') =>
+      request<{
+        file_path: string;
+        method_name: string;
+        business_decisions_found: number;
+        business_decisions: Array<{
+          id: string;
+          title: string;
+          rule: string;
+          covered_scenarios: number;
+          risk_level: string;
+          line_range: string;
+          description: string;
+        }>;
+        dependencies: string[];
+        affected_apis: string[];
+        risk_level: string;
+        guidance: string;
+      }>('/guard/analyze-method', {
+        method: 'POST',
+        body: JSON.stringify({ file_path: filePath, method_name: methodName }),
+      }),
+
+    createBaseline: (filePath = 'FeeCalculation.java', methodName = 'calculateTransferFee') =>
+      request<{
+        status: string;
+        method_name: string;
+        scenarios_captured: number;
+        fingerprint: string;
+        scenarios: any[];
+        message: string;
+      }>('/guard/create-baseline', {
+        method: 'POST',
+        body: JSON.stringify({ file_path: filePath, method_name: methodName }),
+      }),
+
+    changeImpact: (filePath = 'FeeCalculation.java', methodName = 'calculateTransferFee') =>
+      request<{
+        changed_method: string;
+        changed_file: string;
+        blast_radius: {
+          business_decisions_affected: number;
+          behavioral_scenarios_affected: number;
+          downstream_services_affected: string[];
+          public_apis_affected: string[];
+        };
+        safety_advisory: string;
+      }>('/guard/change-impact', {
+        method: 'POST',
+        body: JSON.stringify({ file_path: filePath, method_name: methodName }),
+      }),
+
+    verifyChange: (filePath = 'FeeCalculation.java', methodName = 'calculateTransferFee', overrideMutation?: boolean) =>
+      request<{
+        status: string;
+        overall_equivalence: boolean;
+        total_scenarios: number;
+        equivalent_count: number;
+        drift_count: number;
+        hero_drift: any;
+        scenario_results: any[];
+        wow_quote: string;
+      }>('/guard/verify-change', {
+        method: 'POST',
+        body: JSON.stringify({ file_path: filePath, method_name: methodName, override_mutation: overrideMutation }),
+      }),
+
+    injectDrift: (enabled: boolean) =>
+      request<{
+        status: string;
+        is_mutated: boolean;
+        active_rounding: string;
+        target_file: string;
+        target_line: number;
+        source_diff: string;
+        message: string;
+      }>('/guard/inject-drift', {
+        method: 'POST',
+        body: JSON.stringify({ enabled }),
+      }),
+
+    askLegacyX: (question: string, methodName = 'calculateTransferFee', filePath = 'FeeCalculation.java') =>
+      request<{
+        question: string;
+        method_name: string;
+        file_path: string;
+        explanation: string;
+        evidence_used: any;
+      }>('/guard/ask', {
+        method: 'POST',
+        body: JSON.stringify({ question, method_name: methodName, file_path: filePath }),
+      }),
+  },
 }
 
 // ── Phase 4 Types ─────────────────────────────────────────────────────────────

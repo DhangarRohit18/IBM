@@ -63,6 +63,7 @@ type TabKey =
   | 'whatif'
   | 'risk'
   | 'report'
+  | 'guard'
   | 'settings'
   | 'documentation'
 
@@ -547,6 +548,11 @@ export default function App() {
   const [aiEdgeCases] = useState<AIEdgeCase[]>(MOCK_AI_EDGE_CASES)
   const [scenario4Executing, setScenario4Executing] = useState<boolean>(false)
   const [reportExported, setReportExported] = useState<string | null>(null)
+  const [guardMutated, setGuardMutated] = useState<boolean>(true)
+  const [guardVerifying, setGuardVerifying] = useState<boolean>(false)
+  const [guardStep, setGuardStep] = useState<'understand' | 'baseline' | 'impact' | 'prove'>('prove')
+  const [guardAiAnswer, setGuardAiAnswer] = useState<string | null>(null)
+  const [guardNotice, setGuardNotice] = useState<string | null>(null)
 
   // Fetch real projects from API on mount
   useEffect(() => {
@@ -752,6 +758,16 @@ export default function App() {
           >
             <Award size={15} />
             <span>Assurance Certificate</span>
+          </button>
+
+          {/* DEVELOPER SAFETY LAYER */}
+          <div className="sidebar-heading">Developer Safety Layer</div>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'guard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('guard')}
+          >
+            <ShieldCheck size={15} />
+            <span>LegacyX Guard (IDE)</span>
           </button>
 
           {/* SYSTEM */}
@@ -2543,6 +2559,612 @@ public class ModernizedAccountService implements TransferUseCase {
                       Timestamp: {new Date().toUTCString()}
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: LEGACYX GUARD (IDE EXTENSION SIMULATOR) */}
+          {activeTab === 'guard' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Header */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className="pill-badge" style={{ backgroundColor: '#fee2e2', color: '#991b1b', fontWeight: 800 }}>
+                      Developer Safety Layer
+                    </span>
+                    <span className="pill-badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1', fontWeight: 700 }}>
+                      VS Code Extension: LegacyX Guard
+                    </span>
+                  </div>
+                  <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', marginTop: '6px' }}>
+                    LegacyX Guard — Behavioral Assurance Inside the IDE
+                  </h2>
+                  <p style={{ fontSize: '13px', color: '#64748b' }}>
+                    <em>“Know what your code change changes. Catch behavioral drift before it reaches production.”</em>
+                  </p>
+                </div>
+
+                {/* Top Action Toolbar */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    className="btn-secondary"
+                    style={{
+                      backgroundColor: guardMutated ? '#fff1f2' : '#f0fdf4',
+                      borderColor: guardMutated ? '#fecdd3' : '#bbf7d0',
+                      color: guardMutated ? '#be123c' : '#15803d',
+                      fontWeight: 700,
+                    }}
+                    onClick={() => {
+                      const next = !guardMutated
+                      setGuardMutated(next)
+                      setGuardNotice(
+                        next
+                          ? 'Mutation Challenge Active: Injected RoundingMode.HALF_DOWN into FeeCalculation.java:45'
+                          : 'Mutation Cleared: Restored RoundingMode.HALF_UP (100% Behavioral Equivalence)'
+                      )
+                      api.guard.injectDrift(next).catch(() => {})
+                    }}
+                  >
+                    <Sliders size={14} />
+                    <span>{guardMutated ? 'Mutation: Injected (HALF_DOWN)' : 'Mutation: Off (HALF_UP)'}</span>
+                  </button>
+
+                  <button
+                    className="btn-primary"
+                    disabled={guardVerifying}
+                    onClick={() => {
+                      setGuardVerifying(true)
+                      setTimeout(() => {
+                        setGuardVerifying(false)
+                        setGuardNotice(
+                          guardMutated
+                            ? '⚠ Behavioral Drift Detected: Scenario #04 diverged by ₹0.01 at FeeCalculation.java:45'
+                            : '100% Behavioral Equivalence Verified: 7/7 scenarios preserved across runtimes'
+                        )
+                      }, 500)
+                    }}
+                  >
+                    <RefreshCw size={14} className={guardVerifying ? 'spin' : ''} />
+                    <span>{guardVerifying ? 'Replaying Scenarios...' : 'Verify Change (Replay)'}</span>
+                  </button>
+
+                  <button
+                    className="btn-secondary"
+                    onClick={() => {
+                      setGuardAiAnswer(
+                        'LegacyX AI Explanation:\nMethod calculateTransferFee() is classified as HIGH RISK because it directly governs monetary debits across 3 downstream services (AccountService, TransferService, AuditLedger) and enforces the high-value transaction boundary at ₹50,000. In Scenario #04, altering the rounding policy from HALF_UP to HALF_DOWN creates an unprescribed ₹0.01 deficit.'
+                      )
+                    }}
+                  >
+                    <Sparkles size={14} color="#6366f1" />
+                    <span>Ask LegacyX AI</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* The Hero Wow Quote Banner */}
+              <div
+                style={{
+                  padding: '16px 20px',
+                  borderRadius: '8px',
+                  backgroundColor: '#071525',
+                  border: '1px solid #1e293b',
+                  color: '#f8fafc',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '12px',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.05em', fontWeight: 700 }}>
+                    Core Thesis in the Developer Workflow
+                  </div>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#38bdf8', marginTop: '2px' }}>
+                    “The compiler said this change was valid. LegacyX said the business decision wasn't.”
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: '#1e293b', color: '#cbd5e1', fontFamily: 'monospace' }}>
+                    File: FeeCalculation.java:45
+                  </span>
+                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: guardMutated ? '#991b1b' : '#166534', color: '#ffffff', fontWeight: 700 }}>
+                    {guardMutated ? '1 DRIFT DETECTED' : '7/7 EQUIVALENT'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Notification Banner */}
+              {guardNotice && (
+                <div
+                  style={{
+                    padding: '10px 16px',
+                    borderRadius: '6px',
+                    backgroundColor: guardMutated ? '#fff1f2' : '#f0fdf4',
+                    border: `1px solid ${guardMutated ? '#fecdd3' : '#bbf7d0'}`,
+                    color: guardMutated ? '#9f1239' : '#166534',
+                    fontSize: '12px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {guardMutated ? <AlertTriangle size={15} /> : <CheckCircle2 size={15} />}
+                    <span>{guardNotice}</span>
+                  </div>
+                  <button
+                    onClick={() => setGuardNotice(null)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              )}
+
+              {/* AI Answer Modal / Banner */}
+              {guardAiAnswer && (
+                <div
+                  style={{
+                    padding: '14px 18px',
+                    borderRadius: '6px',
+                    backgroundColor: '#eef2ff',
+                    border: '1px solid #c7d2fe',
+                    color: '#312e81',
+                    fontSize: '12.5px',
+                    lineHeight: 1.6,
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Sparkles size={14} color="#6366f1" />
+                      Ask LegacyX — Grounded AI Reasoning
+                    </span>
+                    <button
+                      onClick={() => setGuardAiAnswer(null)}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#312e81' }}
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                  <div style={{ whiteSpace: 'pre-line' }}>{guardAiAnswer}</div>
+                </div>
+              )}
+
+              {/* 4 Capabilities Selector Buttons */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                <button
+                  className="card-clean"
+                  style={{
+                    padding: '12px 14px',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    border: guardStep === 'understand' ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                    backgroundColor: guardStep === 'understand' ? '#eff6ff' : '#ffffff',
+                  }}
+                  onClick={() => setGuardStep('understand')}
+                >
+                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>01 — Understand</div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Business Decisions</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>3 decisions found</div>
+                </button>
+
+                <button
+                  className="card-clean"
+                  style={{
+                    padding: '12px 14px',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    border: guardStep === 'baseline' ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                    backgroundColor: guardStep === 'baseline' ? '#eff6ff' : '#ffffff',
+                  }}
+                  onClick={() => setGuardStep('baseline')}
+                >
+                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>02 — Capture</div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Behavioral Baseline</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>7 frozen scenarios</div>
+                </button>
+
+                <button
+                  className="card-clean"
+                  style={{
+                    padding: '12px 14px',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    border: guardStep === 'impact' ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                    backgroundColor: guardStep === 'impact' ? '#eff6ff' : '#ffffff',
+                  }}
+                  onClick={() => setGuardStep('impact')}
+                >
+                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>03 — Change Impact</div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Blast Radius Analysis</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>3 services, 2 APIs</div>
+                </button>
+
+                <button
+                  className="card-clean"
+                  style={{
+                    padding: '12px 14px',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    border: guardStep === 'prove' ? '2px solid #e11d48' : '1px solid #e2e8f0',
+                    backgroundColor: guardStep === 'prove' ? '#fff1f2' : '#ffffff',
+                  }}
+                  onClick={() => setGuardStep('prove')}
+                >
+                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>04 — Prove</div>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Dual Replay &amp; Drift</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>Exact source diff</div>
+                </button>
+              </div>
+
+              {/* REALISTIC VS CODE IDE SIMULATOR */}
+              <div
+                style={{
+                  borderRadius: '10px',
+                  backgroundColor: '#070d17',
+                  border: '1px solid #1e293b',
+                  overflow: 'hidden',
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
+                }}
+              >
+                {/* IDE Window Title Bar */}
+                <div
+                  style={{
+                    backgroundColor: '#0b1320',
+                    padding: '10px 16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderBottom: '1px solid #1e293b',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
+                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                    <span style={{ fontSize: '12px', color: '#94a3b8', marginLeft: '12px', fontFamily: 'monospace' }}>
+                      FeeCalculation.java — LegacyBank Core (LegacyX Guard IDE Extension)
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <ShieldCheck size={13} />
+                      <span>GUARD ACTIVE</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* IDE Body: Split Layout */}
+                <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', minHeight: '520px' }}>
+                  {/* Left Activity / Guard Sidebar */}
+                  <div
+                    style={{
+                      backgroundColor: '#0a101d',
+                      borderRight: '1px solid #1e293b',
+                      padding: '16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '16px',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#38bdf8', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase' }}>
+                        <ShieldCheck size={14} />
+                        <span>LegacyX Guard Panel</span>
+                      </div>
+                      <div style={{ fontSize: '13px', fontWeight: 700, color: '#f8fafc', marginTop: '4px' }}>
+                        Decision Shield
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#64748b' }}>
+                        com.legacybank.service.FeeCalculation
+                      </div>
+                    </div>
+
+                    {/* Section 1: Business Decisions (3) */}
+                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '12px', border: '1px solid #1e293b' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px' }}>
+                        Decisions Found (3)
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>Transfer Fee Tariff</span>
+                            <span style={{ fontSize: '9.5px', color: '#f43f5e', fontWeight: 800, backgroundColor: '#881337', padding: '2px 5px', borderRadius: '3px' }}>HIGH</span>
+                          </div>
+                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>amount &gt; ₹50,000 ? 0.50% : 0.25%</div>
+                          <div style={{ fontSize: '10px', color: '#38bdf8', marginTop: '2px' }}>7 covered scenarios</div>
+                        </div>
+
+                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>Compliance Hold</span>
+                            <span style={{ fontSize: '9.5px', color: '#f59e0b', fontWeight: 800, backgroundColor: '#78350f', padding: '2px 5px', borderRadius: '3px' }}>CRITICAL</span>
+                          </div>
+                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>amount &gt; ₹50k &amp; risk &gt; 70</div>
+                        </div>
+
+                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>VIP Discount</span>
+                            <span style={{ fontSize: '9.5px', color: '#10b981', fontWeight: 800, backgroundColor: '#064e3b', padding: '2px 5px', borderRadius: '3px' }}>LOW</span>
+                          </div>
+                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>is_vip == true ? 50% off</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 2: Blast Radius */}
+                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '12px', border: '1px solid #1e293b' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px' }}>
+                        Change Impact (Blast Radius)
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '11px', color: '#cbd5e1' }}>
+                        <div>• <strong>3 Downstream Services:</strong> AccountService, TransferService, AuditLedger</div>
+                        <div>• <strong>2 Public APIs:</strong> POST /transfers, GET /fees/estimate</div>
+                        <div>• <strong>7 Behavioral Scenarios</strong></div>
+                      </div>
+                    </div>
+
+                    {/* Section 3: Baseline Fingerprint */}
+                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '10px', border: '1px solid #1e293b' }}>
+                      <div style={{ fontSize: '10.5px', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Frozen Baseline Hash</div>
+                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#38bdf8', marginTop: '2px', wordBreak: 'break-all' }}>
+                        sha256:4f9a0c2188b1ec45d3e098a12903fe45b8
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Main Editor */}
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {/* Tab Header Bar */}
+                    <div style={{ backgroundColor: '#0b1320', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid #1e293b' }}>
+                      <span style={{ fontSize: '12px', color: '#f8fafc', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <FileCode2 size={14} color="#eab308" />
+                        <span>FeeCalculation.java</span>
+                        {guardMutated && <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#f43f5e' }} />}
+                      </span>
+                      <span style={{ fontSize: '11px', color: '#64748b', marginLeft: 'auto', fontFamily: 'monospace' }}>
+                        UTF-8 | Java 17 | Line 45:28
+                      </span>
+                    </div>
+
+                    {/* Editor Content Area */}
+                    <div style={{ padding: '16px 20px', fontFamily: 'Consolas, "Fira Code", monospace', fontSize: '12.5px', lineHeight: 1.7, color: '#e2e8f0', flex: 1 }}>
+                      {/* CodeLens Line atop calculateTransferFee */}
+                      <div
+                        style={{
+                          backgroundColor: '#0f1f38',
+                          border: '1px dashed #38bdf8',
+                          borderRadius: '4px',
+                          padding: '6px 12px',
+                          marginBottom: '10px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          fontSize: '11.5px',
+                        }}
+                      >
+                        <span style={{ color: '#38bdf8', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <ShieldCheck size={14} />
+                          LegacyX Guard: 3 Business Decisions | 7 Scenarios Frozen
+                        </span>
+                        <button
+                          style={{ background: 'none', border: 'none', color: '#a5b4fc', cursor: 'pointer', fontWeight: 700, padding: 0 }}
+                          onClick={() => {
+                            setGuardVerifying(true)
+                            setTimeout(() => {
+                              setGuardVerifying(false)
+                            }, 500)
+                          }}
+                        >
+                          [▶ Verify Change (Replay)]
+                        </button>
+                        <button
+                          style={{ background: 'none', border: 'none', color: '#a5b4fc', cursor: 'pointer', fontWeight: 700, padding: 0 }}
+                          onClick={() => {
+                            setGuardAiAnswer(
+                              'Method calculateTransferFee() is classified as HIGH RISK because it directly governs monetary debits across 3 downstream services. Under Scenario #04, altering RoundingMode produces a ₹0.01 drift.'
+                            )
+                          }}
+                        >
+                          [💬 Ask LegacyX]
+                        </button>
+                      </div>
+
+                      {/* Code Lines */}
+                      <div style={{ color: '#64748b' }}>36: package com.legacybank.service;</div>
+                      <div style={{ color: '#64748b' }}>37: public class FeeCalculation &#123;</div>
+                      <div>
+                        <span style={{ color: '#c084fc' }}>38:   public BigDecimal </span>
+                        <span style={{ color: '#60a5fa' }}>calculateTransferFee</span>
+                        <span>(BigDecimal amount, String customerId, int riskScore) &#123;</span>
+                      </div>
+                      <div><span style={{ color: '#64748b' }}>39:     if (amount == null || amount.compareTo(BigDecimal.ZERO) &lt;= 0) return BigDecimal.ZERO;</span></div>
+                      <div><span style={{ color: '#64748b' }}>40:     if (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0 &amp;&amp; riskScore &gt; 70) throw new SecurityException();</span></div>
+                      <div><span style={{ color: '#c084fc' }}>41:     BigDecimal feeRate = (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0) ? HIGH_RATE : STD_RATE;</span></div>
+                      <div><span style={{ color: '#64748b' }}>42: </span></div>
+                      <div><span style={{ color: '#64748b' }}>43:     // CRITICAL INVARIANT: Currency Rounding Mode</span></div>
+                      <div><span style={{ color: '#64748b' }}>44:     // Legacy: RoundingMode.HALF_UP (₹250.00) vs Modern: RoundingMode.HALF_DOWN (₹249.99)</span></div>
+
+                      {/* LINE 45: THE CRITICAL DRIFT LINE */}
+                      <div
+                        style={{
+                          backgroundColor: guardMutated ? 'rgba(225, 29, 72, 0.2)' : 'rgba(16, 185, 129, 0.15)',
+                          borderLeft: `3px solid ${guardMutated ? '#f43f5e' : '#10b981'}`,
+                          padding: '4px 8px',
+                          borderRadius: '2px',
+                          margin: '4px 0',
+                        }}
+                      >
+                        <span style={{ fontWeight: 800, color: guardMutated ? '#fb7185' : '#4ade80' }}>45: </span>
+                        <span>BigDecimal fee = amount.multiply(feeRate).setScale(2, </span>
+                        <span
+                          style={{
+                            fontWeight: 800,
+                            color: guardMutated ? '#f43f5e' : '#10b981',
+                            textDecoration: guardMutated ? 'underline wavy #f43f5e' : 'none',
+                          }}
+                        >
+                          RoundingMode.{guardMutated ? 'HALF_DOWN' : 'HALF_UP'}
+                        </span>
+                        <span>);</span>
+                      </div>
+
+                      {/* INLINE BEHAVIORAL DRIFT POPOVER (IF MUTATED) */}
+                      {guardMutated && (
+                        <div
+                          style={{
+                            backgroundColor: '#1c0a0e',
+                            border: '1px solid #e11d48',
+                            borderRadius: '6px',
+                            padding: '12px 14px',
+                            margin: '8px 0 12px 24px',
+                            color: '#ffe4e6',
+                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span style={{ fontSize: '11px', fontWeight: 800, color: '#f43f5e', display: 'flex', alignItems: 'center', gap: '6px', textTransform: 'uppercase' }}>
+                              <AlertTriangle size={14} />
+                              ⚠ LEGACYX BEHAVIORAL DRIFT DETECTED
+                            </span>
+                            <span style={{ fontSize: '10.5px', color: '#94a3b8' }}>Delta: ₹0.01</span>
+                          </div>
+
+                          <div style={{ marginTop: '8px', fontSize: '12px' }}>
+                            <strong>Scenario #04:</strong> ₹50,000 transfer (Customer: CUST-1042 | Risk: 42)
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '6px', fontSize: '11.5px', fontFamily: 'monospace' }}>
+                            <div style={{ backgroundColor: '#2d0f15', padding: '6px 8px', borderRadius: '4px' }}>
+                              <span style={{ color: '#94a3b8' }}>LEGACY RUNTIME: </span>
+                              <strong style={{ color: '#10b981' }}>₹250.00</strong>
+                            </div>
+                            <div style={{ backgroundColor: '#2d0f15', padding: '6px 8px', borderRadius: '4px' }}>
+                              <span style={{ color: '#94a3b8' }}>CURRENT RUNTIME: </span>
+                              <strong style={{ color: '#f43f5e' }}>₹249.99</strong>
+                            </div>
+                          </div>
+
+                          <div style={{ marginTop: '8px', fontSize: '11.5px', color: '#fecdd3' }}>
+                            <strong>Root Cause:</strong> RoundingMode changed from <code>HALF_UP</code> to <code>HALF_DOWN</code> at Line 45.
+                          </div>
+
+                          <div style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
+                            <button
+                              style={{
+                                fontSize: '11px',
+                                fontWeight: 700,
+                                backgroundColor: '#e11d48',
+                                color: '#ffffff',
+                                border: 'none',
+                                padding: '4px 10px',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() => {
+                                setGuardStep('prove')
+                              }}
+                            >
+                              VIEW EVIDENCE
+                            </button>
+                            <button
+                              style={{
+                                fontSize: '11px',
+                                fontWeight: 700,
+                                backgroundColor: '#334155',
+                                color: '#ffffff',
+                                border: 'none',
+                                padding: '4px 10px',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() => {
+                                setGuardMutated(false)
+                                setGuardNotice('Remediated: Restored RoundingMode.HALF_UP. Behavioral equivalence confirmed!')
+                              }}
+                            >
+                              FIX INLINE (RESTORE HALF_UP)
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <div style={{ color: '#64748b' }}>46:     if (customerId != null &amp;&amp; customerId.startsWith("VIP")) fee = fee.multiply(DISCOUNT);</div>
+                      <div style={{ color: '#64748b' }}>47:     return fee;</div>
+                      <div style={{ color: '#64748b' }}>48:   &#125;</div>
+                      <div style={{ color: '#64748b' }}>49: &#125;</div>
+                    </div>
+
+                    {/* Bottom IDE Output Terminal */}
+                    <div
+                      style={{
+                        backgroundColor: '#020617',
+                        borderTop: '1px solid #1e293b',
+                        padding: '10px 16px',
+                        fontFamily: 'Consolas, "Fira Code", monospace',
+                        fontSize: '11.5px',
+                        color: '#94a3b8',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1e293b', paddingBottom: '6px', marginBottom: '8px' }}>
+                        <span style={{ color: '#38bdf8', fontWeight: 800 }}>OUTPUT: LEGACYX GUARD</span>
+                        <span>PROBLEMS ({guardMutated ? 1 : 0})</span>
+                        <span>DEBUG CONSOLE</span>
+                        <span>TERMINAL</span>
+                      </div>
+                      <div style={{ lineHeight: 1.6 }}>
+                        <div>[LegacyX Guard] Dual-Harness Execution Triggered on calculateTransferFee()</div>
+                        <div>[Replay Harness] Scenarios #01 - #03: <span style={{ color: '#10b981' }}>EQUIVALENT (Preserved)</span></div>
+                        {guardMutated ? (
+                          <div>
+                            [Replay Harness] <span style={{ color: '#f43f5e', fontWeight: 800 }}>Scenario #04: ⚠ DRIFT DETECTED!</span> Expected ₹250.00, Actual ₹249.99 (Delta: ₹0.01)
+                          </div>
+                        ) : (
+                          <div>[Replay Harness] Scenario #04: <span style={{ color: '#10b981' }}>EQUIVALENT (₹250.00 == ₹250.00)</span></div>
+                        )}
+                        <div>
+                          [Summary] Status: <strong style={{ color: guardMutated ? '#f43f5e' : '#10b981' }}>{guardMutated ? 'CONDITIONAL ASSURANCE (1 DRIFT)' : 'VERIFIED (0 DRIFT)'}</strong> | Baseline Hash: <code>4f9a...88b1</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* VS Code Extension Package Info Card */}
+              <div
+                className="card-clean"
+                style={{
+                  padding: '20px',
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '16px',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>
+                    Production VS Code Extension Package
+                  </div>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>
+                    legacyx-guard (TypeScript + VS Code Extension Manifest)
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+                    Source located in <code>vscode-extension/</code> in this repository. Ready to run with <code>F5</code> in VS Code.
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <span style={{ padding: '8px 12px', backgroundColor: '#e2e8f0', borderRadius: '4px', fontSize: '12px', fontFamily: 'monospace', color: '#334155' }}>
+                    cd vscode-extension &amp;&amp; npm run compile
+                  </span>
                 </div>
               </div>
             </div>

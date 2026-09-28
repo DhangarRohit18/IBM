@@ -1,0 +1,128 @@
+{
+  "name": "legacyx-guard",
+  "displayName": "LegacyX Guard — Behavioral Assurance",
+  "description": "Know what your code change changes. Catch behavioral drift before it reaches production.",
+  "version": "1.0.0",
+  "publisher": "legacyx",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Testing",
+    "Linters",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "modernization",
+    "java",
+    "drift-detection",
+    "behavioral-replay",
+    "legacyx"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:java",
+    "workspaceContains:**/*.java"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "legacyx-guard-explorer",
+          "title": "LegacyX Guard",
+          "icon": "resources/shield.svg"
+        }
+      ]
+    },
+    "views": {
+      "legacyx-guard-explorer": [
+        {
+          "type": "webview",
+          "id": "legacyx.guardView",
+          "name": "Decision Shield & Replay"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "legacyx.analyzeMethod",
+        "title": "LegacyX Guard: 01 — Understand Business Decisions",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.createBaseline",
+        "title": "LegacyX Guard: 02 — Capture Behavioral Baseline",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.changeImpact",
+        "title": "LegacyX Guard: 03 — Evaluate Change Impact (Blast Radius)",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.verifyChange",
+        "title": "LegacyX Guard: 04 — Verify Change & Detect Drift",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.injectControlledDrift",
+        "title": "LegacyX Guard: 🧪 Inject Controlled Drift (Mutation Challenge)",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.askLegacyX",
+        "title": "LegacyX Guard: Ask LegacyX AI Reasoning",
+        "category": "LegacyX"
+      },
+      {
+        "command": "legacyx.jumpToSourceEvidence",
+        "title": "LegacyX Guard: Jump to Root Cause Line 45",
+        "category": "LegacyX"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname == .java",
+          "command": "legacyx.analyzeMethod",
+          "group": "LegacyX@1"
+        },
+        {
+          "when": "resourceExtname == .java",
+          "command": "legacyx.verifyChange",
+          "group": "LegacyX@2"
+        },
+        {
+          "when": "resourceExtname == .java",
+          "command": "legacyx.createBaseline",
+          "group": "LegacyX@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "LegacyX Guard",
+      "properties": {
+        "legacyx.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:8000/api/v1",
+          "description": "LegacyX Backend API Base URL"
+        },
+        "legacyx.autoVerifyOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically verify affected scenarios when saving Java files"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}
