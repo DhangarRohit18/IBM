@@ -65,3 +65,4 @@ Thumbs.db
 
 # Storage (local dev — repositories & artifacts stored here)
 storage/
+.vercel
