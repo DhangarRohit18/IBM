@@ -787,20 +787,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* Sidebar Footer */}
-        <div style={{ padding: '14px 16px', borderTop: '1px solid #e5e7eb', fontSize: '11px', color: '#6b7280' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span className="pulse-indicator" />
-              <span style={{ color: '#111827', fontWeight: 600 }}>Assurance Nominal</span>
-            </div>
-            <span style={{ color: '#9ca3af', fontFamily: 'monospace', fontSize: '10px' }}>0ms</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-color)', fontWeight: 600, fontSize: '10.5px' }}>
-            <Sparkles size={11} color="var(--accent-color)" />
-            <span>Behavioral Proof Engine • Built with IBM Bob</span>
-          </div>
-        </div>
       </aside>
 
       {/* ── Main Content Area ─────────────────────────────────────────────── */}
@@ -1250,10 +1236,6 @@ export default function App() {
                     Prove the Difference.
                   </h1>
 
-                  <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: 1.65, maxWidth: '740px', marginBottom: '20px' }}>
-                    Does modernized code still make the exact same business decisions? LegacyX answers with mathematical rigor:
-                    Business Rule DNA, Decision Contracts, Decision Replay Lab, and Silent Drift Detection.
-                  </p>
 
                   {/* Quick jump pills row */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
@@ -1791,9 +1773,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     System X-Ray: Architecture & AST Call Graph
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    AST-derived entities established deterministically without AI inference. Ground truth line-level evidence.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button className="btn-secondary" onClick={() => setActiveTab('business_rules')}>
@@ -1920,9 +1899,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Extracted Business Rule DNA (7 Discovered Rules)
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Extracted business rules linked directly to source construct line numbers. Every rule must be traceable.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button className="btn-secondary" onClick={() => setActiveTab('impact')}>
@@ -2000,9 +1976,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Change Impact Analysis: Target Component
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Trace direct callers and transitive callers to calculate exact architectural blast radius.
-                  </p>
                 </div>
                 <button className="btn-secondary" onClick={() => setActiveTab('strategy')}>
                   <span>Next: Modernization Strategy</span>
@@ -2102,9 +2075,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Observed Facts → Implications → Rationale → Strategy
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Strategy recommendations backed by evidence. Human review and override authority required.
-                  </p>
                 </div>
                 <button className="btn-secondary" onClick={() => setActiveTab('plan')}>
                   <span>Next: Execution Plan</span>
@@ -2195,9 +2165,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Modernization Tasks & Dependency Ordering
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Ordered tasks with strict prerequisite gates. Human approval required before transformation execution.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button className="btn-secondary" onClick={() => setActiveTab('transformation')}>
@@ -2258,9 +2225,6 @@ export default function App() {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Controlled Transformation & Side-by-Side Diff
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Original legacy code in <code>storage/extracted/</code> remains strictly immutable. Modernized code isolated in <code>storage/modernized/</code>.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button className="btn-secondary" onClick={() => setActiveTab('validation')}>
@@ -2372,9 +2336,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Build, Test & Behavioral Validation Evidence
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Deterministic execution sandbox. AI output is never marked verified without execution evidence.
-                  </p>
                 </div>
                 <button className="btn-primary" onClick={() => alert('Validation pipeline executed in isolated sandbox')}>
                   <RefreshCw size={14} />
@@ -2436,9 +2397,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Automatic Characterization Test Generator
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Analyzes legacy code &amp; extracted business rules to discover boundary scenarios and capture an immutable behavioral baseline.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <button
@@ -2568,9 +2526,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     AI Edge-Case &amp; Scenario Generator
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Synthesizes high-value verification cases from extracted business rules. AI proposes boundaries; execution remains 100% deterministic.
-                  </p>
                 </div>
                 <button
                   className="btn-primary"
@@ -2674,9 +2629,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginTop: '4px' }}>
                     Behavioral Replay Engine &amp; Silent Drift Detection
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#6b7280' }}>
-                    <em>“The implementation can change. The decision must not.”</em> Real dual-harness execution proving behavioral equivalence.
-                  </p>
                 </div>
                 <button
                   className="btn-primary"
@@ -2874,9 +2826,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Decision Contracts (35 Extracted Specs)
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Implementation-independent specifications capturing business logic rules independently of source language.
-                  </p>
                 </div>
               </div>
 
@@ -2951,9 +2900,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     3-Layer Cross-System Blast Radius
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Visualizes cross-layer ripples from Code AST to Business Logic Contracts and Behavioral Replay Scenarios.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '6px' }}>
                   {['ALL', 'Code Layer', 'Business Logic', 'Behavioral Replay'].map((layer) => (
@@ -3007,9 +2953,6 @@ public class ModernizedAccountService implements TransferUseCase {
                 <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                   What-If Business Scenario Simulator
                 </h2>
-                <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                  Simulate policy parameter shifts and observe how rules branch before cutting production code.
-                </p>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '20px' }}>
@@ -3082,9 +3025,6 @@ public class ModernizedAccountService implements TransferUseCase {
                 <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                   Modernization Risk Scorecard
                 </h2>
-                <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                  Evaluates architectural coupling, rule complexity, dependency debt, and validation readiness.
-                </p>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '20px' }}>
@@ -3133,9 +3073,6 @@ public class ModernizedAccountService implements TransferUseCase {
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
                     Behavioral Assurance Report &amp; Certificate
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Definitive compliance artifact certifying behavioral decision preservation for executive committees and regulatory audits.
-                  </p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   <button
@@ -3298,20 +3235,9 @@ public class ModernizedAccountService implements TransferUseCase {
               {/* Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="pill-badge">
-                      Developer Safety Layer
-                    </span>
-                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#f3f4f6', color: '#4b5563', border: '1px solid #e5e7eb' }}>
-                      VS Code Extension: LegacyX Guard
-                    </span>
-                  </div>
-                  <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#111827', marginTop: '6px' }}>
-                    LegacyX Guard — Behavioral Assurance Inside the IDE
+                  <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#111827' }}>
+                    LegacyX Guard (IDE)
                   </h2>
-                  <p style={{ fontSize: '13px', color: '#6b7280' }}>
-                    <em>“Know what your code change changes. Catch behavioral drift before it reaches production.”</em>
-                  </p>
                 </div>
 
                 {/* Top Action Toolbar */}
@@ -3804,37 +3730,6 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
               </div>
 
-              {/* VS Code Extension Package Info Card */}
-              <div
-                className="card-clean"
-                style={{
-                  padding: '20px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e5e7eb',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: '16px',
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', textTransform: 'uppercase' }}>
-                    Production VS Code Extension Package
-                  </div>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginTop: '2px' }}>
-                    legacyx-guard (TypeScript + VS Code Extension Manifest)
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-                    Source located in <code>vscode-extension/</code> in this repository. Ready to run with <code>F5</code> in VS Code.
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ padding: '8px 12px', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '12px', fontFamily: 'monospace', color: '#111827' }}>
-                    cd vscode-extension &amp;&amp; npm run compile
-                  </span>
-                </div>
-              </div>
             </div>
           )}
 
