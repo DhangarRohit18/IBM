@@ -528,6 +528,7 @@ const MOCK_BLAST_NODES: BlastNode[] = [
 // ── Main App Component ─────────────────────────────────────────────────────────
 
 export default function App() {
+  const [colorTheme, setColorTheme] = useState<'orange' | 'ibm'>('orange')
   const [activeTab, setActiveTab] = useState<TabKey>('dashboard')
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -604,32 +605,32 @@ export default function App() {
       : MOCK_BLAST_NODES.filter((n) => n.layer.toLowerCase().includes(selectedLayer.toLowerCase()))
 
   return (
-    <div className="app-shell">
-      {/* ── Fixed Deep Navy Sidebar (#020813 / #0b192c) ───────────────────── */}
-      <aside className="sidebar-navy">
+    <div className="app-shell" data-theme={colorTheme}>
+      {/* ── Crisp Clean White Sidebar ────────────────────────────────────── */}
+      <aside className="sidebar-white">
         {/* Brand Area */}
-        <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(30, 41, 59, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ padding: '16px 20px', borderBottom: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
                 width: '28px',
                 height: '28px',
                 borderRadius: '6px',
-                backgroundColor: '#0d9488',
+                backgroundColor: 'var(--accent-color)',
                 color: '#ffffff',
                 fontWeight: 900,
                 fontSize: '13px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 2px 6px rgba(13, 148, 136, 0.4)',
+                boxShadow: '0 2px 6px var(--accent-glow)',
                 letterSpacing: '-0.02em',
               }}
             >
               LX
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ fontWeight: 900, fontSize: '15px', letterSpacing: '-0.02em', color: '#ffffff' }}>
+              <span style={{ fontWeight: 900, fontSize: '15px', letterSpacing: '-0.02em', color: '#111827' }}>
                 LEGACYX
               </span>
               <span
@@ -638,9 +639,9 @@ export default function App() {
                   fontWeight: 800,
                   padding: '1px 5px',
                   borderRadius: '4px',
-                  backgroundColor: 'rgba(56, 189, 248, 0.15)',
-                  color: '#38bdf8',
-                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                  backgroundColor: 'var(--accent-light)',
+                  color: 'var(--accent-color)',
+                  border: '1px solid var(--accent-border)',
                 }}
               >
                 2.0
@@ -650,7 +651,7 @@ export default function App() {
         </div>
 
         {/* Scrollable Navigation Groups */}
-        <div style={{ padding: '10px 12px', flex: 1, overflowY: 'auto' }}>
+        <div style={{ padding: '10px 8px', flex: 1, overflowY: 'auto' }}>
           {/* WORKSPACE */}
           <div className="sidebar-heading">Workspace</div>
           <button
@@ -787,31 +788,29 @@ export default function App() {
         </div>
 
         {/* Sidebar Footer */}
-        <div style={{ padding: '14px 16px', borderTop: '1px solid #1e293b', fontSize: '11px', color: '#64748b' }}>
+        <div style={{ padding: '14px 16px', borderTop: '1px solid #e5e7eb', fontSize: '11px', color: '#6b7280' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span className="pulse-indicator" />
-              <span style={{ color: '#cbd5e1', fontWeight: 600 }}>Assurance Nominal</span>
+              <span style={{ color: '#111827', fontWeight: 600 }}>Assurance Nominal</span>
             </div>
-            <span style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '10px' }}>0ms</span>
+            <span style={{ color: '#9ca3af', fontFamily: 'monospace', fontSize: '10px' }}>0ms</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#38bdf8', fontWeight: 600, fontSize: '10.5px' }}>
-            <Sparkles size={11} color="#38bdf8" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-color)', fontWeight: 600, fontSize: '10.5px' }}>
+            <Sparkles size={11} color="var(--accent-color)" />
             <span>Behavioral Proof Engine • Built with IBM Bob</span>
           </div>
         </div>
       </aside>
 
       {/* ── Main Content Area ─────────────────────────────────────────────── */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: '#f8fafc' }}>
-        {/* Sticky Header with Modernization Assurance Quick Tabs */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: 'var(--bg-canvas)' }}>
+        {/* Sticky Header with 2-Color Navigation & Theme Selector */}
         <header
           style={{
             height: '56px',
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: '1px solid rgba(226, 232, 240, 0.9)',
+            backgroundColor: '#ffffff',
+            borderBottom: '1px solid #e5e7eb',
             padding: '0 24px',
             display: 'flex',
             alignItems: 'center',
@@ -819,7 +818,7 @@ export default function App() {
             position: 'sticky',
             top: 0,
             zIndex: 30,
-            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03)',
+            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.02)',
             gap: '12px',
           }}
         >
@@ -834,18 +833,18 @@ export default function App() {
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                color: activeTab === 'dashboard' ? '#0d9488' : '#64748b',
+                color: activeTab === 'dashboard' ? 'var(--accent-color)' : '#4b5563',
                 fontWeight: 700,
                 padding: 0,
               }}
             >
-              <LayoutDashboard size={14} color={activeTab === 'dashboard' ? '#0d9488' : '#64748b'} />
+              <LayoutDashboard size={14} color={activeTab === 'dashboard' ? 'var(--accent-color)' : '#4b5563'} />
               <span>Workspace</span>
             </button>
 
             {activeTab !== 'dashboard' && (
               <>
-                <ChevronRight size={13} color="#94a3b8" />
+                <ChevronRight size={13} color="#9ca3af" />
                 <div
                   style={{
                     display: 'flex',
@@ -853,26 +852,27 @@ export default function App() {
                     gap: '6px',
                     padding: '2px 8px',
                     borderRadius: '999px',
-                    backgroundColor: '#071525',
-                    color: '#f8fafc',
+                    backgroundColor: 'var(--accent-light)',
+                    color: 'var(--accent-color)',
+                    border: '1px solid var(--accent-border)',
                     fontSize: '11px',
                     fontWeight: 700,
                   }}
                 >
                   <span className="pulse-indicator" />
                   <span>LegacyBank Core</span>
-                  <span style={{ fontSize: '9.5px', color: '#38bdf8', fontFamily: 'monospace' }}>v2.4.1</span>
+                  <span style={{ fontSize: '9.5px', fontFamily: 'monospace' }}>v2.4.1</span>
                 </div>
-                <ChevronRight size={13} color="#94a3b8" />
-                <span style={{ textTransform: 'capitalize', fontWeight: 800, color: '#0d9488', fontSize: '12.5px' }}>
+                <ChevronRight size={13} color="#9ca3af" />
+                <span style={{ textTransform: 'capitalize', fontWeight: 800, color: 'var(--accent-color)', fontSize: '12.5px' }}>
                   {activeTab.replace('_', ' ')}
                 </span>
               </>
             )}
           </div>
 
-          {/* Center: Quick Modernization Assurance Navigation Pills (from media_1790535657924.png) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap', overflowX: 'auto' }}>
+          {/* Center: Quick Modernization Assurance Navigation Pills */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap' }}>
             <button
               onClick={() => setActiveTab('replay')}
               style={{
@@ -881,9 +881,9 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'replay' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'replay' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'replay' ? '#0f766e' : '#334155',
+                border: activeTab === 'replay' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'replay' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'replay' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
@@ -898,8 +898,8 @@ export default function App() {
                   fontWeight: 800,
                   padding: '1px 5px',
                   borderRadius: '999px',
-                  backgroundColor: '#dcfce7',
-                  color: '#15803d',
+                  backgroundColor: activeTab === 'replay' ? 'rgba(255, 255, 255, 0.25)' : 'var(--accent-light)',
+                  color: activeTab === 'replay' ? '#ffffff' : 'var(--accent-color)',
                 }}
               >
                 LIVE
@@ -914,9 +914,9 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'contracts' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'contracts' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'contracts' ? '#0f766e' : '#334155',
+                border: activeTab === 'contracts' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'contracts' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'contracts' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
@@ -924,7 +924,7 @@ export default function App() {
                 whiteSpace: 'nowrap',
               }}
             >
-              <FileCheck2 size={12} color="#64748b" />
+              <FileCheck2 size={12} />
               <span>Contracts</span>
               <span
                 style={{
@@ -932,8 +932,8 @@ export default function App() {
                   fontWeight: 800,
                   padding: '1px 5px',
                   borderRadius: '999px',
-                  backgroundColor: '#eff6ff',
-                  color: '#1d4ed8',
+                  backgroundColor: activeTab === 'contracts' ? 'rgba(255, 255, 255, 0.25)' : 'var(--accent-light)',
+                  color: activeTab === 'contracts' ? '#ffffff' : 'var(--accent-color)',
                 }}
               >
                 7 SPECS
@@ -948,16 +948,16 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'blast_radius' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'blast_radius' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'blast_radius' ? '#0f766e' : '#334155',
+                border: activeTab === 'blast_radius' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'blast_radius' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'blast_radius' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
               }}
             >
-              <Layers size={12} color="#64748b" />
+              <Layers size={12} />
               <span>Blast Radius</span>
             </button>
 
@@ -969,16 +969,16 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'whatif' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'whatif' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'whatif' ? '#0f766e' : '#334155',
+                border: activeTab === 'whatif' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'whatif' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'whatif' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
               }}
             >
-              <Sliders size={12} color="#64748b" />
+              <Sliders size={12} />
               <span>What-If</span>
             </button>
 
@@ -990,16 +990,16 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'risk' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'risk' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'risk' ? '#0f766e' : '#334155',
+                border: activeTab === 'risk' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'risk' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'risk' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
               }}
             >
-              <ShieldAlert size={12} color="#64748b" />
+              <ShieldAlert size={12} />
               <span>Risk Scorecard</span>
             </button>
 
@@ -1011,16 +1011,16 @@ export default function App() {
                 gap: '5px',
                 padding: '4px 10px',
                 borderRadius: '999px',
-                border: activeTab === 'guard' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                backgroundColor: activeTab === 'guard' ? '#f0fdfa' : '#ffffff',
-                color: activeTab === 'guard' ? '#0f766e' : '#334155',
+                border: activeTab === 'guard' ? '1.5px solid var(--accent-color)' : '1px solid #e5e7eb',
+                backgroundColor: activeTab === 'guard' ? 'var(--accent-color)' : '#ffffff',
+                color: activeTab === 'guard' ? '#ffffff' : '#4b5563',
                 fontSize: '11.5px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
               }}
             >
-              <ShieldCheck size={12} color="#0d9488" />
+              <ShieldCheck size={12} />
               <span>Guard (IDE)</span>
               <span
                 style={{
@@ -1028,8 +1028,8 @@ export default function App() {
                   fontWeight: 800,
                   padding: '1px 5px',
                   borderRadius: '999px',
-                  backgroundColor: '#ccfbf1',
-                  color: '#0f766e',
+                  backgroundColor: activeTab === 'guard' ? 'rgba(255, 255, 255, 0.25)' : 'var(--accent-light)',
+                  color: activeTab === 'guard' ? '#ffffff' : 'var(--accent-color)',
                 }}
               >
                 ACTIVE
@@ -1037,8 +1037,65 @@ export default function App() {
             </button>
           </div>
 
-          {/* Right: Quick Search, Status, Profile */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          {/* Right: Theme Switcher, Quick Search, Status, Profile */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {/* 2-Color Theme Selector Pill */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '2px',
+                borderRadius: '999px',
+                backgroundColor: '#f3f4f6',
+                border: '1px solid #e5e7eb',
+                gap: '2px',
+              }}
+              title="Switch strictly between 2-color themes"
+            >
+              <button
+                onClick={() => setColorTheme('orange')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '3px 8px',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  backgroundColor: colorTheme === 'orange' ? '#ffffff' : 'transparent',
+                  color: colorTheme === 'orange' ? '#ea580c' : '#6b7280',
+                  boxShadow: colorTheme === 'orange' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                  transition: 'all 120ms ease',
+                }}
+              >
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ea580c' }} />
+                <span>Orange</span>
+              </button>
+              <button
+                onClick={() => setColorTheme('ibm')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '3px 8px',
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  backgroundColor: colorTheme === 'ibm' ? '#ffffff' : 'transparent',
+                  color: colorTheme === 'ibm' ? '#0f62fe' : '#6b7280',
+                  boxShadow: colorTheme === 'ibm' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                  transition: 'all 120ms ease',
+                }}
+              >
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0f62fe' }} />
+                <span>IBM Blue</span>
+              </button>
+            </div>
+
             {/* Quick Search */}
             <button
               onClick={() => setSearchOpen(true)}
@@ -1046,41 +1103,21 @@ export default function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '5px 12px',
+                padding: '5px 10px',
                 borderRadius: '999px',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                color: '#64748b',
-                fontSize: '11.5px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e5e7eb',
+                color: '#6b7280',
+                fontSize: '11px',
                 cursor: 'pointer',
               }}
             >
-              <Search size={12} color="#94a3b8" />
-              <span>Quick Search</span>
-              <kbd style={{ fontSize: '8.5px', fontWeight: 700, padding: '1px 4px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '4px', color: '#475569' }}>
-                Ctrl K
+              <Search size={12} color="#9ca3af" />
+              <span>Search</span>
+              <kbd style={{ fontSize: '8.5px', fontWeight: 700, padding: '1px 4px', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '4px', color: '#4b5563' }}>
+                ⌘K
               </kbd>
             </button>
-
-            {/* IBM watsonx AI Gateway Pill */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '4px 9px',
-                borderRadius: '999px',
-                backgroundColor: '#f5f3ff',
-                border: '1px solid #ddd6fe',
-                color: '#6d28d9',
-                fontSize: '11px',
-                fontWeight: 800,
-                letterSpacing: '0.02em',
-              }}
-            >
-              <Sparkles size={11} color="#7c3aed" />
-              <span>watsonx.ai</span>
-            </div>
 
             {/* Deterministic Verified Status */}
             <div
@@ -1088,17 +1125,17 @@ export default function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '5px',
-                padding: '4px 10px',
+                padding: '4px 8px',
                 borderRadius: '999px',
-                backgroundColor: '#ecfdf5',
-                border: '1px solid #a7f3d0',
-                color: '#065f46',
-                fontSize: '11px',
+                backgroundColor: 'var(--accent-light)',
+                border: '1px solid var(--accent-border)',
+                color: 'var(--accent-color)',
+                fontSize: '10.5px',
                 fontWeight: 700,
               }}
             >
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-              <span>Deterministic Verified</span>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--accent-color)' }} />
+              <span>Verified</span>
             </div>
 
             {/* Auditor Avatar */}
@@ -1107,24 +1144,24 @@ export default function App() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '7px',
-                padding: '3px 8px 3px 3px',
+                gap: '6px',
+                padding: '2px 8px 2px 2px',
                 borderRadius: '999px',
-                backgroundColor: '#f1f5f9',
-                border: '1px solid #e2e8f0',
+                backgroundColor: '#f9fafb',
+                border: '1px solid #e5e7eb',
                 cursor: 'pointer',
               }}
               onClick={() => setActiveTab('report')}
             >
               <div
                 style={{
-                  width: '26px',
-                  height: '26px',
+                  width: '24px',
+                  height: '24px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #0d9488 0%, #0c645d 100%)',
+                  backgroundColor: 'var(--accent-color)',
                   color: '#ffffff',
                   fontWeight: 800,
-                  fontSize: '11px',
+                  fontSize: '10.5px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1133,8 +1170,7 @@ export default function App() {
                 SK
               </div>
               <div style={{ textAlign: 'left', lineHeight: 1.1 }}>
-                <div style={{ fontSize: '11px', fontWeight: 700, color: '#0f172a' }}>Sarvesh K</div>
-                <div style={{ fontSize: '9px', color: '#64748b' }}>Lead Auditor</div>
+                <div style={{ fontSize: '10.5px', fontWeight: 700, color: '#111827' }}>Sarvesh K</div>
               </div>
             </div>
           </div>
@@ -1145,20 +1181,16 @@ export default function App() {
           {/* TAB 1: DASHBOARD */}
           {activeTab === 'dashboard' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              {/* 1. Midnight Panoramic Hero Banner with Radar Motif */}
+              {/* 1. Panoramic Clean Hero Banner */}
               <div
+                className="card-hero-accent"
                 style={{
-                  background: 'linear-gradient(135deg, #020813 0%, #061325 55%, #0b1e36 100%)',
-                  border: '1px solid rgba(56, 189, 248, 0.25)',
-                  borderRadius: '16px',
-                  boxShadow: '0 16px 36px -4px rgba(2, 8, 19, 0.4)',
-                  color: '#f8fafc',
                   padding: '28px 36px',
                   position: 'relative',
                   overflow: 'hidden',
                 }}
               >
-                {/* Background SVG Radar / Inscribed Delta Illustration on the Right */}
+                {/* Background SVG Radar / Inscribed Delta Illustration in Accent Wireframe */}
                 <div
                   style={{
                     position: 'absolute',
@@ -1168,51 +1200,43 @@ export default function App() {
                     width: '280px',
                     height: '240px',
                     pointerEvents: 'none',
-                    opacity: 0.85,
+                    opacity: 0.35,
                   }}
                 >
                   <svg viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
                     {/* Concentric Radar Rings */}
-                    <circle cx="140" cy="120" r="115" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="1" strokeDasharray="4 4" />
-                    <circle cx="140" cy="120" r="85" stroke="rgba(56, 189, 248, 0.2)" strokeWidth="1" />
-                    <circle cx="140" cy="120" r="55" stroke="rgba(56, 189, 248, 0.28)" strokeWidth="1" strokeDasharray="3 3" />
-                    <circle cx="140" cy="120" r="25" stroke="rgba(56, 189, 248, 0.4)" strokeWidth="1.5" />
-                    <circle cx="140" cy="120" r="3" fill="#00f2fe" />
+                    <circle cx="140" cy="120" r="115" stroke="var(--accent-color)" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+                    <circle cx="140" cy="120" r="85" stroke="var(--accent-color)" strokeWidth="1" opacity="0.4" />
+                    <circle cx="140" cy="120" r="55" stroke="var(--accent-color)" strokeWidth="1" strokeDasharray="3 3" opacity="0.5" />
+                    <circle cx="140" cy="120" r="25" stroke="var(--accent-color)" strokeWidth="1.5" opacity="0.7" />
+                    <circle cx="140" cy="120" r="3.5" fill="var(--accent-color)" />
 
                     {/* Crosshairs */}
-                    <line x1="140" y1="5" x2="140" y2="235" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="2 4" />
-                    <line x1="25" y1="120" x2="255" y2="120" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="2 4" />
+                    <line x1="140" y1="5" x2="140" y2="235" stroke="var(--accent-color)" strokeWidth="1" strokeDasharray="2 4" opacity="0.25" />
+                    <line x1="25" y1="120" x2="255" y2="120" stroke="var(--accent-color)" strokeWidth="1" strokeDasharray="2 4" opacity="0.25" />
 
                     {/* Inscribed Geometric Delta / Equivalence Triangle */}
                     <polygon
                       points="140,40 215,165 65,165"
-                      stroke="#00f2fe"
+                      stroke="var(--accent-color)"
                       strokeWidth="1.5"
-                      fill="rgba(0, 242, 254, 0.04)"
+                      fill="var(--accent-light)"
+                      fillOpacity="0.4"
                     />
-                    <circle cx="140" cy="40" r="4" fill="#00f2fe" />
-                    <circle cx="215" cy="165" r="4" fill="#c084fc" />
-                    <circle cx="65" cy="165" r="4" fill="#38bdf8" />
-
-                    {/* Radar Sweep Line */}
-                    <line x1="140" y1="120" x2="225" y2="55" stroke="url(#radarGradient)" strokeWidth="2" />
-                    <defs>
-                      <linearGradient id="radarGradient" x1="140" y1="120" x2="225" y2="55" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#00f2fe" stopOpacity="0.8" />
-                        <stop offset="1" stopColor="#00f2fe" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
+                    <circle cx="140" cy="40" r="4" fill="var(--accent-color)" />
+                    <circle cx="215" cy="165" r="4" fill="var(--accent-color)" />
+                    <circle cx="65" cy="165" r="4" fill="var(--accent-color)" />
                   </svg>
                 </div>
 
                 {/* Hero Content Left */}
                 <div style={{ position: 'relative', zIndex: 2, maxWidth: '820px' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '3px 10px', borderRadius: '999px', backgroundColor: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '12px' }}>
-                    <span style={{ fontSize: '10.5px', fontWeight: 800, color: '#38bdf8', letterSpacing: '0.04em' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 12px', borderRadius: '999px', backgroundColor: '#ffffff', border: '1px solid var(--accent-border)', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
+                    <span style={{ fontSize: '10.5px', fontWeight: 800, color: 'var(--accent-color)', letterSpacing: '0.04em' }}>
                       LEGACYX 2.0
                     </span>
-                    <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>•</span>
-                    <span style={{ fontSize: '11px', color: '#cbd5e1', fontWeight: 600 }}>
+                    <span style={{ color: '#cbd5e1' }}>•</span>
+                    <span style={{ fontSize: '11px', color: '#4b5563', fontWeight: 600 }}>
                       National Modernization Assurance
                     </span>
                   </div>
@@ -1221,194 +1245,133 @@ export default function App() {
                     style={{
                       fontSize: '32px',
                       fontWeight: 900,
-                      color: '#ffffff',
+                      color: '#111827',
                       letterSpacing: '-0.03em',
                       lineHeight: 1.25,
                       margin: '4px 0 10px 0',
                     }}
                   >
                     Modernize the Code.{' '}
-                    <span style={{ color: '#00f2fe', textShadow: '0 0 20px rgba(0, 242, 254, 0.4)' }}>
+                    <span style={{ color: 'var(--accent-color)' }}>
                       Preserve the Decision.
                     </span>{' '}
-                    <span style={{ color: '#c084fc', textShadow: '0 0 20px rgba(192, 132, 252, 0.4)' }}>
-                      Prove the Difference.
-                    </span>
+                    Prove the Difference.
                   </h1>
 
-                  <p style={{ fontSize: '13.5px', color: '#94a3b8', lineHeight: 1.65, maxWidth: '740px', marginBottom: '20px' }}>
+                  <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: 1.65, maxWidth: '740px', marginBottom: '20px' }}>
                     Does modernized code still make the exact same business decisions? LegacyX answers with mathematical rigor:
                     Business Rule DNA, Decision Contracts, Decision Replay Lab, and Silent Drift Detection.
                   </p>
 
                   {/* Quick jump pills row */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                    <button
-                      onClick={() => setActiveTab('replay')}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
-                        border: '1px solid rgba(20, 184, 166, 0.4)',
-                        color: '#5eead4',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        transition: 'all 140ms ease',
-                      }}
-                    >
-                      <Activity size={13} color="#5eead4" />
-                      <span>Decision Replay Lab</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('contracts')}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        backgroundColor: 'rgba(56, 189, 248, 0.15)',
-                        border: '1px solid rgba(56, 189, 248, 0.35)',
-                        color: '#38bdf8',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <FileCheck2 size={13} color="#38bdf8" />
-                      <span>Decision Contracts</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('blast_radius')}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        backgroundColor: 'rgba(168, 85, 247, 0.15)',
-                        border: '1px solid rgba(168, 85, 247, 0.35)',
-                        color: '#c084fc',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <Layers size={13} color="#c084fc" />
-                      <span>3-Layer Blast Radius</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('replay')}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                        border: '1px solid rgba(245, 158, 11, 0.35)',
-                        color: '#fbbf24',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <AlertTriangle size={13} color="#fbbf24" />
-                      <span>Silent Drift Detection</span>
-                    </button>
-
-                    <button
-                      onClick={() => setActiveTab('guard')}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 14px',
-                        borderRadius: '999px',
-                        backgroundColor: 'rgba(239, 68, 68, 0.15)',
-                        border: '1px solid rgba(239, 68, 68, 0.35)',
-                        color: '#f87171',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <ShieldCheck size={13} color="#f87171" />
-                      <span>LegacyX Guard (IDE)</span>
-                    </button>
+                    {[
+                      { label: 'Decision Replay Lab', tab: 'replay' as TabKey, icon: Activity },
+                      { label: 'Decision Contracts', tab: 'contracts' as TabKey, icon: FileCheck2 },
+                      { label: '3-Layer Blast Radius', tab: 'blast_radius' as TabKey, icon: Layers },
+                      { label: 'Silent Drift Detection', tab: 'replay' as TabKey, icon: AlertTriangle },
+                      { label: 'LegacyX Guard (IDE)', tab: 'guard' as TabKey, icon: ShieldCheck },
+                    ].map((pill, idx) => {
+                      const Icon = pill.icon;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveTab(pill.tab)}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '6px 14px',
+                            borderRadius: '999px',
+                            backgroundColor: '#ffffff',
+                            border: '1px solid var(--accent-border)',
+                            color: 'var(--accent-color)',
+                            fontSize: '12px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
+                            transition: 'all 140ms ease',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--accent-color)';
+                            e.currentTarget.style.color = '#ffffff';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '#ffffff';
+                            e.currentTarget.style.color = 'var(--accent-color)';
+                          }}
+                        >
+                          <Icon size={13} />
+                          <span>{pill.label}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
 
               {/* 2. Cryptographic Sign-Off Metric Cards */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#64748b', marginBottom: '10px' }}>
-                  <ShieldCheck size={13} color="#0d9488" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--accent-color)', marginBottom: '10px' }}>
+                  <ShieldCheck size={13} color="var(--accent-color)" />
                   <span>Cryptographic Sign-off</span>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
                   {/* Metric 1 */}
                   <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Folder size={22} />
                     </div>
                     <div>
-                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>
+                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#111827', lineHeight: 1.1 }}>
                         {loadingProjects ? '...' : liveProjects.length > 0 ? liveProjects.length : 2}
                       </div>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Total Projects</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#6b7280' }}>Total Projects</div>
                     </div>
                   </div>
 
                   {/* Metric 2 */}
                   <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#ccfbf1', color: '#0f766e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <BarChart3 size={22} />
                       </div>
                       <div>
-                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>
+                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#111827', lineHeight: 1.1 }}>
                           {loadingProjects ? '...' : liveProjects.filter((p) => p.status === 'ANALYZED').length || 1}
                         </div>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Analyzed Repos</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#6b7280' }}>Analyzed Repos</div>
                       </div>
                     </div>
-                    <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                    <span className="pill-badge">
                       Active
                     </span>
                   </div>
 
                   {/* Metric 3 */}
                   <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <Clock size={22} />
                     </div>
                     <div>
-                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>0</div>
-                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>In Flight</div>
+                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#111827', lineHeight: 1.1 }}>0</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#6b7280' }}>In Flight</div>
                     </div>
                   </div>
 
                   {/* Metric 4 */}
                   <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <CheckCircle2 size={22} />
                       </div>
                       <div>
-                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>1</div>
-                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Assurance Ready</div>
+                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#111827', lineHeight: 1.1 }}>1</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#6b7280' }}>Assurance Ready</div>
                       </div>
                     </div>
-                    <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                    <span className="pill-badge">
                       100%
                     </span>
                   </div>
@@ -1422,30 +1385,23 @@ export default function App() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                        <Folder size={17} color="#0f172a" />
-                        <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#0f172a' }}>
+                        <Folder size={17} color="var(--accent-color)" />
+                        <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#111827' }}>
                           Modernization Workspaces
                         </h2>
                       </div>
-                      <p style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
+                      <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px' }}>
                         Active repository repositories with verified business rules & replay contracts.
                       </p>
                     </div>
 
                     <button
                       onClick={() => setActiveTab('settings')}
+                      className="btn-primary"
                       style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '6px 12px',
-                        borderRadius: '999px',
-                        backgroundColor: '#0f172a',
-                        color: '#ffffff',
+                        padding: '6px 14px',
                         fontSize: '12px',
                         fontWeight: 700,
-                        border: 'none',
-                        cursor: 'pointer',
                       }}
                     >
                       <span>+ New Project</span>
@@ -1455,45 +1411,45 @@ export default function App() {
                   {/* Workspace Card 1: LegacyBank Enterprise Core */}
                   <div className="card-clean" style={{ padding: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                      <span className="pill-badge">
                         ANALYZED
                       </span>
-                      <span style={{ fontSize: '11px', color: '#94a3b8' }}>9/26/2026</span>
+                      <span style={{ fontSize: '11px', color: '#9ca3af' }}>9/26/2026</span>
                     </div>
 
-                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '4px' }}>
                       LegacyBank Enterprise Core
                     </h3>
-                    <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '14px' }}>
+                    <p style={{ fontSize: '12.5px', color: '#4b5563', lineHeight: 1.5, marginBottom: '14px' }}>
                       National-level showcase: Core transaction processing, risk evaluation, and silent business drift detection.
                     </p>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: '#f3f4f6', color: '#374151', fontWeight: 600 }}>
                         Java EE 6
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: '#f3f4f6', color: '#374151', fontWeight: 600 }}>
                         Spring 3
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: '#f3f4f6', color: '#374151', fontWeight: 600 }}>
                         Oracle PL/SQL
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f5f3ff', color: '#7c3aed', fontWeight: 700 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', fontWeight: 700, border: '1px solid var(--accent-border)' }}>
                         35 Rules Extracted
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#eff6ff', color: '#2563eb', fontWeight: 700 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', fontWeight: 700, border: '1px solid var(--accent-border)' }}>
                         7 Contracts
                       </span>
                     </div>
 
                     {/* Card Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f1f5f9' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f3f4f6' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: '#059669' }}>
-                          <Activity size={13} color="#059669" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: 'var(--accent-color)' }}>
+                          <Activity size={13} color="var(--accent-color)" />
                           <span>Replay Ready</span>
                         </div>
-                        <span style={{ fontSize: '11.5px', color: '#64748b' }}>
+                        <span style={{ fontSize: '11.5px', color: '#6b7280' }}>
                           9 Scenarios Seeded
                         </span>
                       </div>
@@ -1508,11 +1464,18 @@ export default function App() {
                             padding: '5px 12px',
                             borderRadius: '999px',
                             backgroundColor: '#ffffff',
-                            border: '1px solid #0d9488',
-                            color: '#0d9488',
+                            border: '1px solid var(--accent-border)',
+                            color: 'var(--accent-color)',
                             fontSize: '11.5px',
                             fontWeight: 700,
                             cursor: 'pointer',
+                            transition: 'all 120ms ease',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '#ffffff';
                           }}
                         >
                           <Activity size={12} />
@@ -1521,18 +1484,11 @@ export default function App() {
 
                         <button
                           onClick={() => setActiveTab('contracts')}
+                          className="btn-primary"
                           style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '5px',
                             padding: '5px 12px',
-                            borderRadius: '999px',
-                            backgroundColor: '#020817',
-                            border: 'none',
-                            color: '#ffffff',
                             fontSize: '11.5px',
                             fontWeight: 700,
-                            cursor: 'pointer',
                           }}
                         >
                           <span>Workspace</span>
@@ -1545,39 +1501,39 @@ export default function App() {
                   {/* Workspace Card 2: Legacy Banking System */}
                   <div className="card-clean" style={{ padding: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#eff6ff', color: '#2563eb', border: '1px solid #bfdbfe' }}>
+                      <span className="pill-badge">
                         CREATED
                       </span>
-                      <span style={{ fontSize: '11px', color: '#94a3b8' }}>9/26/2026</span>
+                      <span style={{ fontSize: '11px', color: '#9ca3af' }}>9/26/2026</span>
                     </div>
 
-                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#111827', marginBottom: '4px' }}>
                       Legacy Banking System
                     </h3>
-                    <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '14px' }}>
+                    <p style={{ fontSize: '12.5px', color: '#4b5563', lineHeight: 1.5, marginBottom: '14px' }}>
                       Legacy application repository modernization workspace
                     </p>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: '#f3f4f6', color: '#374151', fontWeight: 600 }}>
                         COBOL / CICS
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: '#f3f4f6', color: '#374151', fontWeight: 600 }}>
                         Mainframe Ledger
                       </span>
-                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#fef3c7', color: '#d97706', fontWeight: 700 }}>
+                      <span style={{ fontSize: '11px', padding: '3px 8px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', fontWeight: 700, border: '1px solid var(--accent-border)' }}>
                         Ingestion Queue
                       </span>
                     </div>
 
                     {/* Card Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f1f5f9' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f3f4f6' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: '#0284c7' }}>
-                          <Activity size={13} color="#0284c7" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: 'var(--accent-color)' }}>
+                          <Activity size={13} color="var(--accent-color)" />
                           <span>Replay Ready</span>
                         </div>
-                        <span style={{ fontSize: '11.5px', color: '#64748b' }}>
+                        <span style={{ fontSize: '11.5px', color: '#6b7280' }}>
                           Ingestion Pending
                         </span>
                       </div>
@@ -1592,11 +1548,18 @@ export default function App() {
                             padding: '5px 12px',
                             borderRadius: '999px',
                             backgroundColor: '#ffffff',
-                            border: '1px solid #0d9488',
-                            color: '#0d9488',
+                            border: '1px solid var(--accent-border)',
+                            color: 'var(--accent-color)',
                             fontSize: '11.5px',
                             fontWeight: 700,
                             cursor: 'pointer',
+                            transition: 'all 120ms ease',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '#ffffff';
                           }}
                         >
                           <Activity size={12} />
@@ -1605,18 +1568,11 @@ export default function App() {
 
                         <button
                           onClick={() => setActiveTab('contracts')}
+                          className="btn-primary"
                           style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '5px',
                             padding: '5px 12px',
-                            borderRadius: '999px',
-                            backgroundColor: '#020817',
-                            border: 'none',
-                            color: '#ffffff',
                             fontSize: '11.5px',
                             fontWeight: 700,
-                            cursor: 'pointer',
                           }}
                         >
                           <span>Workspace</span>
@@ -1632,16 +1588,16 @@ export default function App() {
                   {/* Card 1: Modernization Journey */}
                   <div className="card-clean" style={{ padding: '22px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                      <Layers size={16} color="#0d9488" />
-                      <h3 style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                      <Layers size={16} color="var(--accent-color)" />
+                      <h3 style={{ fontSize: '13px', fontWeight: 800, color: '#111827', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                         Modernization Journey
                       </h3>
                     </div>
-                    <p style={{ fontSize: '11.5px', color: '#64748b', marginBottom: '16px' }}>
+                    <p style={{ fontSize: '11.5px', color: '#6b7280', marginBottom: '16px' }}>
                       Deterministic flow from legacy source to verified modern code.
                     </p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       {[
                         { step: 1, name: 'Repository Ingestion', desc: 'Upload, validate, and index legacy codebase', tab: 'xray' as TabKey },
                         { step: 2, name: 'System X-Ray (AST)', desc: 'Deterministic structural & call graph analysis', tab: 'xray' as TabKey },
@@ -1662,9 +1618,18 @@ export default function App() {
                             gap: '10px',
                             padding: '8px 10px',
                             borderRadius: '8px',
-                            backgroundColor: '#f8fafc',
+                            backgroundColor: '#f9fafb',
+                            border: '1px solid transparent',
                             cursor: 'pointer',
                             transition: 'all 120ms ease',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                            e.currentTarget.style.borderColor = 'var(--accent-border)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '#f9fafb';
+                            e.currentTarget.style.borderColor = 'transparent';
                           }}
                         >
                           <div
@@ -1673,8 +1638,8 @@ export default function App() {
                               height: '20px',
                               borderRadius: '50%',
                               backgroundColor: '#ffffff',
-                              border: '1.5px solid #0d9488',
-                              color: '#0d9488',
+                              border: '1.5px solid var(--accent-color)',
+                              color: 'var(--accent-color)',
                               fontSize: '10.5px',
                               fontWeight: 800,
                               display: 'flex',
@@ -1687,8 +1652,8 @@ export default function App() {
                             {j.step}
                           </div>
                           <div>
-                            <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>{j.name}</div>
-                            <div style={{ fontSize: '11px', color: '#64748b' }}>{j.desc}</div>
+                            <div style={{ fontSize: '12px', fontWeight: 700, color: '#111827' }}>{j.name}</div>
+                            <div style={{ fontSize: '11px', color: '#6b7280' }}>{j.desc}</div>
                           </div>
                         </div>
                       ))}
@@ -1698,8 +1663,8 @@ export default function App() {
                   {/* Card 2: Quick Launch */}
                   <div className="card-clean" style={{ padding: '18px 20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '12px' }}>
-                      <Sparkles size={14} color="#0d9488" />
-                      <h4 style={{ fontSize: '11.5px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#0f172a' }}>
+                      <Sparkles size={14} color="var(--accent-color)" />
+                      <h4 style={{ fontSize: '11.5px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#111827' }}>
                         Quick Launch
                       </h4>
                     </div>
@@ -1713,17 +1678,26 @@ export default function App() {
                           alignItems: 'center',
                           padding: '10px 12px',
                           borderRadius: '8px',
-                          backgroundColor: '#f8fafc',
-                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#f9fafb',
+                          border: '1px solid #e5e7eb',
                           cursor: 'pointer',
                           textAlign: 'left',
+                          transition: 'all 120ms ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                          e.currentTarget.style.borderColor = 'var(--accent-border)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '#f9fafb';
+                          e.currentTarget.style.borderColor = '#e5e7eb';
                         }}
                       >
                         <div>
-                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>Explore LegacyBank Demo</div>
-                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Dual-harness replay & drift detection</div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#111827' }}>Explore LegacyBank Demo</div>
+                          <div style={{ fontSize: '10.5px', color: '#6b7280' }}>Dual-harness replay & drift detection</div>
                         </div>
-                        <ChevronRight size={14} color="#94a3b8" />
+                        <ChevronRight size={14} color="var(--accent-color)" />
                       </button>
 
                       <button
@@ -1734,17 +1708,26 @@ export default function App() {
                           alignItems: 'center',
                           padding: '10px 12px',
                           borderRadius: '8px',
-                          backgroundColor: '#f8fafc',
-                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#f9fafb',
+                          border: '1px solid #e5e7eb',
                           cursor: 'pointer',
                           textAlign: 'left',
+                          transition: 'all 120ms ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                          e.currentTarget.style.borderColor = 'var(--accent-border)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '#f9fafb';
+                          e.currentTarget.style.borderColor = '#e5e7eb';
                         }}
                       >
                         <div>
-                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>System X-Ray (AST)</div>
-                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Deterministic code entities & calls</div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#111827' }}>System X-Ray (AST)</div>
+                          <div style={{ fontSize: '10.5px', color: '#6b7280' }}>Deterministic code entities & calls</div>
                         </div>
-                        <ChevronRight size={14} color="#94a3b8" />
+                        <ChevronRight size={14} color="var(--accent-color)" />
                       </button>
 
                       <button
@@ -1755,17 +1738,26 @@ export default function App() {
                           alignItems: 'center',
                           padding: '10px 12px',
                           borderRadius: '8px',
-                          backgroundColor: '#f8fafc',
-                          border: '1px solid #e2e8f0',
+                          backgroundColor: '#f9fafb',
+                          border: '1px solid #e5e7eb',
                           cursor: 'pointer',
                           textAlign: 'left',
+                          transition: 'all 120ms ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'var(--accent-light)';
+                          e.currentTarget.style.borderColor = 'var(--accent-border)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '#f9fafb';
+                          e.currentTarget.style.borderColor = '#e5e7eb';
                         }}
                       >
                         <div>
-                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>Assurance Certificate</div>
-                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Executive SHA-256 evidence tree</div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#111827' }}>Assurance Certificate</div>
+                          <div style={{ fontSize: '10.5px', color: '#6b7280' }}>Executive SHA-256 evidence tree</div>
                         </div>
-                        <ChevronRight size={14} color="#94a3b8" />
+                        <ChevronRight size={14} color="var(--accent-color)" />
                       </button>
 
                       <button
@@ -1776,17 +1768,18 @@ export default function App() {
                           alignItems: 'center',
                           padding: '10px 12px',
                           borderRadius: '8px',
-                          backgroundColor: '#f0fdfa',
-                          border: '1px solid #99f6e4',
+                          backgroundColor: 'var(--accent-light)',
+                          border: '1px solid var(--accent-border)',
                           cursor: 'pointer',
                           textAlign: 'left',
+                          transition: 'all 120ms ease',
                         }}
                       >
                         <div>
-                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f766e' }}>LegacyX Guard (IDE Extension)</div>
-                          <div style={{ fontSize: '10.5px', color: '#14b8a6' }}>Live developer safety layer & drift catch</div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-color)' }}>LegacyX Guard (IDE Extension)</div>
+                          <div style={{ fontSize: '10.5px', color: '#6b7280' }}>Live developer safety layer & drift catch</div>
                         </div>
-                        <ChevronRight size={14} color="#0d9488" />
+                        <ChevronRight size={14} color="var(--accent-color)" />
                       </button>
                     </div>
                   </div>
