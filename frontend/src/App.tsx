@@ -26,21 +26,20 @@ import {
   Printer,
   X,
   Play,
-  GitBranch,
   LayoutDashboard,
   Radio,
   FileCode2,
   Target,
-  Workflow,
   FileDiff,
   CheckSquare,
   Settings,
   BookOpen,
   RefreshCw,
-  Lock,
   Check,
   AlertTriangle,
   Download,
+  BarChart3,
+  Clock,
 } from 'lucide-react'
 import { api, type Project } from './api'
 
@@ -606,35 +605,48 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {/* ── Fixed Deep Navy Sidebar (#0b192c) ─────────────────────────────── */}
+      {/* ── Fixed Deep Navy Sidebar (#020813 / #0b192c) ───────────────────── */}
       <aside className="sidebar-navy">
         {/* Brand Area */}
-        <div style={{ padding: '16px 20px', borderBottom: '1px solid #1e293b', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+        <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(30, 41, 59, 0.8)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                width: '30px',
-                height: '30px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #0d9488 0%, #0c645d 100%)',
+                width: '28px',
+                height: '28px',
+                borderRadius: '6px',
+                backgroundColor: '#0d9488',
                 color: '#ffffff',
+                fontWeight: 900,
+                fontSize: '13px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 2px 4px rgba(13, 148, 136, 0.3)',
+                boxShadow: '0 2px 6px rgba(13, 148, 136, 0.4)',
+                letterSpacing: '-0.02em',
               }}
             >
-              <ShieldCheck size={18} color="#ffffff" />
+              LX
             </div>
-            <div>
-              <span style={{ fontWeight: 800, fontSize: '15px', letterSpacing: '-0.02em', color: '#ffffff' }}>
-                LEGACY<span style={{ color: '#0d9488' }}>X</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontWeight: 900, fontSize: '15px', letterSpacing: '-0.02em', color: '#ffffff' }}>
+                LEGACYX
+              </span>
+              <span
+                style={{
+                  fontSize: '9.5px',
+                  fontWeight: 800,
+                  padding: '1px 5px',
+                  borderRadius: '4px',
+                  backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                  color: '#38bdf8',
+                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                }}
+              >
+                2.0
               </span>
             </div>
           </div>
-          <span style={{ fontSize: '9px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#1e293b', color: '#38bdf8' }}>
-            v2.4
-          </span>
         </div>
 
         {/* Scrollable Navigation Groups */}
@@ -648,81 +660,22 @@ export default function App() {
             <LayoutDashboard size={15} />
             <span>Dashboard</span>
           </button>
-
-          {/* MODERNIZATION PIPELINE */}
-          <div className="sidebar-heading">Modernization Pipeline</div>
           <button
-            className={`sidebar-nav-item ${activeTab === 'xray' ? 'active' : ''}`}
-            onClick={() => setActiveTab('xray')}
+            className="sidebar-nav-item"
+            onClick={() => setActiveTab('dashboard')}
           >
-            <Radio size={15} />
-            <span>1. System X-Ray</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'business_rules' ? 'active' : ''}`}
-            onClick={() => setActiveTab('business_rules')}
-          >
-            <FileCode2 size={15} />
-            <span>2. Business Logic</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'impact' ? 'active' : ''}`}
-            onClick={() => setActiveTab('impact')}
-          >
-            <Target size={15} />
-            <span>3. Impact Analysis</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'strategy' ? 'active' : ''}`}
-            onClick={() => setActiveTab('strategy')}
-          >
-            <GitBranch size={15} />
-            <span>4. Strategy</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'plan' ? 'active' : ''}`}
-            onClick={() => setActiveTab('plan')}
-          >
-            <Workflow size={15} />
-            <span>5. Execution Plan</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'transformation' ? 'active' : ''}`}
-            onClick={() => setActiveTab('transformation')}
-          >
-            <FileDiff size={15} />
-            <span>6. Transformation</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'validation' ? 'active' : ''}`}
-            onClick={() => setActiveTab('validation')}
-          >
-            <CheckSquare size={15} />
-            <span>7. Validation</span>
+            <Folder size={15} />
+            <span>Projects & Repos</span>
           </button>
 
-          {/* ASSURANCE ENGINE */}
-          <div className="sidebar-heading">Assurance Engine</div>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'characterization' ? 'active' : ''}`}
-            onClick={() => setActiveTab('characterization')}
-          >
-            <CheckSquare size={15} />
-            <span>Characterization Tests</span>
-          </button>
-          <button
-            className={`sidebar-nav-item ${activeTab === 'ai_scenarios' ? 'active' : ''}`}
-            onClick={() => setActiveTab('ai_scenarios')}
-          >
-            <Sparkles size={15} />
-            <span>AI Edge Cases</span>
-          </button>
+          {/* MODERNIZATION ASSURANCE */}
+          <div className="sidebar-heading">Modernization Assurance</div>
           <button
             className={`sidebar-nav-item ${activeTab === 'replay' ? 'active' : ''}`}
             onClick={() => setActiveTab('replay')}
           >
             <Activity size={15} />
-            <span>Behavioral Replay</span>
+            <span>Decision Replay Lab</span>
           </button>
           <button
             className={`sidebar-nav-item ${activeTab === 'contracts' ? 'active' : ''}`}
@@ -757,7 +710,7 @@ export default function App() {
             onClick={() => setActiveTab('report')}
           >
             <Award size={15} />
-            <span>Assurance Certificate</span>
+            <span>Assurance Report</span>
           </button>
 
           {/* DEVELOPER SAFETY LAYER */}
@@ -769,15 +722,60 @@ export default function App() {
             <ShieldCheck size={15} />
             <span>LegacyX Guard (IDE)</span>
           </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'ai_scenarios' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ai_scenarios')}
+          >
+            <Sparkles size={15} />
+            <span>AI Edge Cases</span>
+          </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'characterization' ? 'active' : ''}`}
+            onClick={() => setActiveTab('characterization')}
+          >
+            <CheckSquare size={15} />
+            <span>Characterization Tests</span>
+          </button>
 
-          {/* SYSTEM */}
-          <div className="sidebar-heading">System</div>
+          {/* ANALYSIS & MODERNIZATION */}
+          <div className="sidebar-heading">Analysis & Modernization</div>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'xray' ? 'active' : ''}`}
+            onClick={() => setActiveTab('xray')}
+          >
+            <Radio size={15} />
+            <span>System X-Ray (AST)</span>
+          </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'business_rules' ? 'active' : ''}`}
+            onClick={() => setActiveTab('business_rules')}
+          >
+            <FileCode2 size={15} />
+            <span>Business Logic DNA</span>
+          </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'transformation' ? 'active' : ''}`}
+            onClick={() => setActiveTab('transformation')}
+          >
+            <FileDiff size={15} />
+            <span>Transformation Studio</span>
+          </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'validation' ? 'active' : ''}`}
+            onClick={() => setActiveTab('validation')}
+          >
+            <CheckCircle2 size={15} />
+            <span>Empirical Validation</span>
+          </button>
+
+          {/* SYSTEM & HELP */}
+          <div className="sidebar-heading">System & Help</div>
           <button
             className={`sidebar-nav-item ${activeTab === 'settings' ? 'active' : ''}`}
             onClick={() => setActiveTab('settings')}
           >
             <Settings size={15} />
-            <span>Settings</span>
+            <span>Settings & Health</span>
           </button>
           <button
             className={`sidebar-nav-item ${activeTab === 'documentation' ? 'active' : ''}`}
@@ -790,84 +788,276 @@ export default function App() {
 
         {/* Sidebar Footer */}
         <div style={{ padding: '14px 16px', borderTop: '1px solid #1e293b', fontSize: '11px', color: '#64748b' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-            <span style={{ color: '#cbd5e1', fontWeight: 600 }}>Backend 8002 • Postgres OK</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span className="pulse-indicator" />
+              <span style={{ color: '#cbd5e1', fontWeight: 600 }}>Assurance Nominal</span>
+            </div>
+            <span style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '10px' }}>0ms</span>
           </div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#38bdf8', fontWeight: 700 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#38bdf8', fontWeight: 600, fontSize: '10.5px' }}>
             <Sparkles size={11} color="#38bdf8" />
-            <span>Built with IBM Bob</span>
+            <span>Behavioral Proof Engine • Built with IBM Bob</span>
           </div>
         </div>
       </aside>
 
       {/* ── Main Content Area ─────────────────────────────────────────────── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, backgroundColor: '#f8fafc' }}>
-        {/* Sticky Header with Glassmorphism */}
+        {/* Sticky Header with Modernization Assurance Quick Tabs */}
         <header
           style={{
             height: '56px',
-            backgroundColor: 'rgba(255, 255, 255, 0.88)',
+            backgroundColor: 'rgba(255, 255, 255, 0.92)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-            padding: '0 28px',
+            borderBottom: '1px solid rgba(226, 232, 240, 0.9)',
+            padding: '0 24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             position: 'sticky',
             top: 0,
             zIndex: 30,
-            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
+            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03)',
+            gap: '12px',
           }}
         >
           {/* Left: View Breadcrumbs with Status Indicator */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px' }}>
-            <div
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', flexShrink: 0 }}>
+            <button
+              onClick={() => setActiveTab('dashboard')}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '7px',
-                padding: '3px 10px',
-                borderRadius: '999px',
-                backgroundColor: '#071525',
-                color: '#f8fafc',
-                fontSize: '11.5px',
+                gap: '6px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: activeTab === 'dashboard' ? '#0d9488' : '#64748b',
                 fontWeight: 700,
+                padding: 0,
               }}
             >
-              <span className="pulse-indicator" />
-              <span>LegacyBank Core</span>
-              <span style={{ fontSize: '10px', color: '#38bdf8', fontFamily: 'monospace' }}>v2.4.1</span>
-            </div>
-            <ChevronRight size={14} color="#94a3b8" />
-            <span style={{ textTransform: 'capitalize', fontWeight: 800, color: '#0d9488', fontSize: '13px' }}>
-              {activeTab.replace('_', ' ')}
-            </span>
+              <LayoutDashboard size={14} color={activeTab === 'dashboard' ? '#0d9488' : '#64748b'} />
+              <span>Workspace</span>
+            </button>
+
+            {activeTab !== 'dashboard' && (
+              <>
+                <ChevronRight size={13} color="#94a3b8" />
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '2px 8px',
+                    borderRadius: '999px',
+                    backgroundColor: '#071525',
+                    color: '#f8fafc',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                  }}
+                >
+                  <span className="pulse-indicator" />
+                  <span>LegacyBank Core</span>
+                  <span style={{ fontSize: '9.5px', color: '#38bdf8', fontFamily: 'monospace' }}>v2.4.1</span>
+                </div>
+                <ChevronRight size={13} color="#94a3b8" />
+                <span style={{ textTransform: 'capitalize', fontWeight: 800, color: '#0d9488', fontSize: '12.5px' }}>
+                  {activeTab.replace('_', ' ')}
+                </span>
+              </>
+            )}
           </div>
 
-          {/* Right: Controls & Seals */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Center: Quick Modernization Assurance Navigation Pills (from media_1790535657924.png) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'nowrap', overflowX: 'auto' }}>
+            <button
+              onClick={() => setActiveTab('replay')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'replay' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'replay' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'replay' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 120ms ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span>Replay Lab</span>
+              <span
+                style={{
+                  fontSize: '9px',
+                  fontWeight: 800,
+                  padding: '1px 5px',
+                  borderRadius: '999px',
+                  backgroundColor: '#dcfce7',
+                  color: '#15803d',
+                }}
+              >
+                LIVE
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('contracts')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'contracts' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'contracts' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'contracts' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 120ms ease',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <FileCheck2 size={12} color="#64748b" />
+              <span>Contracts</span>
+              <span
+                style={{
+                  fontSize: '9px',
+                  fontWeight: 800,
+                  padding: '1px 5px',
+                  borderRadius: '999px',
+                  backgroundColor: '#eff6ff',
+                  color: '#1d4ed8',
+                }}
+              >
+                7 SPECS
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('blast_radius')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'blast_radius' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'blast_radius' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'blast_radius' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <Layers size={12} color="#64748b" />
+              <span>Blast Radius</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('whatif')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'whatif' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'whatif' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'whatif' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <Sliders size={12} color="#64748b" />
+              <span>What-If</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('risk')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'risk' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'risk' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'risk' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <ShieldAlert size={12} color="#64748b" />
+              <span>Risk Scorecard</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('guard')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px',
+                borderRadius: '999px',
+                border: activeTab === 'guard' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
+                backgroundColor: activeTab === 'guard' ? '#f0fdfa' : '#ffffff',
+                color: activeTab === 'guard' ? '#0f766e' : '#334155',
+                fontSize: '11.5px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <ShieldCheck size={12} color="#0d9488" />
+              <span>Guard (IDE)</span>
+              <span
+                style={{
+                  fontSize: '9px',
+                  fontWeight: 800,
+                  padding: '1px 5px',
+                  borderRadius: '999px',
+                  backgroundColor: '#ccfbf1',
+                  color: '#0f766e',
+                }}
+              >
+                ACTIVE
+              </span>
+            </button>
+          </div>
+
+          {/* Right: Quick Search, Status, Profile */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
             {/* Quick Search */}
             <button
               onClick={() => setSearchOpen(true)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                padding: '6px 14px',
-                borderRadius: '8px',
-                backgroundColor: '#f1f5f9',
+                gap: '6px',
+                padding: '5px 12px',
+                borderRadius: '999px',
+                backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 color: '#64748b',
-                fontSize: '12px',
+                fontSize: '11.5px',
                 cursor: 'pointer',
-                transition: 'all 140ms ease',
               }}
             >
-              <Search size={13} color="#94a3b8" />
-              <span>Search classes, rules, specs...</span>
-              <kbd style={{ fontSize: '9px', fontWeight: 700, padding: '2px 5px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '4px', color: '#475569' }}>
+              <Search size={12} color="#94a3b8" />
+              <span>Quick Search</span>
+              <kbd style={{ fontSize: '8.5px', fontWeight: 700, padding: '1px 4px', backgroundColor: '#ffffff', border: '1px solid #cbd5e1', borderRadius: '4px', color: '#475569' }}>
                 Ctrl K
               </kbd>
             </button>
@@ -877,8 +1067,8 @@ export default function App() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                padding: '5px 10px',
+                gap: '5px',
+                padding: '4px 9px',
                 borderRadius: '999px',
                 backgroundColor: '#f5f3ff',
                 border: '1px solid #ddd6fe',
@@ -888,52 +1078,64 @@ export default function App() {
                 letterSpacing: '0.02em',
               }}
             >
-              <Sparkles size={12} color="#7c3aed" />
+              <Sparkles size={11} color="#7c3aed" />
               <span>watsonx.ai</span>
             </div>
 
-            {/* Assurance Hash Seal */}
-            <button
-              onClick={() => setActiveTab('report')}
+            {/* Deterministic Verified Status */}
+            <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                padding: '5px 12px',
+                gap: '5px',
+                padding: '4px 10px',
                 borderRadius: '999px',
-                backgroundColor: '#fff1f2',
-                border: '1px solid #fecdd3',
-                color: '#9f1239',
+                backgroundColor: '#ecfdf5',
+                border: '1px solid #a7f3d0',
+                color: '#065f46',
                 fontSize: '11px',
-                fontWeight: 800,
-                cursor: 'pointer',
+                fontWeight: 700,
               }}
-              title="Click to view full Assurance Certificate"
             >
-              <AlertTriangle size={12} color="#e11d48" />
-              <span>CONDITIONAL ASSURANCE</span>
-              <span style={{ fontFamily: 'monospace', color: '#be123c', fontSize: '10px' }}>8d4a...91c2</span>
-            </button>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+              <span>Deterministic Verified</span>
+            </div>
 
             {/* Auditor Avatar */}
             <div
               title="Sarvesh K — Lead Modernization Auditor"
               style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #0d9488 0%, #0c645d 100%)',
-                color: '#ffffff',
-                fontWeight: 800,
-                fontSize: '11.5px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                gap: '7px',
+                padding: '3px 8px 3px 3px',
+                borderRadius: '999px',
+                backgroundColor: '#f1f5f9',
+                border: '1px solid #e2e8f0',
                 cursor: 'pointer',
-                boxShadow: '0 2px 6px rgba(13, 148, 136, 0.3)',
               }}
+              onClick={() => setActiveTab('report')}
             >
-              SK
+              <div
+                style={{
+                  width: '26px',
+                  height: '26px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #0d9488 0%, #0c645d 100%)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  fontSize: '11px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                SK
+              </div>
+              <div style={{ textAlign: 'left', lineHeight: 1.1 }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, color: '#0f172a' }}>Sarvesh K</div>
+                <div style={{ fontSize: '9px', color: '#64748b' }}>Lead Auditor</div>
+              </div>
             </div>
           </div>
         </header>
@@ -942,165 +1144,652 @@ export default function App() {
         <main className="panoramic-canvas" style={{ padding: '24px 32px' }}>
           {/* TAB 1: DASHBOARD */}
           {activeTab === 'dashboard' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              {/* Hero Banner */}
-              <div className="card-clean" style={{ padding: '28px 32px', background: 'linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%)', border: '1px solid #ccfbf1' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '12px' }}>
-                  <div>
-                    <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4', marginBottom: '8px' }}>
-                      <ShieldCheck size={13} />
-                      Modernization Assurance Platform
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              {/* 1. Midnight Panoramic Hero Banner with Radar Motif */}
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #020813 0%, #061325 55%, #0b1e36 100%)',
+                  border: '1px solid rgba(56, 189, 248, 0.25)',
+                  borderRadius: '16px',
+                  boxShadow: '0 16px 36px -4px rgba(2, 8, 19, 0.4)',
+                  color: '#f8fafc',
+                  padding: '28px 36px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Background SVG Radar / Inscribed Delta Illustration on the Right */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '28px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '280px',
+                    height: '240px',
+                    pointerEvents: 'none',
+                    opacity: 0.85,
+                  }}
+                >
+                  <svg viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                    {/* Concentric Radar Rings */}
+                    <circle cx="140" cy="120" r="115" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="1" strokeDasharray="4 4" />
+                    <circle cx="140" cy="120" r="85" stroke="rgba(56, 189, 248, 0.2)" strokeWidth="1" />
+                    <circle cx="140" cy="120" r="55" stroke="rgba(56, 189, 248, 0.28)" strokeWidth="1" strokeDasharray="3 3" />
+                    <circle cx="140" cy="120" r="25" stroke="rgba(56, 189, 248, 0.4)" strokeWidth="1.5" />
+                    <circle cx="140" cy="120" r="3" fill="#00f2fe" />
+
+                    {/* Crosshairs */}
+                    <line x1="140" y1="5" x2="140" y2="235" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="2 4" />
+                    <line x1="25" y1="120" x2="255" y2="120" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="2 4" />
+
+                    {/* Inscribed Geometric Delta / Equivalence Triangle */}
+                    <polygon
+                      points="140,40 215,165 65,165"
+                      stroke="#00f2fe"
+                      strokeWidth="1.5"
+                      fill="rgba(0, 242, 254, 0.04)"
+                    />
+                    <circle cx="140" cy="40" r="4" fill="#00f2fe" />
+                    <circle cx="215" cy="165" r="4" fill="#c084fc" />
+                    <circle cx="65" cy="165" r="4" fill="#38bdf8" />
+
+                    {/* Radar Sweep Line */}
+                    <line x1="140" y1="120" x2="225" y2="55" stroke="url(#radarGradient)" strokeWidth="2" />
+                    <defs>
+                      <linearGradient id="radarGradient" x1="140" y1="120" x2="225" y2="55" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#00f2fe" stopOpacity="0.8" />
+                        <stop offset="1" stopColor="#00f2fe" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* Hero Content Left */}
+                <div style={{ position: 'relative', zIndex: 2, maxWidth: '820px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '3px 10px', borderRadius: '999px', backgroundColor: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '10.5px', fontWeight: 800, color: '#38bdf8', letterSpacing: '0.04em' }}>
+                      LEGACYX 2.0
                     </span>
-                    <h1 style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.03em', lineHeight: 1.25, margin: '6px 0' }}>
-                      Turn Legacy into What's Next
-                    </h1>
-                    <p style={{ fontSize: '13.5px', color: '#475569', maxWidth: '720px', lineHeight: 1.6 }}>
-                      Understand business logic. Measure impact. Plan modernization. Transform safely. Validate with evidence.
-                      LegacyX guarantees that modernization preserves critical business decisions before any code hits production.
-                    </p>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.3)' }}>•</span>
+                    <span style={{ fontSize: '11px', color: '#cbd5e1', fontWeight: 600 }}>
+                      National Modernization Assurance
+                    </span>
                   </div>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <button className="btn-secondary" onClick={() => setActiveTab('xray')}>
-                      <Radio size={14} />
-                      <span>Explore System X-Ray</span>
-                    </button>
-                    <button className="btn-primary" onClick={() => setActiveTab('replay')}>
-                      <Play size={14} />
-                      <span>Launch Replay Lab</span>
-                    </button>
-                  </div>
-                </div>
 
-                {/* 4 Value Pillars */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <FileCheck2 size={16} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>Evidence-Driven</div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>AST deterministic ground truth</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <CheckCircle2 size={16} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>Human-in-the-Loop</div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>Recorded approval gates</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Sparkles size={16} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>AI-Assisted Insights</div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>IBM watsonx & IBM Bob</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Lock size={16} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>Safe & Controlled</div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>Original source is immutable</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  <h1
+                    style={{
+                      fontSize: '32px',
+                      fontWeight: 900,
+                      color: '#ffffff',
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1.25,
+                      margin: '4px 0 10px 0',
+                    }}
+                  >
+                    Modernize the Code.{' '}
+                    <span style={{ color: '#00f2fe', textShadow: '0 0 20px rgba(0, 242, 254, 0.4)' }}>
+                      Preserve the Decision.
+                    </span>{' '}
+                    <span style={{ color: '#c084fc', textShadow: '0 0 20px rgba(192, 132, 252, 0.4)' }}>
+                      Prove the Difference.
+                    </span>
+                  </h1>
 
-              {/* Real Backend Metrics Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
-                <div className="card-clean" style={{ padding: '20px' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Projects</div>
-                  <div style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', margin: '4px 0' }}>
-                    {loadingProjects ? '...' : liveProjects.length > 0 ? liveProjects.length : 2}
-                  </div>
-                  <div style={{ fontSize: '11.5px', color: '#059669', fontWeight: 600 }}>Active in Local PostgreSQL</div>
-                </div>
-                <div className="card-clean" style={{ padding: '20px' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Analyzed Repositories</div>
-                  <div style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', margin: '4px 0' }}>
-                    {loadingProjects ? '...' : liveProjects.filter((p) => p.status === 'ANALYZED').length || 1}
-                  </div>
-                  <div style={{ fontSize: '11.5px', color: '#0284c7', fontWeight: 600 }}>AST & Dependency Graphs Ready</div>
-                </div>
-                <div className="card-clean" style={{ padding: '20px' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Decision Contracts</div>
-                  <div style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', margin: '4px 0' }}>35</div>
-                  <div style={{ fontSize: '11.5px', color: '#7c3aed', fontWeight: 600 }}>Invariant specifications extracted</div>
-                </div>
-                <div className="card-clean" style={{ padding: '20px' }}>
-                  <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Replay Parity</div>
-                  <div style={{ fontSize: '28px', fontWeight: 900, color: '#0f172a', margin: '4px 0' }}>5 / 8</div>
-                  <div style={{ fontSize: '11.5px', color: '#e11d48', fontWeight: 600 }}>3 Silent Drifts Isolated</div>
-                </div>
-              </div>
+                  <p style={{ fontSize: '13.5px', color: '#94a3b8', lineHeight: 1.65, maxWidth: '740px', marginBottom: '20px' }}>
+                    Does modernized code still make the exact same business decisions? LegacyX answers with mathematical rigor:
+                    Business Rule DNA, Decision Contracts, Decision Replay Lab, and Silent Drift Detection.
+                  </p>
 
-              {/* Active Project Card */}
-              <div className="card-clean" style={{ padding: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#ccfbf1', color: '#0f766e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Folder size={20} />
-                    </div>
-                    <div>
-                      <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a' }}>LegacyBank Enterprise Core</h3>
-                      <div style={{ fontSize: '12px', color: '#64748b' }}>Primary Transaction Processing Ledger • Java EE 6, Spring 3, Oracle PL/SQL</div>
-                    </div>
-                  </div>
-                  <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a', borderColor: '#86efac' }}>
-                    Status: Analyzed
-                  </span>
-                </div>
-
-                {/* Progress bar */}
-                <div style={{ margin: '16px 0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#475569', marginBottom: '6px' }}>
-                    <span style={{ fontWeight: 600 }}>Modernization Pipeline Progress</span>
-                    <span style={{ fontWeight: 800, color: '#0d9488' }}>Phase 7 / 9 • 85% Complete</span>
-                  </div>
-                  <div style={{ height: '8px', width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: '85%', backgroundColor: '#0d9488', borderRadius: '999px' }} />
-                  </div>
-                </div>
-
-                {/* Pipeline Stepper */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '8px', marginTop: '16px' }}>
-                  {[
-                    { step: 1, name: 'Ingestion', tab: 'xray' as TabKey, done: true },
-                    { step: 2, name: 'System X-Ray', tab: 'xray' as TabKey, done: true },
-                    { step: 3, name: 'Business Logic', tab: 'business_rules' as TabKey, done: true },
-                    { step: 4, name: 'Impact', tab: 'impact' as TabKey, done: true },
-                    { step: 5, name: 'Strategy', tab: 'strategy' as TabKey, done: true },
-                    { step: 6, name: 'Plan', tab: 'plan' as TabKey, done: true },
-                    { step: 7, name: 'Transform', tab: 'transformation' as TabKey, done: true },
-                    { step: 8, name: 'Validate', tab: 'validation' as TabKey, done: true },
-                  ].map((s) => (
+                  {/* Quick jump pills row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <button
-                      key={s.step}
-                      onClick={() => setActiveTab(s.tab)}
+                      onClick={() => setActiveTab('replay')}
                       style={{
-                        padding: '10px 8px',
-                        borderRadius: '8px',
-                        border: '1px solid #e2e8f0',
-                        backgroundColor: s.done ? '#f0fdf4' : '#ffffff',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 14px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                        border: '1px solid rgba(20, 184, 166, 0.4)',
+                        color: '#5eead4',
+                        fontSize: '12px',
+                        fontWeight: 700,
                         cursor: 'pointer',
-                        textAlign: 'center',
-                        transition: 'all 120ms ease',
+                        transition: 'all 140ms ease',
                       }}
                     >
-                      <div style={{ fontSize: '10px', fontWeight: 800, color: s.done ? '#16a34a' : '#94a3b8' }}>
-                        PHASE {s.step}
-                      </div>
-                      <div style={{ fontSize: '11px', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>
-                        {s.name}
-                      </div>
+                      <Activity size={13} color="#5eead4" />
+                      <span>Decision Replay Lab</span>
                     </button>
-                  ))}
+
+                    <button
+                      onClick={() => setActiveTab('contracts')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 14px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                        border: '1px solid rgba(56, 189, 248, 0.35)',
+                        color: '#38bdf8',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <FileCheck2 size={13} color="#38bdf8" />
+                      <span>Decision Contracts</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab('blast_radius')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 14px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(168, 85, 247, 0.15)',
+                        border: '1px solid rgba(168, 85, 247, 0.35)',
+                        color: '#c084fc',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Layers size={13} color="#c084fc" />
+                      <span>3-Layer Blast Radius</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab('replay')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 14px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
+                        border: '1px solid rgba(245, 158, 11, 0.35)',
+                        color: '#fbbf24',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <AlertTriangle size={13} color="#fbbf24" />
+                      <span>Silent Drift Detection</span>
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab('guard')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 14px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(239, 68, 68, 0.15)',
+                        border: '1px solid rgba(239, 68, 68, 0.35)',
+                        color: '#f87171',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <ShieldCheck size={13} color="#f87171" />
+                      <span>LegacyX Guard (IDE)</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Cryptographic Sign-Off Metric Cards */}
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#64748b', marginBottom: '10px' }}>
+                  <ShieldCheck size={13} color="#0d9488" />
+                  <span>Cryptographic Sign-off</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                  {/* Metric 1 */}
+                  <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Folder size={22} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>
+                        {loadingProjects ? '...' : liveProjects.length > 0 ? liveProjects.length : 2}
+                      </div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Total Projects</div>
+                    </div>
+                  </div>
+
+                  {/* Metric 2 */}
+                  <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#ccfbf1', color: '#0f766e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <BarChart3 size={22} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>
+                          {loadingProjects ? '...' : liveProjects.filter((p) => p.status === 'ANALYZED').length || 1}
+                        </div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Analyzed Repos</div>
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                      Active
+                    </span>
+                  </div>
+
+                  {/* Metric 3 */}
+                  <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Clock size={22} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>0</div>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>In Flight</div>
+                    </div>
+                  </div>
+
+                  {/* Metric 4 */}
+                  <div className="card-clean" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                      <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <CheckCircle2 size={22} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', lineHeight: 1.1 }}>1</div>
+                        <div style={{ fontSize: '12px', fontWeight: 700, color: '#475569' }}>Assurance Ready</div>
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                      100%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. 2-Column Main Section: Modernization Workspaces + Modernization Journey */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.85fr) minmax(0, 1.15fr)', gap: '20px', alignItems: 'start' }}>
+                {/* LEFT COLUMN: Modernization Workspaces */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                        <Folder size={17} color="#0f172a" />
+                        <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#0f172a' }}>
+                          Modernization Workspaces
+                        </h2>
+                      </div>
+                      <p style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
+                        Active repository repositories with verified business rules & replay contracts.
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => setActiveTab('settings')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 12px',
+                        borderRadius: '999px',
+                        backgroundColor: '#0f172a',
+                        color: '#ffffff',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <span>+ New Project</span>
+                    </button>
+                  </div>
+
+                  {/* Workspace Card 1: LegacyBank Enterprise Core */}
+                  <div className="card-clean" style={{ padding: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#ecfdf5', color: '#059669', border: '1px solid #a7f3d0' }}>
+                        ANALYZED
+                      </span>
+                      <span style={{ fontSize: '11px', color: '#94a3b8' }}>9/26/2026</span>
+                    </div>
+
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                      LegacyBank Enterprise Core
+                    </h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '14px' }}>
+                      National-level showcase: Core transaction processing, risk evaluation, and silent business drift detection.
+                    </p>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                        Java EE 6
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                        Spring 3
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                        Oracle PL/SQL
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f5f3ff', color: '#7c3aed', fontWeight: 700 }}>
+                        35 Rules Extracted
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#eff6ff', color: '#2563eb', fontWeight: 700 }}>
+                        7 Contracts
+                      </span>
+                    </div>
+
+                    {/* Card Footer */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f1f5f9' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: '#059669' }}>
+                          <Activity size={13} color="#059669" />
+                          <span>Replay Ready</span>
+                        </div>
+                        <span style={{ fontSize: '11.5px', color: '#64748b' }}>
+                          9 Scenarios Seeded
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <button
+                          onClick={() => setActiveTab('replay')}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            padding: '5px 12px',
+                            borderRadius: '999px',
+                            backgroundColor: '#ffffff',
+                            border: '1px solid #0d9488',
+                            color: '#0d9488',
+                            fontSize: '11.5px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <Activity size={12} />
+                          <span>Replay Lab</span>
+                        </button>
+
+                        <button
+                          onClick={() => setActiveTab('contracts')}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            padding: '5px 12px',
+                            borderRadius: '999px',
+                            backgroundColor: '#020817',
+                            border: 'none',
+                            color: '#ffffff',
+                            fontSize: '11.5px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <span>Workspace</span>
+                          <ArrowRight size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Workspace Card 2: Legacy Banking System */}
+                  <div className="card-clean" style={{ padding: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#eff6ff', color: '#2563eb', border: '1px solid #bfdbfe' }}>
+                        CREATED
+                      </span>
+                      <span style={{ fontSize: '11px', color: '#94a3b8' }}>9/26/2026</span>
+                    </div>
+
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
+                      Legacy Banking System
+                    </h3>
+                    <p style={{ fontSize: '12.5px', color: '#64748b', lineHeight: 1.5, marginBottom: '14px' }}>
+                      Legacy application repository modernization workspace
+                    </p>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                        COBOL / CICS
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: 600 }}>
+                        Mainframe Ledger
+                      </span>
+                      <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#fef3c7', color: '#d97706', fontWeight: 700 }}>
+                        Ingestion Queue
+                      </span>
+                    </div>
+
+                    {/* Card Footer */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '14px', borderTop: '1px solid #f1f5f9' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', fontWeight: 700, color: '#0284c7' }}>
+                          <Activity size={13} color="#0284c7" />
+                          <span>Replay Ready</span>
+                        </div>
+                        <span style={{ fontSize: '11.5px', color: '#64748b' }}>
+                          Ingestion Pending
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <button
+                          onClick={() => setActiveTab('replay')}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            padding: '5px 12px',
+                            borderRadius: '999px',
+                            backgroundColor: '#ffffff',
+                            border: '1px solid #0d9488',
+                            color: '#0d9488',
+                            fontSize: '11.5px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <Activity size={12} />
+                          <span>Replay Lab</span>
+                        </button>
+
+                        <button
+                          onClick={() => setActiveTab('contracts')}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            padding: '5px 12px',
+                            borderRadius: '999px',
+                            backgroundColor: '#020817',
+                            border: 'none',
+                            color: '#ffffff',
+                            fontSize: '11.5px',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <span>Workspace</span>
+                          <ArrowRight size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* RIGHT COLUMN: MODERNIZATION JOURNEY & QUICK LAUNCH */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {/* Card 1: Modernization Journey */}
+                  <div className="card-clean" style={{ padding: '22px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <Layers size={16} color="#0d9488" />
+                      <h3 style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                        Modernization Journey
+                      </h3>
+                    </div>
+                    <p style={{ fontSize: '11.5px', color: '#64748b', marginBottom: '16px' }}>
+                      Deterministic flow from legacy source to verified modern code.
+                    </p>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {[
+                        { step: 1, name: 'Repository Ingestion', desc: 'Upload, validate, and index legacy codebase', tab: 'xray' as TabKey },
+                        { step: 2, name: 'System X-Ray (AST)', desc: 'Deterministic structural & call graph analysis', tab: 'xray' as TabKey },
+                        { step: 3, name: 'Business Rule DNA', desc: 'Extract semantic constraints & governance locks', tab: 'business_rules' as TabKey },
+                        { step: 4, name: 'Decision Contracts', desc: 'Synthesize language-neutral decision specs', tab: 'contracts' as TabKey },
+                        { step: 5, name: 'Decision Replay Lab', desc: 'Dual-harness replay proving decision preservation', tab: 'replay' as TabKey },
+                        { step: 6, name: '3-Layer Blast Radius', desc: 'Cross-impact: Code + Business + Replay nodes', tab: 'blast_radius' as TabKey },
+                        { step: 7, name: 'What-If Simulation', desc: 'Predict behavioral drift before applying changes', tab: 'whatif' as TabKey },
+                        { step: 8, name: 'Isolated Transform', desc: 'Automated refactoring in sandbox environments', tab: 'transformation' as TabKey },
+                        { step: 9, name: 'Assurance Sign-Off', desc: 'Cryptographically sealed SHA-256 evidence tree', tab: 'report' as TabKey },
+                      ].map((j) => (
+                        <div
+                          key={j.step}
+                          onClick={() => setActiveTab(j.tab)}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '10px',
+                            padding: '8px 10px',
+                            borderRadius: '8px',
+                            backgroundColor: '#f8fafc',
+                            cursor: 'pointer',
+                            transition: 'all 120ms ease',
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: '20px',
+                              height: '20px',
+                              borderRadius: '50%',
+                              backgroundColor: '#ffffff',
+                              border: '1.5px solid #0d9488',
+                              color: '#0d9488',
+                              fontSize: '10.5px',
+                              fontWeight: 800,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0,
+                              marginTop: '2px',
+                            }}
+                          >
+                            {j.step}
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>{j.name}</div>
+                            <div style={{ fontSize: '11px', color: '#64748b' }}>{j.desc}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Card 2: Quick Launch */}
+                  <div className="card-clean" style={{ padding: '18px 20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '12px' }}>
+                      <Sparkles size={14} color="#0d9488" />
+                      <h4 style={{ fontSize: '11.5px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#0f172a' }}>
+                        Quick Launch
+                      </h4>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <button
+                        onClick={() => setActiveTab('replay')}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '10px 12px',
+                          borderRadius: '8px',
+                          backgroundColor: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>Explore LegacyBank Demo</div>
+                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Dual-harness replay & drift detection</div>
+                        </div>
+                        <ChevronRight size={14} color="#94a3b8" />
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab('xray')}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '10px 12px',
+                          borderRadius: '8px',
+                          backgroundColor: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>System X-Ray (AST)</div>
+                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Deterministic code entities & calls</div>
+                        </div>
+                        <ChevronRight size={14} color="#94a3b8" />
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab('report')}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '10px 12px',
+                          borderRadius: '8px',
+                          backgroundColor: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>Assurance Certificate</div>
+                          <div style={{ fontSize: '10.5px', color: '#64748b' }}>Executive SHA-256 evidence tree</div>
+                        </div>
+                        <ChevronRight size={14} color="#94a3b8" />
+                      </button>
+
+                      <button
+                        onClick={() => setActiveTab('guard')}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '10px 12px',
+                          borderRadius: '8px',
+                          backgroundColor: '#f0fdfa',
+                          border: '1px solid #99f6e4',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f766e' }}>LegacyX Guard (IDE Extension)</div>
+                          <div style={{ fontSize: '10.5px', color: '#14b8a6' }}>Live developer safety layer & drift catch</div>
+                        </div>
+                        <ChevronRight size={14} color="#0d9488" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
