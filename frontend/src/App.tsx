@@ -1042,7 +1042,7 @@ export default function App() {
             {/* 2-Color Theme Selector Pill */}
             <div
               style={{
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
                 padding: '2px',
                 borderRadius: '999px',
@@ -1055,44 +1055,36 @@ export default function App() {
               <button
                 onClick={() => setColorTheme('orange')}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '3px 8px',
+                  padding: '3px 10px',
                   borderRadius: '999px',
                   border: 'none',
                   cursor: 'pointer',
                   fontSize: '11px',
                   fontWeight: 700,
-                  backgroundColor: colorTheme === 'orange' ? '#ffffff' : 'transparent',
-                  color: colorTheme === 'orange' ? '#ea580c' : '#6b7280',
+                  backgroundColor: colorTheme === 'orange' ? 'var(--accent-color)' : 'transparent',
+                  color: colorTheme === 'orange' ? '#ffffff' : '#6b7280',
                   boxShadow: colorTheme === 'orange' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
                   transition: 'all 120ms ease',
                 }}
               >
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ea580c' }} />
-                <span>Orange</span>
+                Orange
               </button>
               <button
                 onClick={() => setColorTheme('ibm')}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '3px 8px',
+                  padding: '3px 10px',
                   borderRadius: '999px',
                   border: 'none',
                   cursor: 'pointer',
                   fontSize: '11px',
                   fontWeight: 700,
-                  backgroundColor: colorTheme === 'ibm' ? '#ffffff' : 'transparent',
-                  color: colorTheme === 'ibm' ? '#0f62fe' : '#6b7280',
+                  backgroundColor: colorTheme === 'ibm' ? 'var(--accent-color)' : 'transparent',
+                  color: colorTheme === 'ibm' ? '#ffffff' : '#6b7280',
                   boxShadow: colorTheme === 'ibm' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
                   transition: 'all 120ms ease',
                 }}
               >
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0f62fe' }} />
-                <span>IBM Blue</span>
+                IBM Blue
               </button>
             </div>
 
@@ -1793,7 +1785,7 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1', borderColor: '#bae6fd' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 3 • Deterministic Static Analysis
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -1852,7 +1844,7 @@ export default function App() {
                     <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a' }}>
                       Architecture Call Relationships (45 Edges)
                     </div>
-                    <span style={{ fontSize: '11px', color: '#059669', fontWeight: 700 }}>
+                    <span style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 700 }}>
                       Pure-Python Java AST (javalang)
                     </span>
                   </div>
@@ -1861,20 +1853,20 @@ export default function App() {
                   <div style={{ height: '360px', width: '100%', backgroundColor: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                     <svg width="100%" height="100%" viewBox="0 0 600 320">
                       {/* Edges */}
-                      <line x1="120" y1="80" x2="300" y2="80" stroke="#0d9488" strokeWidth="2" strokeDasharray="4 2" />
-                      <line x1="300" y1="80" x2="480" y2="80" stroke="#0d9488" strokeWidth="2" />
-                      <line x1="300" y1="80" x2="300" y2="220" stroke="#2563eb" strokeWidth="2" />
-                      <line x1="300" y1="220" x2="480" y2="220" stroke="#059669" strokeWidth="2" />
+                      <line x1="120" y1="80" x2="300" y2="80" stroke="var(--accent-color)" strokeWidth="2" strokeDasharray="4 2" />
+                      <line x1="300" y1="80" x2="480" y2="80" stroke="var(--accent-color)" strokeWidth="2" />
+                      <line x1="300" y1="80" x2="300" y2="220" stroke="var(--accent-color)" strokeWidth="2" />
+                      <line x1="300" y1="220" x2="480" y2="220" stroke="var(--accent-color)" strokeWidth="2" />
                       
                       {/* Controller Node */}
-                      <rect x="50" y="55" width="140" height="50" rx="8" fill="#ffffff" stroke="#0284c7" strokeWidth="1.5" />
+                      <rect x="50" y="55" width="140" height="50" rx="8" fill="#ffffff" stroke="var(--accent-border)" strokeWidth="1.5" />
                       <text x="120" y="80" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a">AccountController</text>
                       <text x="120" y="95" textAnchor="middle" fontSize="9" fill="#64748b">Spring @RestController</text>
 
                       {/* Service Node (Core) */}
-                      <rect x="230" y="55" width="140" height="50" rx="8" fill="#f0fdf4" stroke="#0d9488" strokeWidth="2" />
+                      <rect x="230" y="55" width="140" height="50" rx="8" fill="var(--accent-light)" stroke="var(--accent-color)" strokeWidth="2" />
                       <text x="300" y="80" textAnchor="middle" fontSize="11" fontWeight="800" fill="#0f172a">AccountService</text>
-                      <text x="300" y="95" textAnchor="middle" fontSize="9" fill="#0d9488">Primary Business Service</text>
+                      <text x="300" y="95" textAnchor="middle" fontSize="9" fill="var(--accent-color)">Primary Business Service</text>
 
                       {/* Repository Node */}
                       <rect x="410" y="55" width="140" height="50" rx="8" fill="#ffffff" stroke="#64748b" strokeWidth="1.5" />
@@ -1882,14 +1874,14 @@ export default function App() {
                       <text x="480" y="95" textAnchor="middle" fontSize="9" fill="#64748b">JPA / Hibernate DAO</text>
 
                       {/* Domain Service Node */}
-                      <rect x="230" y="195" width="140" height="50" rx="8" fill="#ffffff" stroke="#2563eb" strokeWidth="1.5" />
+                      <rect x="230" y="195" width="140" height="50" rx="8" fill="#ffffff" stroke="var(--accent-color)" strokeWidth="1.5" />
                       <text x="300" y="220" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a">TransferDomainService</text>
-                      <text x="300" y="235" textAnchor="middle" fontSize="9" fill="#2563eb">Fee & Policy Invariants</text>
+                      <text x="300" y="235" textAnchor="middle" fontSize="9" fill="var(--accent-color)">Fee & Policy Invariants</text>
 
                       {/* Fraud Service Node */}
-                      <rect x="410" y="195" width="140" height="50" rx="8" fill="#ffffff" stroke="#d97706" strokeWidth="1.5" />
+                      <rect x="410" y="195" width="140" height="50" rx="8" fill="#ffffff" stroke="var(--accent-border)" strokeWidth="1.5" />
                       <text x="480" y="220" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0f172a">FraudDetectionService</text>
-                      <text x="480" y="235" textAnchor="middle" fontSize="9" fill="#d97706">Velocity & Sanctions Check</text>
+                      <text x="480" y="235" textAnchor="middle" fontSize="9" fill="var(--accent-color)">Velocity & Sanctions Check</text>
                     </svg>
                   </div>
                 </div>
@@ -1899,12 +1891,12 @@ export default function App() {
                   <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#475569' }}>
                     Source Fact Trace
                   </div>
-                  <div style={{ backgroundColor: '#0b192c', color: '#f8fafc', borderRadius: '8px', padding: '12px', fontFamily: 'monospace', fontSize: '11px', lineHeight: 1.6 }}>
-                    <div style={{ color: '#38bdf8' }}>// AccountService.java:L45</div>
+                  <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', borderRadius: '8px', padding: '12px', fontFamily: 'monospace', fontSize: '11px', lineHeight: 1.6 }}>
+                    <div style={{ color: 'var(--accent-color)' }}>// AccountService.java:L45</div>
                     <div>@Transactional</div>
                     <div>public void processTransfer(</div>
                     <div style={{ paddingLeft: '12px' }}>TransferRequest req) &#123;</div>
-                    <div style={{ color: '#f87171', paddingLeft: '12px' }}>  if (req.getAmount() &gt; 50000)</div>
+                    <div style={{ color: 'var(--accent-color)', paddingLeft: '12px' }}>  if (req.getAmount() &gt; 50000)</div>
                     <div style={{ paddingLeft: '24px' }}>    auditLog(req);</div>
                     <div style={{ paddingLeft: '12px' }}>  fee = calculateFee(req);</div>
                     <div>&#125;</div>
@@ -1922,7 +1914,7 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#fef3c7', color: '#92400e', borderColor: '#fde68a' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 4 • Business Logic DNA Recovery
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -1964,7 +1956,7 @@ export default function App() {
                       { id: 'BR-007', title: 'Account Freeze State Transition', condition: 'fraud_score > 0.85 -> Freeze Debit', type: 'STATE_TRANSITION', file: 'AccountService.java:120', status: 'REVIEWED' },
                     ].map((r) => (
                       <tr key={r.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                        <td style={{ padding: '12px 16px', fontWeight: 800, fontFamily: 'monospace', color: '#0d9488' }}>{r.id}</td>
+                        <td style={{ padding: '12px 16px', fontWeight: 800, fontFamily: 'monospace', color: 'var(--accent-color)' }}>{r.id}</td>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ fontWeight: 700, color: '#0f172a' }}>{r.title}</div>
                           <div style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace', marginTop: '2px' }}>{r.condition}</div>
@@ -1974,9 +1966,9 @@ export default function App() {
                             {r.type}
                           </span>
                         </td>
-                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: '#2563eb' }}>{r.file}</td>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: 'var(--accent-color)' }}>{r.file}</td>
                         <td style={{ padding: '12px 16px' }}>
-                          <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', backgroundColor: r.status === 'REVIEWED' ? '#dcfce7' : '#fef3c7', color: r.status === 'REVIEWED' ? '#16a34a' : '#b45309' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', border: '1px solid var(--accent-border)' }}>
                             {r.status}
                           </span>
                         </td>
@@ -2002,7 +1994,7 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#fee2e2', color: '#b91c1c', borderColor: '#fca5a5' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 5 • Change Impact & Blast Radius Explorer
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2021,13 +2013,13 @@ export default function App() {
               {/* Target Selector */}
               <div className="card-clean" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Target size={18} color="#e11d48" />
+                  <Target size={18} color="var(--accent-color)" />
                   <div>
                     <div style={{ fontSize: '11px', color: '#64748b', fontWeight: 700, textTransform: 'uppercase' }}>Selected Analysis Target</div>
                     <div style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>AccountService.processTransfer()</div>
                   </div>
                 </div>
-                <span className="pill-badge" style={{ backgroundColor: '#fee2e2', color: '#b91c1c', borderColor: '#fecdd3' }}>
+                <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                   Critical Blast Radius: Depth 3
                 </span>
               </div>
@@ -2037,7 +2029,7 @@ export default function App() {
                 <div className="card-clean" style={{ padding: '20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                     <h3 style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>Direct Architectural Dependents (3)</h3>
-                    <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#fee2e2', color: '#b91c1c' }}>
+                    <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                       DIRECT CALLERS
                     </span>
                   </div>
@@ -2047,12 +2039,12 @@ export default function App() {
                       { name: 'WireTransferService.java', caller: 'initiateWire()', risk: 'HIGH' },
                       { name: 'AccountRepository.java', caller: 'updateBalanceAndAudit()', risk: 'CRITICAL' },
                     ].map((d) => (
-                      <div key={d.name} style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: '#fff1f2', border: '1px solid #ffe4e6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div key={d.name} style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
                           <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>{d.name}</div>
                           <div style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace' }}>{d.caller}</div>
                         </div>
-                        <span style={{ fontSize: '10px', fontWeight: 800, color: '#b91c1c' }}>{d.risk}</span>
+                        <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--accent-color)' }}>{d.risk}</span>
                       </div>
                     ))}
                   </div>
@@ -2061,7 +2053,7 @@ export default function App() {
                 <div className="card-clean" style={{ padding: '20px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                     <h3 style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>Transitive Callers & Background Jobs (4)</h3>
-                    <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#fef3c7', color: '#92400e' }}>
+                    <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                       TRANSITIVE CALLERS
                     </span>
                   </div>
@@ -2072,12 +2064,12 @@ export default function App() {
                       { name: 'ComplianceAuditReporter.java', caller: 'Transitive Depth 3', risk: 'MEDIUM' },
                       { name: 'MonthlyStatementExporter.java', caller: 'Transitive Depth 3', risk: 'LOW' },
                     ].map((t) => (
-                      <div key={t.name} style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: '#fefce8', border: '1px solid #fef08a', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div key={t.name} style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
                           <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>{t.name}</div>
                           <div style={{ fontSize: '11px', color: '#64748b' }}>{t.caller}</div>
                         </div>
-                        <span style={{ fontSize: '10px', fontWeight: 800, color: '#b45309' }}>{t.risk}</span>
+                        <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--accent-color)' }}>{t.risk}</span>
                       </div>
                     ))}
                   </div>
@@ -2085,9 +2077,9 @@ export default function App() {
               </div>
 
               {/* AI Risk Summary */}
-              <div className="card-clean" style={{ padding: '20px', backgroundColor: '#f8fafc', borderLeft: '4px solid #0d9488' }}>
+              <div className="card-clean" style={{ padding: '20px', backgroundColor: '#f8fafc', borderLeft: '4px solid var(--accent-color)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <Sparkles size={15} color="#0d9488" />
+                  <Sparkles size={15} color="var(--accent-color)" />
                   <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#0f172a' }}>
                     IBM watsonx AI Impact Interpretation (Non-Authoritative)
                   </span>
@@ -2104,7 +2096,7 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#f3e8ff', color: '#6b21a8', borderColor: '#e9d5ff' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 6 • Modernization Strategy Matrix
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2156,13 +2148,13 @@ export default function App() {
                       <span style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', fontFamily: 'monospace' }}>
                         {strat.entity}
                       </span>
-                      <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                      <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                         Score: {strat.score}/100
                       </span>
                     </div>
 
-                    <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
-                      <div style={{ fontSize: '10px', textTransform: 'uppercase', color: '#16a34a', fontWeight: 700 }}>Recommended Strategy</div>
+                    <div style={{ padding: '8px 12px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                      <div style={{ fontSize: '10px', textTransform: 'uppercase', color: 'var(--accent-color)', fontWeight: 700 }}>Recommended Strategy</div>
                       <div style={{ fontSize: '14px', fontWeight: 900, color: '#0f172a' }}>{strat.primary}</div>
                     </div>
 
@@ -2197,7 +2189,7 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#e0e7ff', color: '#3730a3', borderColor: '#c7d2fe' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 7 • Topological DAG Modernization Plan
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2221,7 +2213,7 @@ export default function App() {
                   <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
                     Plan ID: PLN-LEGACYBANK-MOD-01 • Status: APPROVED
                   </div>
-                  <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                     Approved by lead_architect
                   </span>
                 </div>
@@ -2237,7 +2229,7 @@ export default function App() {
                   ].map((t) => (
                     <div key={t.step} style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: t.status === 'COMPLETED' ? '#dcfce7' : t.status === 'IN_PROGRESS' ? '#e0f2fe' : '#f1f5f9', color: t.status === 'COMPLETED' ? '#16a34a' : t.status === 'IN_PROGRESS' ? '#0284c7' : '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '12px' }}>
+                        <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? 'var(--accent-light)' : '#f1f5f9', color: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? 'var(--accent-color)' : '#64748b', border: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? '1px solid var(--accent-border)' : '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '12px' }}>
                           {t.step}
                         </div>
                         <div>
@@ -2245,7 +2237,7 @@ export default function App() {
                           <div style={{ fontSize: '11px', color: '#64748b' }}>Prerequisite: {t.depends}</div>
                         </div>
                       </div>
-                      <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '3px 8px', borderRadius: '999px', backgroundColor: t.status === 'COMPLETED' ? '#dcfce7' : t.status === 'IN_PROGRESS' ? '#e0f2fe' : '#f1f5f9', color: t.status === 'COMPLETED' ? '#16a34a' : t.status === 'IN_PROGRESS' ? '#0284c7' : '#64748b' }}>
+                      <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '3px 8px', borderRadius: '999px', backgroundColor: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? 'var(--accent-light)' : '#f1f5f9', color: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? 'var(--accent-color)' : '#64748b', border: t.status === 'COMPLETED' || t.status === 'IN_PROGRESS' ? '1px solid var(--accent-border)' : '1px solid #e2e8f0' }}>
                         {t.status}
                       </span>
                     </div>
@@ -2282,11 +2274,11 @@ export default function App() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 {/* Left: Legacy */}
                 <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                  <div style={{ padding: '10px 16px', backgroundColor: '#0b192c', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
+                  <div style={{ padding: '10px 16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
                     <span>LEGACY SOURCE (Java EE 6 / Spring 3)</span>
-                    <span style={{ color: '#ef4444' }}>IMMUTABLE READ-ONLY</span>
+                    <span style={{ color: 'var(--accent-color)' }}>IMMUTABLE READ-ONLY</span>
                   </div>
-                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#071525', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
 {`// AccountService.java (Legacy Monolith)
 public class AccountService {
     @Autowired
@@ -2313,11 +2305,11 @@ public class AccountService {
 
                 {/* Right: Modern Proposal */}
                 <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                  <div style={{ padding: '10px 16px', backgroundColor: '#0b192c', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
+                  <div style={{ padding: '10px 16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
                     <span>MODERNIZED PROPOSAL (Spring Boot 3 / Java 21)</span>
-                    <span style={{ color: '#10b981' }}>ISOLATED PROPOSAL</span>
+                    <span style={{ color: 'var(--accent-color)' }}>ISOLATED PROPOSAL</span>
                   </div>
-                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#071525', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
 {`// ModernizedAccountService.java (Clean Architecture)
 @Service
 @Transactional
@@ -2349,7 +2341,7 @@ public class ModernizedAccountService implements TransferUseCase {
               {/* Bottom Diff & Approval Controls */}
               <div className="card-clean" style={{ padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                     Preserved Rules: BR-001, BR-002, BR-003 (Verified)
                   </span>
                   <span style={{ fontSize: '12px', color: '#64748b' }}>
@@ -2374,7 +2366,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a', borderColor: '#86efac' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Phase 9 • Empirical Behavioral Validation Sandbox
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2394,28 +2386,28 @@ public class ModernizedAccountService implements TransferUseCase {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
                 <div className="card-clean" style={{ padding: '20px' }}>
                   <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Dimension 1: Build</div>
-                  <div style={{ fontSize: '24px', fontWeight: 900, color: '#059669', margin: '6px 0' }}>BUILD_PASS</div>
+                  <div style={{ fontSize: '24px', fontWeight: 900, color: 'var(--accent-color)', margin: '6px 0' }}>BUILD_PASS</div>
                   <div style={{ fontSize: '11.5px', color: '#475569' }}>javac compiled in isolated sandbox with zero errors</div>
                 </div>
                 <div className="card-clean" style={{ padding: '20px' }}>
                   <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Dimension 2: Unit Tests</div>
-                  <div style={{ fontSize: '24px', fontWeight: 900, color: '#059669', margin: '6px 0' }}>57 / 57 PASS</div>
+                  <div style={{ fontSize: '24px', fontWeight: 900, color: 'var(--accent-color)', margin: '6px 0' }}>57 / 57 PASS</div>
                   <div style={{ fontSize: '11.5px', color: '#475569' }}>All unit and integration test suites succeeded</div>
                 </div>
                 <div className="card-clean" style={{ padding: '20px' }}>
                   <div style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Dimension 3: Behavior</div>
-                  <div style={{ fontSize: '24px', fontWeight: 900, color: '#d97706', margin: '6px 0' }}>5 MATCH / 3 DRIFT</div>
-                  <div style={{ fontSize: '11.5px', color: '#b45309' }}>Dual-harness replay surfaced 3 subtle decision drifts</div>
+                  <div style={{ fontSize: '24px', fontWeight: 900, color: 'var(--accent-color)', margin: '6px 0' }}>5 MATCH / 3 DRIFT</div>
+                  <div style={{ fontSize: '11.5px', color: 'var(--accent-color)' }}>Dual-harness replay surfaced 3 subtle decision drifts</div>
                 </div>
               </div>
 
               {/* Evidence Terminal Log */}
               <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                <div style={{ padding: '10px 16px', backgroundColor: '#0b192c', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ padding: '10px 16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
                   <span>EMPIRICAL EXECUTION LOG (STDOUT / STDERR)</span>
-                  <span style={{ color: '#10b981' }}>SUBPROCESS COMPLIANT</span>
+                  <span style={{ color: 'var(--accent-color)' }}>SUBPROCESS COMPLIANT</span>
                 </div>
-                <pre style={{ margin: 0, padding: '16px', backgroundColor: '#071525', color: '#4ade80', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                <pre style={{ margin: 0, padding: '16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#111827', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
 {`[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ legacybank ---
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 9 source files with javac [debug target 21] to target/classes
@@ -2438,7 +2430,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Feature 2 • Baseline Characterization Engine
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2471,8 +2463,8 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {baselineNotice && (
-                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: '#dcfce7', border: '1px solid #86efac', color: '#166534', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <CheckCircle2 size={16} color="#16a34a" />
+                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', color: 'var(--accent-color)', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <CheckCircle2 size={16} color="var(--accent-color)" />
                   <span>{baselineNotice}</span>
                 </div>
               )}
@@ -2486,12 +2478,12 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
                 <div className="card-clean" style={{ padding: '16px' }}>
                   <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Generated Scenarios</span>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#0d9488', marginTop: '4px' }}>8 Boundary Scenarios</div>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--accent-color)', marginTop: '4px' }}>8 Boundary Scenarios</div>
                   <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>Discovered via AST parser</div>
                 </div>
                 <div className="card-clean" style={{ padding: '16px' }}>
                   <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Legacy Baseline Status</span>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#059669', marginTop: '4px' }}>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--accent-color)', marginTop: '4px' }}>
                     {baselineFrozen ? '✓ Behavioral baseline created' : 'PENDING'}
                   </div>
                   <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>8 legacy results captured &amp; frozen</div>
@@ -2504,9 +2496,9 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {/* Value Proposition Callout */}
-              <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', gap: '12px', alignItems: 'center' }}>
-                <CheckCircle2 size={18} color="#16a34a" />
-                <div style={{ fontSize: '12px', color: '#166534', lineHeight: 1.5 }}>
+              <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <CheckCircle2 size={18} color="var(--accent-color)" />
+                <div style={{ fontSize: '12px', color: 'var(--accent-color)', lineHeight: 1.5 }}>
                   <strong>How Characterization Testing Powers LegacyX:</strong> Rather than manually typing arbitrary tests, LegacyX deterministically analyzes the legacy AST and business logic to discover critical edge cases and freeze the legacy system's behavior as an indisputable baseline.
                 </div>
               </div>
@@ -2517,7 +2509,7 @@ public class ModernizedAccountService implements TransferUseCase {
                   <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
                     Discovered Boundary Scenarios (FEE CALCULATION)
                   </div>
-                  <span className="pill-badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                     8 Boundary Conditions
                   </span>
                 </div>
@@ -2536,7 +2528,7 @@ public class ModernizedAccountService implements TransferUseCase {
                       <tr key={sc.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
                         <td style={{ padding: '12px 16px' }}>
                           <div style={{ fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <CheckCircle2 size={13} color="#10b981" />
+                            <CheckCircle2 size={13} color="var(--accent-color)" />
                             <span>{sc.name}</span>
                           </div>
                           <div style={{ fontSize: '11px', color: '#64748b' }}>{sc.description}</div>
@@ -2549,11 +2541,11 @@ public class ModernizedAccountService implements TransferUseCase {
                         <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11px', color: '#334155' }}>
                           {JSON.stringify(sc.inputs).replace(/["{}]/g, '').replace(/,/g, ', ')}
                         </td>
-                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11px', color: '#0d9488', fontWeight: 700 }}>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11px', color: 'var(--accent-color)', fontWeight: 700 }}>
                           Fee: {sc.expected_legacy_output.fee || sc.expected_legacy_output.roundedFee} (Status: {sc.expected_legacy_output.status})
                         </td>
                         <td style={{ padding: '12px 16px', textAlign: 'right' }}>
-                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#dcfce7', color: '#15803d' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                             FROZEN
                           </span>
                         </td>
@@ -2570,7 +2562,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Feature 4 • Grounded AI Intelligence
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2590,9 +2582,9 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {/* Source Rule Card */}
-              <div className="card-clean" style={{ padding: '20px', borderLeft: '4px solid #0d9488' }}>
+              <div className="card-clean" style={{ padding: '20px', borderLeft: '4px solid var(--accent-color)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#0d9488' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-color)' }}>
                     Target Business Rule DNA
                   </span>
                   <span style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace' }}>
@@ -2608,17 +2600,17 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {/* Architectural Story Callout */}
-              <div style={{ padding: '16px 20px', borderRadius: '8px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe' }}>
+              <div style={{ padding: '16px 20px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                  <Sparkles size={16} color="#2563eb" />
-                  <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#1d4ed8' }}>
+                  <Sparkles size={16} color="var(--accent-color)" />
+                  <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-color)' }}>
                     Grounded AI Architecture Pattern
                   </span>
                 </div>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: '#1e3a8a', fontFamily: 'monospace', marginBottom: '6px' }}>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#111827', fontFamily: 'monospace', marginBottom: '6px' }}>
                   DETERMINISTIC ENGINE ➔ EXTRACTED RULE ➔ AI EDGE CASES ➔ DETERMINISTIC REPLAY ➔ PROOF
                 </div>
-                <div style={{ fontSize: '12px', color: '#1e40af', lineHeight: 1.5 }}>
+                <div style={{ fontSize: '12px', color: '#4b5563', lineHeight: 1.5 }}>
                   <em>"Where exactly is AI used?"</em> — AI is not asked to generate unverified rewrites or act as a black-box oracle. AI reasons over the extracted business rule to formulate precise boundary and combination test cases. Execution and verification remain entirely deterministic.
                 </div>
               </div>
@@ -2649,11 +2641,11 @@ public class ModernizedAccountService implements TransferUseCase {
                         <td style={{ padding: '12px 16px', fontWeight: 800, color: '#0f172a', fontFamily: 'monospace' }}>
                           {ec.case_name}
                         </td>
-                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', color: '#0d9488' }}>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', color: 'var(--accent-color)' }}>
                           Amount: {ec.amount} • Risk: {ec.riskScore}
                         </td>
                         <td style={{ padding: '12px 16px' }}>
-                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '4px', backgroundColor: ec.expected_decision === 'COMPLIANCE_HOLD' ? '#fee2e2' : '#dcfce7', color: ec.expected_decision === 'COMPLIANCE_HOLD' ? '#991b1b' : '#166534' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', border: '1px solid var(--accent-border)' }}>
                             {ec.expected_decision}
                           </span>
                         </td>
@@ -2676,13 +2668,13 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge">
                     Hero Feature • Behavioral Replay Engine
                   </span>
-                  <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
+                  <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#111827', marginTop: '4px' }}>
                     Behavioral Replay Engine &amp; Silent Drift Detection
                   </h2>
-                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
+                  <p style={{ fontSize: '12.5px', color: '#6b7280' }}>
                     <em>“The implementation can change. The decision must not.”</em> Real dual-harness execution proving behavioral equivalence.
                   </p>
                 </div>
@@ -2701,108 +2693,108 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {/* HERO SCENARIO #04 SHOWCASE CARD */}
-              <div className="card-clean" style={{ padding: '24px', border: '2px solid #e11d48', backgroundColor: '#fffafb' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', borderBottom: '1px solid #fecdd3', paddingBottom: '14px', marginBottom: '16px' }}>
+              <div className="card-clean" style={{ padding: '24px', border: '2px solid var(--accent-color)', backgroundColor: '#ffffff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', borderBottom: '1px solid #e5e7eb', paddingBottom: '14px', marginBottom: '16px' }}>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', padding: '3px 8px', borderRadius: '4px', backgroundColor: '#e11d48', color: '#ffffff' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', padding: '3px 8px', borderRadius: '4px', backgroundColor: 'var(--accent-color)', color: '#ffffff' }}>
                         Hero Scenario #04
                       </span>
-                      <span style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>
+                      <span style={{ fontSize: '14px', fontWeight: 800, color: '#111827' }}>
                         Fee Calculation &amp; Rounding Mode Evaluation
                       </span>
                     </div>
-                    <div style={{ display: 'flex', gap: '16px', marginTop: '8px', fontSize: '12px', color: '#475569', fontFamily: 'monospace' }}>
+                    <div style={{ display: 'flex', gap: '16px', marginTop: '8px', fontSize: '12px', color: '#4b5563', fontFamily: 'monospace' }}>
                       <span>Transfer Amount: <strong>₹50,000</strong></span>
                       <span>Customer: <strong>CUST-1042</strong></span>
                       <span>Risk Score: <strong>42</strong></span>
                     </div>
                   </div>
-                  <span style={{ fontSize: '11px', fontWeight: 800, padding: '4px 10px', borderRadius: '999px', backgroundColor: '#fee2e2', color: '#991b1b', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <AlertTriangle size={13} />
+                  <span className="pill-badge" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <AlertTriangle size={13} color="var(--accent-color)" />
                     <span>DRIFT DETECTED</span>
                   </span>
                 </div>
 
                 {/* Dual Runtime Comparison Box */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '16px' }}>
-                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
+                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>LEGACY RUNTIME</span>
-                      <span style={{ fontSize: '10.5px', color: '#64748b', fontFamily: 'monospace' }}>Latency: 14ms</span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#6b7280', textTransform: 'uppercase' }}>LEGACY RUNTIME</span>
+                      <span style={{ fontSize: '10.5px', color: '#6b7280', fontFamily: 'monospace' }}>Latency: 14ms</span>
                     </div>
-                    <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', fontFamily: 'monospace' }}>
+                    <div style={{ fontSize: '26px', fontWeight: 900, color: '#111827', fontFamily: 'monospace' }}>
                       ₹250.00
                     </div>
-                    <div style={{ fontSize: '11px', color: '#0d9488', fontWeight: 700, marginTop: '4px' }}>
+                    <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: 600, marginTop: '4px' }}>
                       Formula: 50,000 * 0.005 = 250.00 (RoundingMode.HALF_UP)
                     </div>
                   </div>
 
-                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#ffffff', border: '2px solid #e11d48' }}>
+                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '2px solid var(--accent-color)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>MODERN RUNTIME</span>
-                      <span style={{ fontSize: '10.5px', color: '#64748b', fontFamily: 'monospace' }}>Latency: 2ms</span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', textTransform: 'uppercase' }}>MODERN RUNTIME</span>
+                      <span style={{ fontSize: '10.5px', color: '#6b7280', fontFamily: 'monospace' }}>Latency: 2ms</span>
                     </div>
-                    <div style={{ fontSize: '26px', fontWeight: 900, color: '#e11d48', fontFamily: 'monospace' }}>
+                    <div style={{ fontSize: '26px', fontWeight: 900, color: 'var(--accent-color)', fontFamily: 'monospace' }}>
                       ₹249.99
                     </div>
-                    <div style={{ fontSize: '11px', color: '#e11d48', fontWeight: 700, marginTop: '4px' }}>
+                    <div style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 700, marginTop: '4px' }}>
                       Formula: 50,000 * 0.005 = 249.995 (RoundingMode.HALF_DOWN)
                     </div>
                   </div>
                 </div>
 
                 {/* Behavioral Drift Alert */}
-                <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3', color: '#9f1239', marginBottom: '18px' }}>
+                <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', color: 'var(--accent-color)', marginBottom: '18px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: '13px' }}>
-                    <AlertTriangle size={16} color="#e11d48" />
+                    <AlertTriangle size={16} color="var(--accent-color)" />
                     <span>⚠ BEHAVIORAL DRIFT DETECTED</span>
                   </div>
-                  <div style={{ display: 'flex', gap: '24px', marginTop: '6px', fontSize: '12px', fontFamily: 'monospace' }}>
+                  <div style={{ display: 'flex', gap: '24px', marginTop: '6px', fontSize: '12px', fontFamily: 'monospace', color: '#111827' }}>
                     <span>Expected: <strong>₹250.00</strong></span>
-                    <span>Actual: <strong>₹249.99</strong></span>
-                    <span style={{ color: '#be123c', fontWeight: 800 }}>Difference: ₹0.01</span>
+                    <span>Actual: <strong style={{ color: 'var(--accent-color)' }}>₹249.99</strong></span>
+                    <span style={{ color: 'var(--accent-color)', fontWeight: 800 }}>Difference: ₹0.01</span>
                   </div>
                 </div>
 
                 {/* DRIFT -> ROOT CAUSE -> SOURCE EVIDENCE (FEATURE 3) */}
-                <div style={{ borderTop: '1px solid #fecdd3', paddingTop: '16px' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#991b1b', marginBottom: '10px' }}>
+                <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-color)', marginBottom: '10px' }}>
                     Feature 3 • Drift ➔ Root Cause ➔ Source Evidence
                   </div>
 
                   {/* Step-down Trace Chain */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '14px', fontSize: '11.5px', fontWeight: 700 }}>
-                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#fee2e2', color: '#991b1b' }}>
+                    <span className="pill-badge">
                       DRIFT DETECTED
                     </span>
-                    <span style={{ color: '#94a3b8' }}>➔</span>
-                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#334155' }}>
+                    <span style={{ color: '#9ca3af' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f3f4f6', color: '#374151' }}>
                       Fee calculation changed
                     </span>
-                    <span style={{ color: '#94a3b8' }}>➔</span>
-                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#334155' }}>
+                    <span style={{ color: '#9ca3af' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f3f4f6', color: '#374151' }}>
                       Rounding behaviour changed
                     </span>
-                    <span style={{ color: '#94a3b8' }}>➔</span>
-                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#ccfbf1', color: '#0f766e', fontFamily: 'monospace' }}>
+                    <span style={{ color: '#9ca3af' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', border: '1px solid var(--accent-border)', fontFamily: 'monospace' }}>
                       FeeCalculation.java:Line 45
                     </span>
                   </div>
 
                   {/* Exact Source Diff */}
-                  <div style={{ borderRadius: '6px', overflow: 'hidden', border: '1px solid #cbd5e1' }}>
-                    <div style={{ padding: '8px 12px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between' }}>
+                  <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #e5e7eb' }}>
+                    <div style={{ padding: '8px 12px', backgroundColor: '#f9fafb', color: '#4b5563', fontSize: '11px', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #e5e7eb' }}>
                       <span>FeeCalculation.java (Line 45)</span>
-                      <span style={{ color: '#f43f5e' }}>Unified Source Difference</span>
+                      <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>Unified Source Difference</span>
                     </div>
-                    <pre style={{ margin: 0, padding: '12px 14px', backgroundColor: '#0f172a', color: '#f8fafc', fontSize: '11.5px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                    <pre style={{ margin: 0, padding: '12px 14px', backgroundColor: '#ffffff', color: '#111827', fontSize: '11.5px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
 {`- BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_UP);
 + BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_DOWN);`}
                     </pre>
                   </div>
-                  <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '10px', lineHeight: 1.5 }}>
+                  <div style={{ fontSize: '11.5px', color: '#4b5563', marginTop: '10px', lineHeight: 1.5 }}>
                     <strong>Technical Root Cause:</strong> The modern refactored microservice inadvertently swapped the rounding mode from <code>HALF_UP</code> to <code>HALF_DOWN</code>. Standard unit tests pass because tests did not assert decimal precision at boundary thresholds. LegacyX behavioral replay detected the ₹0.01 drift and isolated the exact line of code.
                   </div>
                 </div>
@@ -2810,17 +2802,17 @@ public class ModernizedAccountService implements TransferUseCase {
 
               {/* Scenarios Table */}
               <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                <div style={{ padding: '14px 18px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc' }}>
-                  <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
+                <div style={{ padding: '14px 18px', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f9fafb' }}>
+                  <div style={{ fontWeight: 800, fontSize: '13px', color: '#111827' }}>
                     Dual-Harness Execution Matrix (8 Replayed Scenarios)
                   </div>
-                  <span style={{ fontSize: '11px', color: '#64748b' }}>
+                  <span style={{ fontSize: '11px', color: '#6b7280' }}>
                     7 Preserved • 1 Silent Drift
                   </span>
                 </div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
                   <thead>
-                    <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left', color: '#64748b', fontSize: '11px', textTransform: 'uppercase' }}>
+                    <tr style={{ backgroundColor: '#f9fafb', borderBottom: '1px solid #e5e7eb', textAlign: 'left', color: '#6b7280', fontSize: '11px', textTransform: 'uppercase' }}>
                       <th style={{ padding: '12px 16px' }}>Scenario</th>
                       <th style={{ padding: '12px 16px' }}>Legacy Output</th>
                       <th style={{ padding: '12px 16px' }}>Modern Output</th>
@@ -2830,17 +2822,27 @@ public class ModernizedAccountService implements TransferUseCase {
                   </thead>
                   <tbody>
                     {replays.map((r) => (
-                      <tr key={r.id} style={{ borderBottom: '1px solid #e2e8f0', backgroundColor: r.comparison_status === 'BEHAVIOR_DRIFT' ? '#fffafb' : '#ffffff' }}>
+                      <tr key={r.id} style={{ borderBottom: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
                         <td style={{ padding: '12px 16px' }}>
-                          <div style={{ fontWeight: 700, color: '#0f172a' }}>{r.scenario_name}</div>
-                          <div style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace' }}>{r.scenario_id} • {r.scenario_category}</div>
+                          <div style={{ fontWeight: 700, color: '#111827' }}>{r.scenario_name}</div>
+                          <div style={{ fontSize: '11px', color: '#6b7280', fontFamily: 'monospace' }}>{r.scenario_id} • {r.scenario_category}</div>
                         </td>
-                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: '#0f172a' }}>{r.legacy_decision}</td>
-                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: r.comparison_status === 'BEHAVIOR_DRIFT' ? '#e11d48' : '#059669', fontWeight: 700 }}>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: '#111827' }}>{r.legacy_decision}</td>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11.5px', color: r.comparison_status === 'BEHAVIOR_DRIFT' ? 'var(--accent-color)' : '#111827', fontWeight: 700 }}>
                           {r.modern_decision}
                         </td>
                         <td style={{ padding: '12px 16px' }}>
-                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: r.comparison_status === 'PRESERVED' ? '#dcfce7' : '#fee2e2', color: r.comparison_status === 'PRESERVED' ? '#16a34a' : '#991b1b' }}>
+                          <span
+                            style={{
+                              fontSize: '10.5px',
+                              fontWeight: 800,
+                              padding: '3px 8px',
+                              borderRadius: '999px',
+                              backgroundColor: r.comparison_status === 'PRESERVED' ? '#f3f4f6' : 'var(--accent-light)',
+                              color: r.comparison_status === 'PRESERVED' ? '#374151' : 'var(--accent-color)',
+                              border: r.comparison_status === 'PRESERVED' ? '1px solid #e5e7eb' : '1px solid var(--accent-border)',
+                            }}
+                          >
                             {r.comparison_status === 'PRESERVED' ? 'PRESERVED' : 'SILENT DRIFT'}
                           </span>
                         </td>
@@ -2866,7 +2868,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Language-Agnostic Invariant Specifications
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2887,13 +2889,13 @@ public class ModernizedAccountService implements TransferUseCase {
                       style={{
                         padding: '12px 14px',
                         borderRadius: '8px',
-                        backgroundColor: selectedContract.id === c.id ? '#f0fdf4' : '#f8fafc',
-                        border: `1px solid ${selectedContract.id === c.id ? '#0d9488' : '#e2e8f0'}`,
+                        backgroundColor: selectedContract.id === c.id ? 'var(--accent-light)' : '#ffffff',
+                        border: `1px solid ${selectedContract.id === c.id ? 'var(--accent-color)' : '#e5e7eb'}`,
                         cursor: 'pointer',
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '11px', fontWeight: 800, color: '#0d9488', fontFamily: 'monospace' }}>{c.contract_id}</span>
+                        <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', fontFamily: 'monospace' }}>{c.contract_id}</span>
                         <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#e2e8f0' }}>v{c.version}</span>
                       </div>
                       <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0f172a', marginTop: '4px' }}>{c.name}</div>
@@ -2904,10 +2906,10 @@ public class ModernizedAccountService implements TransferUseCase {
                 <div className="card-clean" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#0d9488', fontFamily: 'monospace' }}>{selectedContract.contract_id}</span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', fontFamily: 'monospace' }}>{selectedContract.contract_id}</span>
                       <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a' }}>{selectedContract.name}</h3>
                     </div>
-                    <span className="pill-badge" style={{ backgroundColor: '#dcfce7', color: '#16a34a' }}>
+                    <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                       Audited Spec
                     </span>
                   </div>
@@ -2943,7 +2945,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Multi-Layer Dependency Explorer
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -2958,7 +2960,7 @@ public class ModernizedAccountService implements TransferUseCase {
                     <button
                       key={layer}
                       className={`btn-secondary ${selectedLayer === layer ? 'active' : ''}`}
-                      style={{ padding: '4px 10px', fontSize: '11.5px', backgroundColor: selectedLayer === layer ? '#0d9488' : '#ffffff', color: selectedLayer === layer ? '#ffffff' : '#0f172a' }}
+                      style={{ padding: '4px 10px', fontSize: '11.5px', backgroundColor: selectedLayer === layer ? 'var(--accent-color)' : '#ffffff', color: selectedLayer === layer ? '#ffffff' : '#0f172a' }}
                       onClick={() => setSelectedLayer(layer)}
                     >
                       {layer}
@@ -2976,14 +2978,14 @@ public class ModernizedAccountService implements TransferUseCase {
                     style={{
                       padding: '16px',
                       cursor: 'pointer',
-                      border: selectedBlastNode.id === n.id ? '2px solid #0d9488' : '1px solid #e2e8f0',
+                      border: selectedBlastNode.id === n.id ? '2px solid var(--accent-color)' : '1px solid #e5e7eb',
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#475569' }}>
                         {n.layer}
                       </span>
-                      <span style={{ fontSize: '10px', fontWeight: 800, color: n.risk === 'CRITICAL' ? '#b91c1c' : n.risk === 'HIGH' ? '#d97706' : '#2563eb' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--accent-color)' }}>
                         {n.risk} RISK
                       </span>
                     </div>
@@ -2999,7 +3001,7 @@ public class ModernizedAccountService implements TransferUseCase {
           {activeTab === 'whatif' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
-                <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                   Policy Drift Simulation
                 </span>
                 <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -3056,8 +3058,8 @@ public class ModernizedAccountService implements TransferUseCase {
                     Simulation Outcome & Policy Decision Trace
                   </div>
                   {whatIfResult ? (
-                    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#f0fdf4', border: '1px solid #a7f3d0' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#059669', textTransform: 'uppercase' }}>Simulated Decision</div>
+                    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', textTransform: 'uppercase' }}>Simulated Decision</div>
                       <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a', marginTop: '4px' }}>{whatIfResult}</div>
                     </div>
                   ) : (
@@ -3074,7 +3076,7 @@ public class ModernizedAccountService implements TransferUseCase {
           {activeTab === 'risk' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
-                <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                   Modernization Readiness
                 </span>
                 <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -3088,8 +3090,8 @@ public class ModernizedAccountService implements TransferUseCase {
               <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '20px' }}>
                 <div className="card-clean" style={{ padding: '24px', textAlign: 'center' }}>
                   <div style={{ fontSize: '12px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>Overall Modernization Risk</div>
-                  <div style={{ fontSize: '48px', fontWeight: 900, color: '#d97706', margin: '10px 0' }}>58.2</div>
-                  <span className="pill-badge" style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
+                  <div style={{ fontSize: '48px', fontWeight: 900, color: 'var(--accent-color)', margin: '10px 0' }}>58.2</div>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                     Moderate Risk • Controlled
                   </span>
                   <p style={{ fontSize: '11.5px', color: '#64748b', marginTop: '12px' }}>
@@ -3111,7 +3113,7 @@ public class ModernizedAccountService implements TransferUseCase {
                       </div>
                       <div style={{ textAlign: 'right' }}>
                         <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a' }}>{item.score}</div>
-                        <span style={{ fontSize: '10px', fontWeight: 700, color: '#0d9488' }}>{item.status}</span>
+                        <span style={{ fontSize: '10px', fontWeight: 700, color: 'var(--accent-color)' }}>{item.status}</span>
                       </div>
                     </div>
                   ))}
@@ -3125,7 +3127,7 @@ public class ModernizedAccountService implements TransferUseCase {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
-                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                  <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', borderColor: 'var(--accent-border)' }}>
                     Feature 5 • Formal Enterprise Deliverable
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
@@ -3181,20 +3183,20 @@ public class ModernizedAccountService implements TransferUseCase {
               </div>
 
               {reportExported && (
-                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: '#dcfce7', border: '1px solid #86efac', color: '#166534', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <CheckCircle2 size={16} color="#16a34a" />
+                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', color: 'var(--accent-color)', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <CheckCircle2 size={16} color="var(--accent-color)" />
                   <span>{reportExported}</span>
                 </div>
               )}
 
               {/* Certificate Document Card */}
-              <div className="card-clean" style={{ padding: '36px', maxWidth: '920px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff', border: '2px solid #0d9488' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #0d9488', paddingBottom: '16px', marginBottom: '24px' }}>
+              <div className="card-clean" style={{ padding: '36px', maxWidth: '920px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff', border: '2px solid var(--accent-color)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--accent-color)', paddingBottom: '16px', marginBottom: '24px' }}>
                   <div>
                     <span style={{ fontSize: '22px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>
-                      LEGACY<span style={{ color: '#0d9488' }}>X</span> BEHAVIORAL ASSURANCE
+                      LEGACY<span style={{ color: 'var(--accent-color)' }}>X</span> BEHAVIORAL ASSURANCE
                     </span>
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: '#0d9488', marginTop: '2px' }}>
+                    <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-color)', marginTop: '2px' }}>
                       Project: LegacyBank Core • Certificate ID: CERT-20260928-8D4A
                     </div>
                   </div>
@@ -3202,7 +3204,7 @@ public class ModernizedAccountService implements TransferUseCase {
                     <span style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, display: 'block' }}>
                       Behavioral Status
                     </span>
-                    <span style={{ fontSize: '14px', fontWeight: 900, padding: '4px 12px', borderRadius: '4px', backgroundColor: '#fef3c7', color: '#92400e', display: 'inline-block', marginTop: '3px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 900, padding: '4px 12px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)', display: 'inline-block', marginTop: '3px' }}>
                       CONDITIONAL ASSURANCE
                     </span>
                   </div>
@@ -3214,38 +3216,38 @@ public class ModernizedAccountService implements TransferUseCase {
                     <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
                       <div style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', fontWeight: 700 }}>Scenarios Executed</div>
                       <div style={{ fontSize: '22px', fontWeight: 900, color: '#0f172a', marginTop: '4px' }}>24</div>
-                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600 }}>100% boundary coverage</div>
+                      <div style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 600 }}>100% boundary coverage</div>
                     </div>
-                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
-                      <div style={{ fontSize: '11px', color: '#166534', textTransform: 'uppercase', fontWeight: 700 }}>Equivalent Preserved</div>
-                      <div style={{ fontSize: '22px', fontWeight: 900, color: '#15803d', marginTop: '4px' }}>23</div>
-                      <div style={{ fontSize: '11px', color: '#166534', fontWeight: 600 }}>Bitwise verified</div>
+                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                      <div style={{ fontSize: '11px', color: 'var(--accent-color)', textTransform: 'uppercase', fontWeight: 700 }}>Equivalent Preserved</div>
+                      <div style={{ fontSize: '22px', fontWeight: 900, color: 'var(--accent-color)', marginTop: '4px' }}>23</div>
+                      <div style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 600 }}>Bitwise verified</div>
                     </div>
-                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3' }}>
-                      <div style={{ fontSize: '11px', color: '#9f1239', textTransform: 'uppercase', fontWeight: 700 }}>Drift Detected</div>
-                      <div style={{ fontSize: '22px', fontWeight: 900, color: '#be123c', marginTop: '4px' }}>1</div>
-                      <div style={{ fontSize: '11px', color: '#be123c', fontWeight: 600 }}>Root cause identified</div>
+                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                      <div style={{ fontSize: '11px', color: 'var(--accent-color)', textTransform: 'uppercase', fontWeight: 700 }}>Drift Detected</div>
+                      <div style={{ fontSize: '22px', fontWeight: 900, color: 'var(--accent-color)', marginTop: '4px' }}>1</div>
+                      <div style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 600 }}>Root cause identified</div>
                     </div>
                   </div>
 
                   {/* Verification Dimensions */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
                     <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <CheckCircle2 size={16} color="#10b981" />
+                      <CheckCircle2 size={16} color="var(--accent-color)" />
                       <div>
                         <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Root Cause Identified</div>
                         <div style={{ fontSize: '10.5px', color: '#64748b' }}>FeeCalculation.java:Line 45</div>
                       </div>
                     </div>
                     <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <CheckCircle2 size={16} color="#10b981" />
+                      <CheckCircle2 size={16} color="var(--accent-color)" />
                       <div>
                         <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Source Evidence</div>
                         <div style={{ fontSize: '10.5px', color: '#64748b' }}>Verified Unified Diff</div>
                       </div>
                     </div>
                     <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <CheckCircle2 size={16} color="#10b981" />
+                      <CheckCircle2 size={16} color="var(--accent-color)" />
                       <div>
                         <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Human Review</div>
                         <div style={{ fontSize: '10.5px', color: '#64748b' }}>Lead Auditor Sign-Off</div>
@@ -3254,10 +3256,10 @@ public class ModernizedAccountService implements TransferUseCase {
                   </div>
 
                   {/* Evidence Hash Banner */}
-                  <div style={{ padding: '14px 18px', borderRadius: '6px', backgroundColor: '#071525', color: '#f8fafc', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+                  <div style={{ padding: '14px 18px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
                     <div>
                       <span style={{ color: '#94a3b8', textTransform: 'uppercase', fontSize: '10.5px', display: 'block' }}>Evidence Hash</span>
-                      <span style={{ color: '#38bdf8', fontWeight: 800 }}>8d4a...91c2</span>
+                      <span style={{ color: 'var(--accent-color)', fontWeight: 800 }}>8d4a...91c2</span>
                     </div>
                     <div style={{ textAlign: 'right', fontSize: '11px', color: '#94a3b8' }}>
                       Merkle Root: sha256:8d4a7c19b2e4f018a3d902e8412691c2f91040854388e2193b04a99187310574
@@ -3297,17 +3299,17 @@ public class ModernizedAccountService implements TransferUseCase {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="pill-badge" style={{ backgroundColor: '#fee2e2', color: '#991b1b', fontWeight: 800 }}>
+                    <span className="pill-badge">
                       Developer Safety Layer
                     </span>
-                    <span className="pill-badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1', fontWeight: 700 }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#f3f4f6', color: '#4b5563', border: '1px solid #e5e7eb' }}>
                       VS Code Extension: LegacyX Guard
                     </span>
                   </div>
-                  <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#0f172a', marginTop: '6px' }}>
+                  <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#111827', marginTop: '6px' }}>
                     LegacyX Guard — Behavioral Assurance Inside the IDE
                   </h2>
-                  <p style={{ fontSize: '13px', color: '#64748b' }}>
+                  <p style={{ fontSize: '13px', color: '#6b7280' }}>
                     <em>“Know what your code change changes. Catch behavioral drift before it reaches production.”</em>
                   </p>
                 </div>
@@ -3317,9 +3319,9 @@ public class ModernizedAccountService implements TransferUseCase {
                   <button
                     className="btn-secondary"
                     style={{
-                      backgroundColor: guardMutated ? '#fff1f2' : '#f0fdf4',
-                      borderColor: guardMutated ? '#fecdd3' : '#bbf7d0',
-                      color: guardMutated ? '#be123c' : '#15803d',
+                      backgroundColor: guardMutated ? 'var(--accent-light)' : '#ffffff',
+                      borderColor: guardMutated ? 'var(--accent-border)' : '#e5e7eb',
+                      color: guardMutated ? 'var(--accent-color)' : '#4b5563',
                       fontWeight: 700,
                     }}
                     onClick={() => {
@@ -3364,7 +3366,7 @@ public class ModernizedAccountService implements TransferUseCase {
                       )
                     }}
                   >
-                    <Sparkles size={14} color="#6366f1" />
+                    <Sparkles size={14} color="var(--accent-color)" />
                     <span>Ask LegacyX AI</span>
                   </button>
                 </div>
@@ -3372,12 +3374,11 @@ public class ModernizedAccountService implements TransferUseCase {
 
               {/* The Hero Wow Quote Banner */}
               <div
+                className="card-clean"
                 style={{
-                  padding: '16px 20px',
-                  borderRadius: '8px',
-                  backgroundColor: '#071525',
-                  border: '1px solid #1e293b',
-                  color: '#f8fafc',
+                  padding: '18px 24px',
+                  backgroundColor: 'var(--accent-light)',
+                  border: '1px solid var(--accent-border)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -3386,18 +3387,18 @@ public class ModernizedAccountService implements TransferUseCase {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.05em', fontWeight: 700 }}>
+                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: 'var(--accent-color)', letterSpacing: '0.06em', fontWeight: 800 }}>
                     Core Thesis in the Developer Workflow
                   </div>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#38bdf8', marginTop: '2px' }}>
-                    “The compiler said this change was valid. LegacyX said the business decision wasn't.”
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginTop: '3px' }}>
+                    “The compiler said this change was valid. <span style={{ color: 'var(--accent-color)' }}>LegacyX said the business decision wasn't.”</span>
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: '#1e293b', color: '#cbd5e1', fontFamily: 'monospace' }}>
+                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: '#ffffff', border: '1px solid var(--accent-border)', color: '#4b5563', fontFamily: 'monospace' }}>
                     File: FeeCalculation.java:45
                   </span>
-                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: guardMutated ? '#991b1b' : '#166534', color: '#ffffff', fontWeight: 700 }}>
+                  <span className="pill-badge" style={{ backgroundColor: guardMutated ? 'var(--accent-color)' : '#ffffff', color: guardMutated ? '#ffffff' : 'var(--accent-color)' }}>
                     {guardMutated ? '1 DRIFT DETECTED' : '7/7 EQUIVALENT'}
                   </span>
                 </div>
@@ -3408,18 +3409,19 @@ public class ModernizedAccountService implements TransferUseCase {
                 <div
                   style={{
                     padding: '10px 16px',
-                    borderRadius: '6px',
-                    backgroundColor: guardMutated ? '#fff1f2' : '#f0fdf4',
-                    border: `1px solid ${guardMutated ? '#fecdd3' : '#bbf7d0'}`,
-                    color: guardMutated ? '#9f1239' : '#166534',
+                    borderRadius: '8px',
+                    backgroundColor: 'var(--accent-light)',
+                    border: '1px solid var(--accent-border)',
+                    color: 'var(--accent-color)',
                     fontSize: '12px',
+                    fontWeight: 600,
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {guardMutated ? <AlertTriangle size={15} /> : <CheckCircle2 size={15} />}
+                    {guardMutated ? <AlertTriangle size={15} color="var(--accent-color)" /> : <CheckCircle2 size={15} color="var(--accent-color)" />}
                     <span>{guardNotice}</span>
                   </div>
                   <button
@@ -3436,22 +3438,22 @@ public class ModernizedAccountService implements TransferUseCase {
                 <div
                   style={{
                     padding: '14px 18px',
-                    borderRadius: '6px',
-                    backgroundColor: '#eef2ff',
-                    border: '1px solid #c7d2fe',
-                    color: '#312e81',
+                    borderRadius: '8px',
+                    backgroundColor: 'var(--accent-light)',
+                    border: '1px solid var(--accent-border)',
+                    color: '#111827',
                     fontSize: '12.5px',
                     lineHeight: 1.6,
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <span style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Sparkles size={14} color="#6366f1" />
+                    <span style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-color)' }}>
+                      <Sparkles size={14} color="var(--accent-color)" />
                       Ask LegacyX — Grounded AI Reasoning
                     </span>
                     <button
                       onClick={() => setGuardAiAnswer(null)}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#312e81' }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}
                     >
                       <X size={14} />
                     </button>
@@ -3462,173 +3464,130 @@ public class ModernizedAccountService implements TransferUseCase {
 
               {/* 4 Capabilities Selector Buttons */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
-                <button
-                  className="card-clean"
-                  style={{
-                    padding: '12px 14px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    border: guardStep === 'understand' ? '2px solid #2563eb' : '1px solid #e2e8f0',
-                    backgroundColor: guardStep === 'understand' ? '#eff6ff' : '#ffffff',
-                  }}
-                  onClick={() => setGuardStep('understand')}
-                >
-                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>01 — Understand</div>
-                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Business Decisions</div>
-                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>3 decisions found</div>
-                </button>
-
-                <button
-                  className="card-clean"
-                  style={{
-                    padding: '12px 14px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    border: guardStep === 'baseline' ? '2px solid #2563eb' : '1px solid #e2e8f0',
-                    backgroundColor: guardStep === 'baseline' ? '#eff6ff' : '#ffffff',
-                  }}
-                  onClick={() => setGuardStep('baseline')}
-                >
-                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>02 — Capture</div>
-                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Behavioral Baseline</div>
-                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>7 frozen scenarios</div>
-                </button>
-
-                <button
-                  className="card-clean"
-                  style={{
-                    padding: '12px 14px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    border: guardStep === 'impact' ? '2px solid #2563eb' : '1px solid #e2e8f0',
-                    backgroundColor: guardStep === 'impact' ? '#eff6ff' : '#ffffff',
-                  }}
-                  onClick={() => setGuardStep('impact')}
-                >
-                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>03 — Change Impact</div>
-                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Blast Radius Analysis</div>
-                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>3 services, 2 APIs</div>
-                </button>
-
-                <button
-                  className="card-clean"
-                  style={{
-                    padding: '12px 14px',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    border: guardStep === 'prove' ? '2px solid #e11d48' : '1px solid #e2e8f0',
-                    backgroundColor: guardStep === 'prove' ? '#fff1f2' : '#ffffff',
-                  }}
-                  onClick={() => setGuardStep('prove')}
-                >
-                  <div style={{ fontSize: '10.5px', fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>04 — Prove</div>
-                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>Dual Replay &amp; Drift</div>
-                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>Exact source diff</div>
-                </button>
+                {[
+                  { key: 'understand', num: '01', title: 'Business Decisions', sub: '3 decisions found' },
+                  { key: 'baseline', num: '02', title: 'Behavioral Baseline', sub: '7 frozen scenarios' },
+                  { key: 'impact', num: '03', title: 'Blast Radius Analysis', sub: '3 services, 2 APIs' },
+                  { key: 'prove', num: '04', title: 'Dual Replay & Drift', sub: 'Exact source diff' },
+                ].map((step) => {
+                  const isSel = guardStep === step.key
+                  return (
+                    <button
+                      key={step.key}
+                      className="card-clean"
+                      style={{
+                        padding: '12px 14px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        border: isSel ? '2px solid var(--accent-color)' : '1px solid #e5e7eb',
+                        backgroundColor: isSel ? 'var(--accent-light)' : '#ffffff',
+                        transition: 'all 120ms ease',
+                      }}
+                      onClick={() => setGuardStep(step.key as any)}
+                    >
+                      <div style={{ fontSize: '10.5px', fontWeight: 800, color: isSel ? 'var(--accent-color)' : '#6b7280', textTransform: 'uppercase' }}>
+                        {step.num} — {step.key === 'understand' ? 'Understand' : step.key === 'baseline' ? 'Capture' : step.key === 'impact' ? 'Change Impact' : 'Prove'}
+                      </div>
+                      <div style={{ fontSize: '13px', fontWeight: 800, color: '#111827', marginTop: '2px' }}>{step.title}</div>
+                      <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{step.sub}</div>
+                    </button>
+                  )
+                })}
               </div>
 
-              {/* REALISTIC VS CODE IDE SIMULATOR */}
+              {/* REALISTIC VS CODE IDE SIMULATOR (STRICT 2-COLOR CLEAN LIGHT PALETTE) */}
               <div
+                className="card-clean"
                 style={{
-                  borderRadius: '10px',
-                  backgroundColor: '#070d17',
-                  border: '1px solid #1e293b',
+                  borderRadius: '12px',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e5e7eb',
                   overflow: 'hidden',
-                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)',
                 }}
               >
                 {/* IDE Window Title Bar */}
                 <div
                   style={{
-                    backgroundColor: '#0b1320',
+                    backgroundColor: '#f9fafb',
                     padding: '10px 16px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    borderBottom: '1px solid #1e293b',
+                    borderBottom: '1px solid #e5e7eb',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
-                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
-                    <div style={{ width: '11px', height: '11px', borderRadius: '50%', backgroundColor: '#10b981' }} />
-                    <span style={{ fontSize: '12px', color: '#94a3b8', marginLeft: '12px', fontFamily: 'monospace' }}>
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#cbd5e1' }} />
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#cbd5e1' }} />
+                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#cbd5e1' }} />
+                    <span style={{ fontSize: '12px', color: '#4b5563', marginLeft: '12px', fontFamily: 'monospace', fontWeight: 600 }}>
                       FeeCalculation.java — LegacyBank Core (LegacyX Guard IDE Extension)
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <ShieldCheck size={13} />
+                    <span style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <ShieldCheck size={13} color="var(--accent-color)" />
                       <span>GUARD ACTIVE</span>
                     </span>
                   </div>
                 </div>
 
                 {/* IDE Body: Split Layout */}
-                <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', minHeight: '520px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '310px 1fr', minHeight: '520px' }}>
                   {/* Left Activity / Guard Sidebar */}
                   <div
                     style={{
-                      backgroundColor: '#0a101d',
-                      borderRight: '1px solid #1e293b',
+                      backgroundColor: '#fafafa',
+                      borderRight: '1px solid #e5e7eb',
                       padding: '16px',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '16px',
+                      gap: '14px',
                     }}
                   >
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#38bdf8', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase' }}>
-                        <ShieldCheck size={14} />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--accent-color)', fontSize: '11px', fontWeight: 800, textTransform: 'uppercase' }}>
+                        <ShieldCheck size={14} color="var(--accent-color)" />
                         <span>LegacyX Guard Panel</span>
                       </div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: '#f8fafc', marginTop: '4px' }}>
+                      <div style={{ fontSize: '13px', fontWeight: 700, color: '#111827', marginTop: '4px' }}>
                         Decision Shield
                       </div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>
+                      <div style={{ fontSize: '11px', color: '#6b7280' }}>
                         com.legacybank.service.FeeCalculation
                       </div>
                     </div>
 
                     {/* Section 1: Business Decisions (3) */}
-                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '12px', border: '1px solid #1e293b' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', padding: '12px', border: '1px solid #e5e7eb' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#111827', textTransform: 'uppercase', marginBottom: '8px' }}>
                         Decisions Found (3)
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>Transfer Fee Tariff</span>
-                            <span style={{ fontSize: '9.5px', color: '#f43f5e', fontWeight: 800, backgroundColor: '#881337', padding: '2px 5px', borderRadius: '3px' }}>HIGH</span>
+                        {[
+                          { title: 'Transfer Fee Tariff', sub: 'amount > ₹50,000 ? 0.50% : 0.25%', tag: 'HIGH', note: '7 covered scenarios' },
+                          { title: 'Compliance Hold', sub: 'amount > ₹50k & risk > 70', tag: 'CRITICAL', note: null },
+                          { title: 'VIP Discount', sub: 'is_vip == true ? 50% off', tag: 'LOW', note: null },
+                        ].map((d, i) => (
+                          <div key={i} style={{ padding: '8px 10px', borderRadius: '6px', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#111827' }}>{d.title}</span>
+                              <span className="pill-badge" style={{ fontSize: '9px', padding: '1px 5px' }}>{d.tag}</span>
+                            </div>
+                            <div style={{ fontSize: '10.5px', color: '#6b7280', marginTop: '2px', fontFamily: 'monospace' }}>{d.sub}</div>
+                            {d.note && <div style={{ fontSize: '10px', color: 'var(--accent-color)', fontWeight: 600, marginTop: '2px' }}>{d.note}</div>}
                           </div>
-                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>amount &gt; ₹50,000 ? 0.50% : 0.25%</div>
-                          <div style={{ fontSize: '10px', color: '#38bdf8', marginTop: '2px' }}>7 covered scenarios</div>
-                        </div>
-
-                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>Compliance Hold</span>
-                            <span style={{ fontSize: '9.5px', color: '#f59e0b', fontWeight: 800, backgroundColor: '#78350f', padding: '2px 5px', borderRadius: '3px' }}>CRITICAL</span>
-                          </div>
-                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>amount &gt; ₹50k &amp; risk &gt; 70</div>
-                        </div>
-
-                        <div style={{ padding: '6px 8px', borderRadius: '4px', backgroundColor: '#0f172a', border: '1px solid #334155' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#f8fafc' }}>VIP Discount</span>
-                            <span style={{ fontSize: '9.5px', color: '#10b981', fontWeight: 800, backgroundColor: '#064e3b', padding: '2px 5px', borderRadius: '3px' }}>LOW</span>
-                          </div>
-                          <div style={{ fontSize: '10.5px', color: '#94a3b8', marginTop: '2px' }}>is_vip == true ? 50% off</div>
-                        </div>
+                        ))}
                       </div>
                     </div>
 
                     {/* Section 2: Blast Radius */}
-                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '12px', border: '1px solid #1e293b' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '8px' }}>
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', padding: '12px', border: '1px solid #e5e7eb' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 800, color: '#111827', textTransform: 'uppercase', marginBottom: '8px' }}>
                         Change Impact (Blast Radius)
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '11px', color: '#cbd5e1' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '11px', color: '#4b5563' }}>
                         <div>• <strong>3 Downstream Services:</strong> AccountService, TransferService, AuditLedger</div>
                         <div>• <strong>2 Public APIs:</strong> POST /transfers, GET /fees/estimate</div>
                         <div>• <strong>7 Behavioral Scenarios</strong></div>
@@ -3636,50 +3595,50 @@ public class ModernizedAccountService implements TransferUseCase {
                     </div>
 
                     {/* Section 3: Baseline Fingerprint */}
-                    <div style={{ backgroundColor: '#070d17', borderRadius: '6px', padding: '10px', border: '1px solid #1e293b' }}>
-                      <div style={{ fontSize: '10.5px', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>Frozen Baseline Hash</div>
-                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#38bdf8', marginTop: '2px', wordBreak: 'break-all' }}>
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', padding: '10px', border: '1px solid #e5e7eb' }}>
+                      <div style={{ fontSize: '10.5px', color: '#6b7280', textTransform: 'uppercase', fontWeight: 700 }}>Frozen Baseline Hash</div>
+                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: 'var(--accent-color)', fontWeight: 600, marginTop: '2px', wordBreak: 'break-all' }}>
                         sha256:4f9a0c2188b1ec45d3e098a12903fe45b8
                       </div>
                     </div>
                   </div>
 
                   {/* Right Main Editor */}
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
                     {/* Tab Header Bar */}
-                    <div style={{ backgroundColor: '#0b1320', padding: '6px 14px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid #1e293b' }}>
-                      <span style={{ fontSize: '12px', color: '#f8fafc', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <FileCode2 size={14} color="#eab308" />
+                    <div style={{ backgroundColor: '#f9fafb', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid #e5e7eb' }}>
+                      <span style={{ fontSize: '12px', color: '#111827', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <FileCode2 size={14} color="var(--accent-color)" />
                         <span>FeeCalculation.java</span>
-                        {guardMutated && <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#f43f5e' }} />}
+                        {guardMutated && <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--accent-color)' }} />}
                       </span>
-                      <span style={{ fontSize: '11px', color: '#64748b', marginLeft: 'auto', fontFamily: 'monospace' }}>
+                      <span style={{ fontSize: '11px', color: '#9ca3af', marginLeft: 'auto', fontFamily: 'monospace' }}>
                         UTF-8 | Java 17 | Line 45:28
                       </span>
                     </div>
 
                     {/* Editor Content Area */}
-                    <div style={{ padding: '16px 20px', fontFamily: 'Consolas, "Fira Code", monospace', fontSize: '12.5px', lineHeight: 1.7, color: '#e2e8f0', flex: 1 }}>
-                      {/* CodeLens Line atop calculateTransferFee */}
+                    <div style={{ padding: '16px 20px', fontFamily: 'Consolas, "Fira Code", monospace', fontSize: '12.5px', lineHeight: 1.7, color: '#111827', flex: 1 }}>
+                      {/* CodeLens Line */}
                       <div
                         style={{
-                          backgroundColor: '#0f1f38',
-                          border: '1px dashed #38bdf8',
-                          borderRadius: '4px',
+                          backgroundColor: 'var(--accent-light)',
+                          border: '1px dashed var(--accent-border)',
+                          borderRadius: '6px',
                           padding: '6px 12px',
-                          marginBottom: '10px',
+                          marginBottom: '12px',
                           display: 'flex',
                           alignItems: 'center',
                           gap: '12px',
                           fontSize: '11.5px',
                         }}
                       >
-                        <span style={{ color: '#38bdf8', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <ShieldCheck size={14} />
+                        <span style={{ color: 'var(--accent-color)', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '5px' }}>
+                          <ShieldCheck size={14} color="var(--accent-color)" />
                           LegacyX Guard: 3 Business Decisions | 7 Scenarios Frozen
                         </span>
                         <button
-                          style={{ background: 'none', border: 'none', color: '#a5b4fc', cursor: 'pointer', fontWeight: 700, padding: 0 }}
+                          style={{ background: 'none', border: 'none', color: 'var(--accent-color)', cursor: 'pointer', fontWeight: 700, padding: 0 }}
                           onClick={() => {
                             setGuardVerifying(true)
                             setTimeout(() => {
@@ -3690,7 +3649,7 @@ public class ModernizedAccountService implements TransferUseCase {
                           [▶ Verify Change (Replay)]
                         </button>
                         <button
-                          style={{ background: 'none', border: 'none', color: '#a5b4fc', cursor: 'pointer', fontWeight: 700, padding: 0 }}
+                          style={{ background: 'none', border: 'none', color: 'var(--accent-color)', cursor: 'pointer', fontWeight: 700, padding: 0 }}
                           onClick={() => {
                             setGuardAiAnswer(
                               'Method calculateTransferFee() is classified as HIGH RISK because it directly governs monetary debits across 3 downstream services. Under Scenario #04, altering RoundingMode produces a ₹0.01 drift.'
@@ -3702,37 +3661,37 @@ public class ModernizedAccountService implements TransferUseCase {
                       </div>
 
                       {/* Code Lines */}
-                      <div style={{ color: '#64748b' }}>36: package com.legacybank.service;</div>
-                      <div style={{ color: '#64748b' }}>37: public class FeeCalculation &#123;</div>
+                      <div style={{ color: '#9ca3af' }}>36: package com.legacybank.service;</div>
+                      <div style={{ color: '#9ca3af' }}>37: public class FeeCalculation &#123;</div>
                       <div>
-                        <span style={{ color: '#c084fc' }}>38:   public BigDecimal </span>
-                        <span style={{ color: '#60a5fa' }}>calculateTransferFee</span>
+                        <span style={{ fontWeight: 700, color: 'var(--accent-color)' }}>38:   public BigDecimal </span>
+                        <span style={{ fontWeight: 700, color: '#111827' }}>calculateTransferFee</span>
                         <span>(BigDecimal amount, String customerId, int riskScore) &#123;</span>
                       </div>
-                      <div><span style={{ color: '#64748b' }}>39:     if (amount == null || amount.compareTo(BigDecimal.ZERO) &lt;= 0) return BigDecimal.ZERO;</span></div>
-                      <div><span style={{ color: '#64748b' }}>40:     if (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0 &amp;&amp; riskScore &gt; 70) throw new SecurityException();</span></div>
-                      <div><span style={{ color: '#c084fc' }}>41:     BigDecimal feeRate = (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0) ? HIGH_RATE : STD_RATE;</span></div>
-                      <div><span style={{ color: '#64748b' }}>42: </span></div>
-                      <div><span style={{ color: '#64748b' }}>43:     // CRITICAL INVARIANT: Currency Rounding Mode</span></div>
-                      <div><span style={{ color: '#64748b' }}>44:     // Legacy: RoundingMode.HALF_UP (₹250.00) vs Modern: RoundingMode.HALF_DOWN (₹249.99)</span></div>
+                      <div><span style={{ color: '#9ca3af' }}>39:     if (amount == null || amount.compareTo(BigDecimal.ZERO) &lt;= 0) return BigDecimal.ZERO;</span></div>
+                      <div><span style={{ color: '#9ca3af' }}>40:     if (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0 &amp;&amp; riskScore &gt; 70) throw new SecurityException();</span></div>
+                      <div><span style={{ fontWeight: 700, color: 'var(--accent-color)' }}>41:     BigDecimal feeRate = (amount.compareTo(HIGH_VALUE_THRESHOLD) &gt; 0) ? HIGH_RATE : STD_RATE;</span></div>
+                      <div><span style={{ color: '#9ca3af' }}>42: </span></div>
+                      <div><span style={{ color: '#9ca3af' }}>43:     // CRITICAL INVARIANT: Currency Rounding Mode</span></div>
+                      <div><span style={{ color: '#9ca3af' }}>44:     // Legacy: RoundingMode.HALF_UP (₹250.00) vs Modern: RoundingMode.HALF_DOWN (₹249.99)</span></div>
 
                       {/* LINE 45: THE CRITICAL DRIFT LINE */}
                       <div
                         style={{
-                          backgroundColor: guardMutated ? 'rgba(225, 29, 72, 0.2)' : 'rgba(16, 185, 129, 0.15)',
-                          borderLeft: `3px solid ${guardMutated ? '#f43f5e' : '#10b981'}`,
+                          backgroundColor: guardMutated ? 'var(--accent-light)' : '#f9fafb',
+                          borderLeft: '3px solid var(--accent-color)',
                           padding: '4px 8px',
                           borderRadius: '2px',
                           margin: '4px 0',
                         }}
                       >
-                        <span style={{ fontWeight: 800, color: guardMutated ? '#fb7185' : '#4ade80' }}>45: </span>
+                        <span style={{ fontWeight: 800, color: 'var(--accent-color)' }}>45: </span>
                         <span>BigDecimal fee = amount.multiply(feeRate).setScale(2, </span>
                         <span
                           style={{
                             fontWeight: 800,
-                            color: guardMutated ? '#f43f5e' : '#10b981',
-                            textDecoration: guardMutated ? 'underline wavy #f43f5e' : 'none',
+                            color: 'var(--accent-color)',
+                            textDecoration: guardMutated ? 'underline wavy var(--accent-color)' : 'none',
                           }}
                         >
                           RoundingMode.{guardMutated ? 'HALF_DOWN' : 'HALF_UP'}
@@ -3744,54 +3703,45 @@ public class ModernizedAccountService implements TransferUseCase {
                       {guardMutated && (
                         <div
                           style={{
-                            backgroundColor: '#1c0a0e',
-                            border: '1px solid #e11d48',
-                            borderRadius: '6px',
-                            padding: '12px 14px',
-                            margin: '8px 0 12px 24px',
-                            color: '#ffe4e6',
-                            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
+                            backgroundColor: '#ffffff',
+                            border: '1.5px solid var(--accent-color)',
+                            borderRadius: '8px',
+                            padding: '14px 16px',
+                            margin: '10px 0 14px 20px',
+                            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.05)',
                           }}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span style={{ fontSize: '11px', fontWeight: 800, color: '#f43f5e', display: 'flex', alignItems: 'center', gap: '6px', textTransform: 'uppercase' }}>
-                              <AlertTriangle size={14} />
+                            <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', display: 'flex', alignItems: 'center', gap: '6px', textTransform: 'uppercase' }}>
+                              <AlertTriangle size={14} color="var(--accent-color)" />
                               ⚠ LEGACYX BEHAVIORAL DRIFT DETECTED
                             </span>
-                            <span style={{ fontSize: '10.5px', color: '#94a3b8' }}>Delta: ₹0.01</span>
+                            <span style={{ fontSize: '10.5px', color: '#6b7280', fontWeight: 600 }}>Delta: ₹0.01</span>
                           </div>
 
-                          <div style={{ marginTop: '8px', fontSize: '12px' }}>
+                          <div style={{ marginTop: '8px', fontSize: '12px', color: '#111827' }}>
                             <strong>Scenario #04:</strong> ₹50,000 transfer (Customer: CUST-1042 | Risk: 42)
                           </div>
 
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '6px', fontSize: '11.5px', fontFamily: 'monospace' }}>
-                            <div style={{ backgroundColor: '#2d0f15', padding: '6px 8px', borderRadius: '4px' }}>
-                              <span style={{ color: '#94a3b8' }}>LEGACY RUNTIME: </span>
-                              <strong style={{ color: '#10b981' }}>₹250.00</strong>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '8px', fontSize: '11.5px', fontFamily: 'monospace' }}>
+                            <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', padding: '6px 8px', borderRadius: '4px' }}>
+                              <span style={{ color: '#6b7280' }}>LEGACY RUNTIME: </span>
+                              <strong style={{ color: '#111827' }}>₹250.00</strong>
                             </div>
-                            <div style={{ backgroundColor: '#2d0f15', padding: '6px 8px', borderRadius: '4px' }}>
-                              <span style={{ color: '#94a3b8' }}>CURRENT RUNTIME: </span>
-                              <strong style={{ color: '#f43f5e' }}>₹249.99</strong>
+                            <div style={{ backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)', padding: '6px 8px', borderRadius: '4px' }}>
+                              <span style={{ color: '#6b7280' }}>CURRENT RUNTIME: </span>
+                              <strong style={{ color: 'var(--accent-color)' }}>₹249.99</strong>
                             </div>
                           </div>
 
-                          <div style={{ marginTop: '8px', fontSize: '11.5px', color: '#fecdd3' }}>
+                          <div style={{ marginTop: '8px', fontSize: '11.5px', color: '#4b5563' }}>
                             <strong>Root Cause:</strong> RoundingMode changed from <code>HALF_UP</code> to <code>HALF_DOWN</code> at Line 45.
                           </div>
 
                           <div style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
                             <button
-                              style={{
-                                fontSize: '11px',
-                                fontWeight: 700,
-                                backgroundColor: '#e11d48',
-                                color: '#ffffff',
-                                border: 'none',
-                                padding: '4px 10px',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                              }}
+                              className="btn-primary"
+                              style={{ padding: '4px 12px', fontSize: '11px' }}
                               onClick={() => {
                                 setGuardStep('prove')
                               }}
@@ -3799,16 +3749,8 @@ public class ModernizedAccountService implements TransferUseCase {
                               VIEW EVIDENCE
                             </button>
                             <button
-                              style={{
-                                fontSize: '11px',
-                                fontWeight: 700,
-                                backgroundColor: '#334155',
-                                color: '#ffffff',
-                                border: 'none',
-                                padding: '4px 10px',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                              }}
+                              className="btn-secondary"
+                              style={{ padding: '4px 12px', fontSize: '11px' }}
                               onClick={() => {
                                 setGuardMutated(false)
                                 setGuardNotice('Remediated: Restored RoundingMode.HALF_UP. Behavioral equivalence confirmed!')
@@ -3820,41 +3762,41 @@ public class ModernizedAccountService implements TransferUseCase {
                         </div>
                       )}
 
-                      <div style={{ color: '#64748b' }}>46:     if (customerId != null &amp;&amp; customerId.startsWith("VIP")) fee = fee.multiply(DISCOUNT);</div>
-                      <div style={{ color: '#64748b' }}>47:     return fee;</div>
-                      <div style={{ color: '#64748b' }}>48:   &#125;</div>
-                      <div style={{ color: '#64748b' }}>49: &#125;</div>
+                      <div style={{ color: '#9ca3af' }}>46:     if (customerId != null &amp;&amp; customerId.startsWith("VIP")) fee = fee.multiply(DISCOUNT);</div>
+                      <div style={{ color: '#9ca3af' }}>47:     return fee;</div>
+                      <div style={{ color: '#9ca3af' }}>48:   &#125;</div>
+                      <div style={{ color: '#9ca3af' }}>49: &#125;</div>
                     </div>
 
-                    {/* Bottom IDE Output Terminal */}
+                    {/* Bottom IDE Output Terminal (Clean White/Gray) */}
                     <div
                       style={{
-                        backgroundColor: '#020617',
-                        borderTop: '1px solid #1e293b',
+                        backgroundColor: '#f9fafb',
+                        borderTop: '1px solid #e5e7eb',
                         padding: '10px 16px',
                         fontFamily: 'Consolas, "Fira Code", monospace',
                         fontSize: '11.5px',
-                        color: '#94a3b8',
+                        color: '#4b5563',
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid #1e293b', paddingBottom: '6px', marginBottom: '8px' }}>
-                        <span style={{ color: '#38bdf8', fontWeight: 800 }}>OUTPUT: LEGACYX GUARD</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid #e5e7eb', paddingBottom: '6px', marginBottom: '8px', fontSize: '11px', fontWeight: 700 }}>
+                        <span style={{ color: 'var(--accent-color)' }}>OUTPUT: LEGACYX GUARD</span>
                         <span>PROBLEMS ({guardMutated ? 1 : 0})</span>
                         <span>DEBUG CONSOLE</span>
                         <span>TERMINAL</span>
                       </div>
                       <div style={{ lineHeight: 1.6 }}>
                         <div>[LegacyX Guard] Dual-Harness Execution Triggered on calculateTransferFee()</div>
-                        <div>[Replay Harness] Scenarios #01 - #03: <span style={{ color: '#10b981' }}>EQUIVALENT (Preserved)</span></div>
+                        <div>[Replay Harness] Scenarios #01 - #03: <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>EQUIVALENT (Preserved)</span></div>
                         {guardMutated ? (
                           <div>
-                            [Replay Harness] <span style={{ color: '#f43f5e', fontWeight: 800 }}>Scenario #04: ⚠ DRIFT DETECTED!</span> Expected ₹250.00, Actual ₹249.99 (Delta: ₹0.01)
+                            [Replay Harness] <span style={{ color: 'var(--accent-color)', fontWeight: 800 }}>Scenario #04: ⚠ DRIFT DETECTED!</span> Expected ₹250.00, Actual ₹249.99 (Delta: ₹0.01)
                           </div>
                         ) : (
-                          <div>[Replay Harness] Scenario #04: <span style={{ color: '#10b981' }}>EQUIVALENT (₹250.00 == ₹250.00)</span></div>
+                          <div>[Replay Harness] Scenario #04: <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>EQUIVALENT (₹250.00 == ₹250.00)</span></div>
                         )}
                         <div>
-                          [Summary] Status: <strong style={{ color: guardMutated ? '#f43f5e' : '#10b981' }}>{guardMutated ? 'CONDITIONAL ASSURANCE (1 DRIFT)' : 'VERIFIED (0 DRIFT)'}</strong> | Baseline Hash: <code>4f9a...88b1</code>
+                          [Summary] Status: <strong style={{ color: 'var(--accent-color)' }}>{guardMutated ? 'CONDITIONAL ASSURANCE (1 DRIFT)' : 'VERIFIED (0 DRIFT)'}</strong> | Baseline Hash: <code>4f9a...88b1</code>
                         </div>
                       </div>
                     </div>
@@ -3867,8 +3809,8 @@ public class ModernizedAccountService implements TransferUseCase {
                 className="card-clean"
                 style={{
                   padding: '20px',
-                  backgroundColor: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e5e7eb',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -3877,18 +3819,18 @@ public class ModernizedAccountService implements TransferUseCase {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '11px', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', textTransform: 'uppercase' }}>
                     Production VS Code Extension Package
                   </div>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', marginTop: '2px' }}>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginTop: '2px' }}>
                     legacyx-guard (TypeScript + VS Code Extension Manifest)
                   </div>
-                  <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+                  <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
                     Source located in <code>vscode-extension/</code> in this repository. Ready to run with <code>F5</code> in VS Code.
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                  <span style={{ padding: '8px 12px', backgroundColor: '#e2e8f0', borderRadius: '4px', fontSize: '12px', fontFamily: 'monospace', color: '#334155' }}>
+                  <span style={{ padding: '8px 12px', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '6px', fontSize: '12px', fontFamily: 'monospace', color: '#111827' }}>
                     cd vscode-extension &amp;&amp; npm run compile
                   </span>
                 </div>
@@ -3906,7 +3848,7 @@ public class ModernizedAccountService implements TransferUseCase {
               <div className="card-clean" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #e2e8f0' }}>
                   <span style={{ fontWeight: 700, color: '#0f172a' }}>Database Engine</span>
-                  <span style={{ color: '#059669', fontWeight: 600 }}>PostgreSQL 15 (SQLAlchemy 2.x async)</span>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 600 }}>PostgreSQL 15 (SQLAlchemy 2.x async)</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid #e2e8f0' }}>
                   <span style={{ fontWeight: 700, color: '#0f172a' }}>Storage Provider</span>
@@ -3918,7 +3860,7 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ fontWeight: 700, color: '#0f172a' }}>AI Gateway Provider</span>
-                  <span style={{ color: '#0d9488', fontWeight: 700 }}>IBM watsonx.ai (Simulated fallback active without live API key)</span>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>IBM watsonx.ai (Simulated fallback active without live API key)</span>
                 </div>
               </div>
             </div>
@@ -3936,8 +3878,8 @@ public class ModernizedAccountService implements TransferUseCase {
                 <p style={{ fontSize: '12.5px', color: '#334155', lineHeight: 1.6 }}>
                   LEGACYX is strictly governed by <code>AGENTS.md</code>: Deterministic static analysis is the authoritative source of truth. AI never invents facts, file names, or test results. Original legacy source remains strictly immutable. Every impactful transformation requires recorded human approval.
                 </p>
-                <div style={{ padding: '12px 16px', backgroundColor: '#f0fdf4', borderRadius: '8px', border: '1px solid #a7f3d0' }}>
-                  <strong style={{ color: '#065f46' }}>Built with IBM Bob:</strong> Development-time AI-assisted engineering harness documented in <code>IBM_BOB_USAGE.md</code>.
+                <div style={{ padding: '12px 16px', backgroundColor: 'var(--accent-light)', borderRadius: '8px', border: '1px solid var(--accent-border)' }}>
+                  <strong style={{ color: 'var(--accent-color)' }}>Built with IBM Bob:</strong> Development-time AI-assisted engineering harness documented in <code>IBM_BOB_USAGE.md</code>.
                 </div>
               </div>
             </div>
@@ -3976,7 +3918,7 @@ public class ModernizedAccountService implements TransferUseCase {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '14px' }}>
               <div>
-                <span className="pill-badge" style={{ backgroundColor: '#fee2e2', color: '#991b1b' }}>
+                <span className="pill-badge" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                   {investigatingScenario.scenario_id} • SILENT DRIFT INVESTIGATION
                 </span>
                 <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', marginTop: '6px' }}>
@@ -3999,27 +3941,27 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
               </div>
 
-              <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3' }}>
-                <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#991b1b', fontWeight: 700 }}>Modern Decision (Drifted)</div>
-                <div style={{ fontSize: '13px', fontWeight: 800, color: '#991b1b', fontFamily: 'monospace', marginTop: '2px' }}>
+              <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: 'var(--accent-color)', fontWeight: 700 }}>Modern Decision (Drifted)</div>
+                <div style={{ fontSize: '13px', fontWeight: 800, color: 'var(--accent-color)', fontFamily: 'monospace', marginTop: '2px' }}>
                   {investigatingScenario.modern_decision}
                 </div>
               </div>
 
               {investigatingScenario.drift_details && (
-                <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3' }}>
-                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#991b1b', fontWeight: 800 }}>Drift Explanation</div>
-                  <p style={{ fontSize: '12px', color: '#991b1b', marginTop: '2px', lineHeight: 1.5 }}>
+                <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
+                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: 'var(--accent-color)', fontWeight: 800 }}>Drift Explanation</div>
+                  <p style={{ fontSize: '12px', color: 'var(--accent-color)', marginTop: '2px', lineHeight: 1.5 }}>
                     {investigatingScenario.drift_details}
                   </p>
                 </div>
               )}
 
               {investigatingScenario.root_cause_explanation && (
-                <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: '#f0fdf4', border: '1px solid #a7f3d0' }}>
+                <div style={{ padding: '12px', borderRadius: '8px', backgroundColor: 'var(--accent-light)', border: '1px solid var(--accent-border)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#166534', fontWeight: 800 }}>Root Cause Code Anchor</span>
-                    <span style={{ fontSize: '9.5px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#dcfce7', color: '#166534' }}>
+                    <span style={{ fontSize: '10.5px', textTransform: 'uppercase', color: 'var(--accent-color)', fontWeight: 800 }}>Root Cause Code Anchor</span>
+                    <span style={{ fontSize: '9.5px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: 'var(--accent-light)', color: 'var(--accent-color)' }}>
                       IBM watsonx AI Diagnostic
                     </span>
                   </div>

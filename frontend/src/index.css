@@ -321,24 +321,9 @@ code, pre, kbd, samp {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #ef4444;
-  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  animation: pulseGlowRed 2s infinite;
-}
-
-@keyframes pulseGlowRed {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-  }
+  background-color: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  animation: pulseGlow 2s infinite;
 }
 
 /* Spin animation for refresh buttons */
@@ -351,23 +336,27 @@ code, pre, kbd, samp {
   to { transform: rotate(360deg); }
 }
 
-/* ── Code Diffs ───────────────────────────────────────────────────────────── */
+/* ── Code Diffs (Strict 2-Color & Slate Neutral) ─────────────────────────── */
 .diff-add {
-  background-color: #f0fdf4;
-  color: #166534;
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  font-weight: 700;
   padding: 3px 6px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 11px;
   border-radius: 3px;
+  border: 1px solid var(--accent-border);
 }
 
 .diff-del {
-  background-color: #fef2f2;
-  color: #991b1b;
+  background-color: #f1f5f9;
+  color: #64748b;
+  text-decoration: line-through;
   padding: 3px 6px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 11px;
   border-radius: 3px;
+  border: 1px solid #e2e8f0;
 }
 
 /* ── IDE Terminal Styling ─────────────────────────────────────────────────── */
