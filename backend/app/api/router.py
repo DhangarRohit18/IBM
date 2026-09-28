@@ -6,7 +6,7 @@ Aggregates all route modules under the /api/v1 prefix.
 
 from fastapi import APIRouter
 
-from app.api import analysis, business_rules, health, impact, modernization, projects, repositories, validation
+from app.api import analysis, assurance, business_rules, health, impact, modernization, projects, repositories, validation
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -31,6 +31,9 @@ api_router.include_router(modernization.router)
 
 # ── Phase 9 ───────────────────────────────────────────────────────────────────
 api_router.include_router(validation.router)
+
+# ── Modernization Assurance ───────────────────────────────────────────────────
+api_router.include_router(assurance.router)
 
 
 

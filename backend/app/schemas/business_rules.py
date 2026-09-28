@@ -52,6 +52,20 @@ class BusinessRuleResponse(BaseModel):
     source_construct: str
     extraction_reason: str
 
+    # Business Rule DNA (Feature 1)
+    business_meaning: Optional[str] = None
+    inputs: list[dict[str, Any]] = []
+    outputs: list[dict[str, Any]] = []
+    dependencies: list[str] = []
+    related_apis: list[str] = []
+    related_db_fields: list[str] = []
+    related_business_processes: list[str] = []
+    related_tests: list[str] = []
+    confidence: float = 1.0
+    evidence_snippet: Optional[str] = None
+    is_locked: bool = False
+    is_critical: bool = False
+
     # AI Explanation
     ai_explanation: Optional[str] = None
     ai_explanation_status: AIExplanationStatus

@@ -1,97 +1,270 @@
-@import "tailwindcss";
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEGACYX 2.0 — ROADGUARD X / MEETIQ ENTERPRISE DESIGN SYSTEM
+   Modernize the Code. Preserve the Decision. Prove the Difference.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Design Tokens (Enterprise Clean Theme) ──────────────────────────────── */
 :root {
-  /* Main Backgrounds & Surfaces */
-  --background:        #f8fafc;
+  /* Canvas Background: RoadGuard X soft clean mint aura */
+  --bg-gradient:       linear-gradient(180deg, #e8f5f4 0%, #f4fbfb 100%);
+  --background:        #f4fbfb;
   --surface:           #ffffff;
   --surface-raised:    #ffffff;
-  --surface-overlay:   #f1f5f9;
-  --border:            #e2e8f0;
-  --border-subtle:     #f1f5f9;
+  --surface-subtle:    #f0f8f7;
+  --surface-hover:     #eaf6f4;
+  
+  /* Borders */
+  --border:            #cbe6e3;
+  --border-subtle:     #e3f2f0;
+  --border-strong:     #9fd4ce;
+  --border-focus:      #0c645d;
 
-  /* Sidebar Theme (Slate/Navy Dual Tone) */
-  --sidebar-bg:        #0f172a;
-  --sidebar-text:      #94a3b8;
-  --sidebar-hover:     #1e293b;
-  --sidebar-active-bg: #0d9488;
-  --sidebar-active-fg: #ffffff;
+  /* Brand / Authoritative Teal */
+  --brand-teal:        #0c645d;
+  --brand-teal-hover:  #084c46;
+  --brand-teal-light:  #e6f5f3;
+  --brand-teal-border: #a8ded7;
+  --brand-dark:        #0b2321;
 
-  /* Brand / Primary Accents */
-  --accent:            #0d9488;
-  --accent-hover:      #0f766e;
-  --accent-muted:      rgba(13, 148, 136, 0.10);
-  --brand-blue:        #2563eb;
-  --brand-navy:        #0f172a;
+  /* Semantic Accents */
+  --success-bg:        #ecfdf5;
+  --success-border:    #a7f3d0;
+  --success-text:      #065f46;
 
-  /* Text Colors */
-  --text-primary:      #0f172a;
-  --text-secondary:    #475569;
-  --text-muted:        #64748b;
-  --text-inverse:      #ffffff;
+  --warning-bg:        #fffbeb;
+  --warning-border:    #fde68a;
+  --warning-text:      #92400e;
 
-  /* Layout Dimensions */
-  --sidebar-width:     250px;
-  --header-height:     56px;
+  --danger-bg:         #fff1f2;
+  --danger-border:     #fecdd3;
+  --danger-text:       #9f1239;
+
+  --info-bg:           #eff6ff;
+  --info-border:       #bfdbfe;
+  --info-text:         #1e40af;
+
+  /* Text Hierarchy */
+  --text-primary:      #0b2321;
+  --text-secondary:    #305551;
+  --text-muted:        #5f837f;
+  --text-subtle:       #8ea8a5;
+
+  /* Elevations */
+  --shadow-2xs:        0 1px 2px rgba(12, 100, 93, 0.04);
+  --shadow-xs:         0 1px 4px rgba(12, 100, 93, 0.06), 0 2px 6px rgba(12, 100, 93, 0.02);
+  --shadow-md:         0 4px 16px -2px rgba(12, 100, 93, 0.08), 0 2px 6px -1px rgba(12, 100, 93, 0.04);
+  --shadow-lg:         0 12px 32px -4px rgba(12, 100, 93, 0.12);
 }
 
-/* ── Base Reset & Defaults ─────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
-  height: 100%;
+html, body {
+  min-height: 100%;
   width: 100%;
-  background-color: var(--background);
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--text-primary);
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13.5px;
   line-height: 1.5;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Typography ────────────────────────────────────────────────────────────── */
+#root {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-primary);
   line-height: 1.25;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
 }
 
 code, pre, kbd, samp {
   font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
-  font-size: 0.875em;
+  font-size: 0.85em;
 }
 
-/* ── Custom Scrollbars ─────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+/* ── Scrollbars ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #b2dbd6;
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-thumb:hover { background: #85c2bb; }
 
-/* ── Enterprise Cards & Utilities ──────────────────────────────────────────── */
-.card-enterprise {
-  background-color: var(--surface);
+/* ── RoadGuard X Card Utilities ───────────────────────────────────────────── */
+.card-clean {
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-  transition: all 150ms ease;
+  border-radius: 20px;
+  box-shadow: var(--shadow-xs);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.card-enterprise:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+.card-clean:hover {
+  border-color: var(--brand-teal-border);
+  box-shadow: var(--shadow-md);
 }
 
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.card-luxury {
+  background: linear-gradient(135deg, #ffffff 0%, #f4fbfb 60%, #e6f5f3 100%);
+  border: 1px solid var(--brand-teal-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── RoadGuard X Pill Badges & Buttons ─────────────────────────────────────── */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--brand-teal-light);
+  color: var(--brand-teal);
+  border: 1px solid var(--brand-teal-border);
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
   white-space: nowrap;
+  cursor: pointer;
+  transition: all 160ms ease;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-secondary);
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 140ms ease;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #475569;
+}
+
+.nav-tab:hover {
+  color: #0b2321;
+  background: #eaf6f4;
+}
+
+.nav-tab.active {
+  background: #0c645d;
+  color: #ffffff;
+  font-weight: 700;
+  border-color: #0c645d;
+  box-shadow: 0 1px 3px rgba(12, 100, 93, 0.25);
+}
+
+.pill-button:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border-color: var(--brand-teal-border);
+}
+
+.pill-button.active {
+  background: var(--brand-teal);
+  color: #ffffff;
+  border-color: var(--brand-teal);
+  box-shadow: 0 2px 6px rgba(12, 100, 93, 0.25);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: var(--brand-teal);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 160ms ease;
+  box-shadow: var(--shadow-2xs);
+}
+
+.btn-primary:hover {
+  background: var(--brand-teal-hover);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 160ms ease;
+  box-shadow: var(--shadow-2xs);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--brand-teal-border);
+}
+
+.tag-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Container Layout ─────────────────────────────────────────────────────── */
+.panoramic-canvas {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .panoramic-canvas {
+    padding: 16px;
+  }
 }

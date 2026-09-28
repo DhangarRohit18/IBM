@@ -10,7 +10,7 @@ import enum
 from typing import Any
 import uuid
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, JSON
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.models.base import Base
@@ -87,6 +87,20 @@ class BusinessRule(Base):
     line_end: Mapped[int] = mapped_column(Integer, nullable=False)
     source_construct: Mapped[str] = mapped_column(String(128), nullable=False)
     extraction_reason: Mapped[str] = mapped_column(Text, nullable=False)
+
+    # Business Rule DNA (Feature 1)
+    business_meaning: Mapped[str] = mapped_column(Text, nullable=True)
+    inputs: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list, nullable=False)
+    outputs: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list, nullable=False)
+    dependencies: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    related_apis: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    related_db_fields: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    related_business_processes: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    related_tests: Mapped[list[str]] = mapped_column(JSON, default=list, nullable=False)
+    confidence: Mapped[float] = mapped_column(Float, default=1.0, nullable=False)
+    evidence_snippet: Mapped[str] = mapped_column(Text, nullable=True)
+    is_locked: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    is_critical: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
     # Optional AI Explanation (Stored separately from facts)
     ai_explanation: Mapped[str] = mapped_column(Text, nullable=True)

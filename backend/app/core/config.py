@@ -43,7 +43,7 @@ class Settings(BaseSettings):
     max_single_file_size_mb: int = 25
 
     # ── CORS ───────────────────────────────────────────────────────────────────
-    allowed_origins: str | list[str] = "http://localhost:5174,http://localhost:5173,http://localhost:3000"
+    allowed_origins: str | list[str] = "http://localhost:5190,http://127.0.0.1:5190,http://localhost:5174,http://localhost:5173,http://localhost:3000,*"
 
     @field_validator("allowed_origins", mode="before")
     @classmethod

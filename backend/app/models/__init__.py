@@ -27,6 +27,14 @@ from app.models.transformation import (
     TransformationStatus,
 )
 from app.models.user import User
+from app.models.decision_contract import ContractStatus, DecisionContract
+from app.models.decision_replay import (
+    ComparisonOutcome,
+    DecisionReplayRun,
+    DecisionScenarioResult,
+    DriftSeverity,
+    DriftType,
+)
 from app.models.validation import (
     BehavioralScenario,
     BehaviorStatus,
@@ -63,6 +71,13 @@ __all__ = [
     "RuleType",
     "RuleStatus",
     "AIExplanationStatus",
+    "DecisionContract",
+    "ContractStatus",
+    "DecisionReplayRun",
+    "DecisionScenarioResult",
+    "ComparisonOutcome",
+    "DriftType",
+    "DriftSeverity",
     "ModernizationStrategy",
     "StrategyStatus",
     "ModernizationPlan",

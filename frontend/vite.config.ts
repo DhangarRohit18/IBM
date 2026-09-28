@@ -1,25 +1,15 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import path from 'path'
+import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(import.meta.dirname, './src'),
-    },
-  },
+  plugins: [react()],
   server: {
-    port: 5173,
-    host: true, // needed for Docker
+    port: 5190,
+    strictPort: true,
     proxy: {
       '/api': {
-        target: process.env.VITE_API_TARGET || 'http://backend:8000',
+        target: 'http://127.0.0.1:8002',
         changeOrigin: true,
       },
     },
