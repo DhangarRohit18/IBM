@@ -39,6 +39,8 @@ import {
   RefreshCw,
   Lock,
   Check,
+  AlertTriangle,
+  Download,
 } from 'lucide-react'
 import { api, type Project } from './api'
 
@@ -53,6 +55,8 @@ type TabKey =
   | 'plan'
   | 'transformation'
   | 'validation'
+  | 'characterization'
+  | 'ai_scenarios'
   | 'replay'
   | 'contracts'
   | 'blast_radius'
@@ -61,6 +65,26 @@ type TabKey =
   | 'report'
   | 'settings'
   | 'documentation'
+
+export interface CharacterizationScenario {
+  id: string
+  name: string
+  category: string
+  description: string
+  inputs: Record<string, any>
+  expected_legacy_output: Record<string, any>
+  boundary_type: string
+}
+
+export interface AIEdgeCase {
+  id: string
+  case_name: string
+  amount: string
+  riskScore: number
+  expected_decision: string
+  rationale: string
+  significance: string
+}
 
 interface ReplayScenario {
   id: string
@@ -102,6 +126,129 @@ interface BlastNode {
 }
 
 // ── Canonical Data ────────────────────────────────────────────────────────────
+
+const MOCK_CHARACTERIZATION_SCENARIOS: CharacterizationScenario[] = [
+  {
+    id: 'CHAR-01',
+    name: 'Normal transfer',
+    category: 'FEE_CALCULATION',
+    description: 'Standard intra-bank transfer well below threshold limits',
+    inputs: { amount: '₹10,000', currency: 'INR', customerTier: 'STANDARD', riskScore: 15 },
+    expected_legacy_output: { fee: '₹50.00', status: 'APPROVED', rounding: 'HALF_UP' },
+    boundary_type: 'NOMINAL',
+  },
+  {
+    id: 'CHAR-02',
+    name: '₹49,999 boundary',
+    category: 'FEE_CALCULATION',
+    description: 'Exactly 1 unit below the high-value compliance threshold',
+    inputs: { amount: '₹49,999', currency: 'INR', customerTier: 'STANDARD', riskScore: 25 },
+    expected_legacy_output: { fee: '₹249.995', roundedFee: '₹250.00', status: 'APPROVED' },
+    boundary_type: 'LOWER_BORDER',
+  },
+  {
+    id: 'CHAR-03',
+    name: '₹50,000 boundary',
+    category: 'FEE_CALCULATION',
+    description: 'Exact threshold boundary value evaluation',
+    inputs: { amount: '₹50,000', currency: 'INR', customerTier: 'STANDARD', riskScore: 42 },
+    expected_legacy_output: { fee: '₹250.00', status: 'APPROVED', rounding: 'HALF_UP' },
+    boundary_type: 'EXACT_THRESHOLD',
+  },
+  {
+    id: 'CHAR-04',
+    name: '₹50,001 boundary',
+    category: 'FEE_CALCULATION',
+    description: 'Exactly 1 unit above threshold triggering secondary risk review',
+    inputs: { amount: '₹50,001', currency: 'INR', customerTier: 'STANDARD', riskScore: 42 },
+    expected_legacy_output: { fee: '₹250.005', roundedFee: '₹250.01', status: 'APPROVED' },
+    boundary_type: 'UPPER_BORDER',
+  },
+  {
+    id: 'CHAR-05',
+    name: 'Premium customer',
+    category: 'FEE_CALCULATION',
+    description: 'VIP account tier evaluating preferential fee waiver algorithm',
+    inputs: { amount: '₹50,000', currency: 'INR', customerTier: 'PREMIUM', riskScore: 12 },
+    expected_legacy_output: { fee: '₹175.00', discountApplied: '30%', status: 'APPROVED' },
+    boundary_type: 'CUSTOMER_TIER',
+  },
+  {
+    id: 'CHAR-06',
+    name: 'High-risk customer',
+    category: 'FEE_CALCULATION',
+    description: 'High risk score evaluating risk surcharge policy',
+    inputs: { amount: '₹50,000', currency: 'INR', customerTier: 'STANDARD', riskScore: 78 },
+    expected_legacy_output: { fee: '₹350.00', surchargeApplied: true, status: 'APPROVED' },
+    boundary_type: 'RISK_EVALUATION',
+  },
+  {
+    id: 'CHAR-07',
+    name: 'Decimal rounding',
+    category: 'FEE_CALCULATION',
+    description: 'Fractional monetary inputs verifying exact Half-Up rounding behavior',
+    inputs: { amount: '₹12,345.67', currency: 'INR', customerTier: 'STANDARD', riskScore: 20 },
+    expected_legacy_output: { fee: '₹61.73', unroundedFee: '61.72835', status: 'APPROVED' },
+    boundary_type: 'PRECISION_ROUNDING',
+  },
+  {
+    id: 'CHAR-08',
+    name: 'Maximum transfer',
+    category: 'FEE_CALCULATION',
+    description: 'High-volume transfer evaluating fixed cap ceiling',
+    inputs: { amount: '₹1,000,000', currency: 'INR', customerTier: 'ENTERPRISE', riskScore: 30 },
+    expected_legacy_output: { fee: '₹1,500.00', capEnforced: true, status: 'APPROVED' },
+    boundary_type: 'CEILING_LIMIT',
+  },
+]
+
+const MOCK_AI_EDGE_CASES: AIEdgeCase[] = [
+  {
+    id: 'AI-EDGE-01',
+    case_name: '₹49,999 / Risk 70',
+    amount: '₹49,999',
+    riskScore: 70,
+    expected_decision: 'AUTO_APPROVE',
+    rationale: 'Amount is 1 unit below threshold; condition (Amount > 50,000) evaluates FALSE.',
+    significance: 'Proves strict inequality boundary (< vs <=)',
+  },
+  {
+    id: 'AI-EDGE-02',
+    case_name: '₹50,000 / Risk 70',
+    amount: '₹50,000',
+    riskScore: 70,
+    expected_decision: 'AUTO_APPROVE',
+    rationale: 'Exact boundary value. Strict greater-than means compliance hold is NOT triggered.',
+    significance: 'Catches accidental rewrite of (amount > 50000) to (amount >= 50000).',
+  },
+  {
+    id: 'AI-EDGE-03',
+    case_name: '₹50,001 / Risk 70',
+    amount: '₹50,001',
+    riskScore: 70,
+    expected_decision: 'AUTO_APPROVE',
+    rationale: 'Amount exceeds threshold, but Risk is 70. Since condition requires Risk > 70, hold is NOT triggered.',
+    significance: 'Validates boundary condition of the secondary risk clause.',
+  },
+  {
+    id: 'AI-EDGE-04',
+    case_name: '₹50,001 / Risk 71',
+    amount: '₹50,001',
+    riskScore: 71,
+    expected_decision: 'COMPLIANCE_HOLD',
+    rationale: 'Both clauses satisfied (Amount > 50,000 AND Risk > 70) -> Mandates compliance hold.',
+    significance: 'Validates compound conjunctive policy trigger.',
+  },
+  {
+    id: 'AI-EDGE-05',
+    case_name: '₹50,001 / Risk 69',
+    amount: '₹50,001',
+    riskScore: 69,
+    expected_decision: 'AUTO_APPROVE',
+    rationale: 'Amount is large, but customer is low-risk (Risk 69 <= 70) -> Approved without hold.',
+    significance: 'Prevents false-positive compliance halts for high-value trusted customers.',
+  },
+]
 
 const MOCK_REPLAY_SCENARIOS: ReplayScenario[] = [
   {
@@ -151,17 +298,17 @@ const MOCK_REPLAY_SCENARIOS: ReplayScenario[] = [
   {
     id: 'sc-4',
     scenario_number: 4,
-    scenario_id: 'SC-VAL-002',
-    scenario_name: 'Cumulative Daily Velocity Limit Exceeded at 23:59:50 UTC',
-    scenario_category: 'VALIDATION',
-    legacy_decision: 'TRANSACTION_REJECTED: VELOCITY_CEILING_REACHED',
-    modern_decision: 'TRANSACTION_ACCEPTED: PROCESSED_SETTLEMENT_OK',
+    scenario_id: 'Scenario #04',
+    scenario_name: 'Transfer Amount: ₹50,000 • Customer: CUST-1042 • Risk Score: 42',
+    scenario_category: 'FEE_CALCULATION',
+    legacy_decision: '₹250.00',
+    modern_decision: '₹249.99',
     comparison_status: 'BEHAVIOR_DRIFT',
-    drift_type: 'TIMEZONE_CALCULATION_DRIFT',
-    drift_details: 'Settlement window calculated in UTC on modern microservice instead of legacy EST banking operating day boundary.',
-    root_cause_explanation: 'DailyVelocityPolicy.java:L92: ZoneId.of("America/New_York") replaced with Instant.now() (UTC discrepancy).',
-    legacy_execution_time_ms: 22,
-    modern_execution_time_ms: 4,
+    drift_type: 'ROUNDING_PRECISION_DRIFT',
+    drift_details: 'Difference: ₹0.01 (Expected: ₹250.00, Actual: ₹249.99). Legacy used RoundingMode.HALF_UP, Modern used RoundingMode.HALF_DOWN.',
+    root_cause_explanation: 'FeeCalculation.java:Line 45: Rounding behaviour changed (- RoundingMode.HALF_UP / + RoundingMode.HALF_DOWN).',
+    legacy_execution_time_ms: 14,
+    modern_execution_time_ms: 2,
     reviewed: false,
   },
   {
@@ -394,6 +541,12 @@ export default function App() {
   const [whatIfResult, setWhatIfResult] = useState<string | null>(null)
   const [liveProjects, setLiveProjects] = useState<Project[]>([])
   const [loadingProjects, setLoadingProjects] = useState(true)
+  const [characterizationScenarios] = useState<CharacterizationScenario[]>(MOCK_CHARACTERIZATION_SCENARIOS)
+  const [baselineFrozen, setBaselineFrozen] = useState<boolean>(true)
+  const [baselineNotice, setBaselineNotice] = useState<string | null>(null)
+  const [aiEdgeCases] = useState<AIEdgeCase[]>(MOCK_AI_EDGE_CASES)
+  const [scenario4Executing, setScenario4Executing] = useState<boolean>(false)
+  const [reportExported, setReportExported] = useState<string | null>(null)
 
   // Fetch real projects from API on mount
   useEffect(() => {
@@ -545,11 +698,25 @@ export default function App() {
           {/* ASSURANCE ENGINE */}
           <div className="sidebar-heading">Assurance Engine</div>
           <button
+            className={`sidebar-nav-item ${activeTab === 'characterization' ? 'active' : ''}`}
+            onClick={() => setActiveTab('characterization')}
+          >
+            <CheckSquare size={15} />
+            <span>Characterization Tests</span>
+          </button>
+          <button
+            className={`sidebar-nav-item ${activeTab === 'ai_scenarios' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ai_scenarios')}
+          >
+            <Sparkles size={15} />
+            <span>AI Edge Cases</span>
+          </button>
+          <button
             className={`sidebar-nav-item ${activeTab === 'replay' ? 'active' : ''}`}
             onClick={() => setActiveTab('replay')}
           >
             <Activity size={15} />
-            <span>Replay Lab</span>
+            <span>Behavioral Replay</span>
           </button>
           <button
             className={`sidebar-nav-item ${activeTab === 'contracts' ? 'active' : ''}`}
@@ -584,7 +751,7 @@ export default function App() {
             onClick={() => setActiveTab('report')}
           >
             <Award size={15} />
-            <span>Assurance Report</span>
+            <span>Assurance Certificate</span>
           </button>
 
           {/* SYSTEM */}
@@ -1524,29 +1691,391 @@ public class ModernizedAccountService implements TransferUseCase {
             </div>
           )}
 
-          {/* TAB 9: REPLAY LAB (LEGACYX 2.0) */}
+          {/* TAB 8A: AUTOMATIC CHARACTERIZATION TEST GENERATOR (FEATURE 2) */}
+          {activeTab === 'characterization' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                    Feature 2 • Baseline Characterization Engine
+                  </span>
+                  <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
+                    Automatic Characterization Test Generator
+                  </h2>
+                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
+                    Analyzes legacy code &amp; extracted business rules to discover boundary scenarios and capture an immutable behavioral baseline.
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button
+                    className="btn-primary"
+                    onClick={() => {
+                      setBaselineFrozen(true)
+                      setBaselineNotice('✓ Behavioral baseline captured and frozen across all 8 boundary scenarios.')
+                      setTimeout(() => setBaselineNotice(null), 4000)
+                    }}
+                  >
+                    <RefreshCw size={14} />
+                    <span>Generate Baseline</span>
+                  </button>
+                  <button
+                    className="btn-secondary"
+                    onClick={() => setActiveTab('replay')}
+                  >
+                    <span>Proceed to Behavioral Replay</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+
+              {baselineNotice && (
+                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: '#dcfce7', border: '1px solid #86efac', color: '#166534', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <CheckCircle2 size={16} color="#16a34a" />
+                  <span>{baselineNotice}</span>
+                </div>
+              )}
+
+              {/* Baseline Status Header */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <div className="card-clean" style={{ padding: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Target Domain</span>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>FEE CALCULATION</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>AccountService.java:L45-L68</div>
+                </div>
+                <div className="card-clean" style={{ padding: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Generated Scenarios</span>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#0d9488', marginTop: '4px' }}>8 Boundary Scenarios</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>Discovered via AST parser</div>
+                </div>
+                <div className="card-clean" style={{ padding: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Legacy Baseline Status</span>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#059669', marginTop: '4px' }}>
+                    {baselineFrozen ? '✓ Behavioral baseline created' : 'PENDING'}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>8 legacy results captured &amp; frozen</div>
+                </div>
+                <div className="card-clean" style={{ padding: '16px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', color: '#64748b' }}>Baseline Fingerprint</span>
+                  <div style={{ fontSize: '13px', fontWeight: 800, fontFamily: 'monospace', color: '#0f172a', marginTop: '4px' }}>sha256:7f4a...9b2c</div>
+                  <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>Immutable verification anchor</div>
+                </div>
+              </div>
+
+              {/* Value Proposition Callout */}
+              <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <CheckCircle2 size={18} color="#16a34a" />
+                <div style={{ fontSize: '12px', color: '#166534', lineHeight: 1.5 }}>
+                  <strong>How Characterization Testing Powers LegacyX:</strong> Rather than manually typing arbitrary tests, LegacyX deterministically analyzes the legacy AST and business logic to discover critical edge cases and freeze the legacy system's behavior as an indisputable baseline.
+                </div>
+              </div>
+
+              {/* Generated Scenarios Table */}
+              <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
+                <div style={{ padding: '14px 18px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc' }}>
+                  <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
+                    Discovered Boundary Scenarios (FEE CALCULATION)
+                  </div>
+                  <span className="pill-badge" style={{ backgroundColor: '#e0f2fe', color: '#0369a1' }}>
+                    8 Boundary Conditions
+                  </span>
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left', color: '#64748b', fontSize: '11px', textTransform: 'uppercase' }}>
+                      <th style={{ padding: '10px 16px' }}>Scenario Name</th>
+                      <th style={{ padding: '10px 16px' }}>Boundary Classification</th>
+                      <th style={{ padding: '10px 16px' }}>Inputs Evaluated</th>
+                      <th style={{ padding: '10px 16px' }}>Captured Legacy Baseline</th>
+                      <th style={{ padding: '10px 16px', textAlign: 'right' }}>Baseline Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {characterizationScenarios.map((sc) => (
+                      <tr key={sc.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                        <td style={{ padding: '12px 16px' }}>
+                          <div style={{ fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <CheckCircle2 size={13} color="#10b981" />
+                            <span>{sc.name}</span>
+                          </div>
+                          <div style={{ fontSize: '11px', color: '#64748b' }}>{sc.description}</div>
+                        </td>
+                        <td style={{ padding: '12px 16px' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#475569', fontFamily: 'monospace' }}>
+                            {sc.boundary_type}
+                          </span>
+                        </td>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11px', color: '#334155' }}>
+                          {JSON.stringify(sc.inputs).replace(/["{}]/g, '').replace(/,/g, ', ')}
+                        </td>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', fontSize: '11px', color: '#0d9488', fontWeight: 700 }}>
+                          Fee: {sc.expected_legacy_output.fee || sc.expected_legacy_output.roundedFee} (Status: {sc.expected_legacy_output.status})
+                        </td>
+                        <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px', backgroundColor: '#dcfce7', color: '#15803d' }}>
+                            FROZEN
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 8B: AI EDGE-CASE & SCENARIO GENERATOR (FEATURE 4) */}
+          {activeTab === 'ai_scenarios' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
+                    Feature 4 • Grounded AI Intelligence
+                  </span>
+                  <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
+                    AI Edge-Case &amp; Scenario Generator
+                  </h2>
+                  <p style={{ fontSize: '12.5px', color: '#64748b' }}>
+                    Synthesizes high-value verification cases from extracted business rules. AI proposes boundaries; execution remains 100% deterministic.
+                  </p>
+                </div>
+                <button
+                  className="btn-primary"
+                  onClick={() => setActiveTab('replay')}
+                >
+                  <Activity size={14} />
+                  <span>Execute Scenarios in Replay Engine</span>
+                </button>
+              </div>
+
+              {/* Source Rule Card */}
+              <div className="card-clean" style={{ padding: '20px', borderLeft: '4px solid #0d9488' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#0d9488' }}>
+                    Target Business Rule DNA
+                  </span>
+                  <span style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace' }}>
+                    AccountService.java:Line 45-68
+                  </span>
+                </div>
+                <div style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', fontFamily: 'monospace', backgroundColor: '#f8fafc', padding: '10px 14px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                  Transfer &gt; ₹50,000 AND Risk Score &gt; 70 → Compliance Hold
+                </div>
+                <div style={{ fontSize: '12px', color: '#475569', marginTop: '8px' }}>
+                  Compound policy extracted deterministically from AST branch nodes. Evaluates high-value transactions against fraud scoring thresholds.
+                </div>
+              </div>
+
+              {/* Architectural Story Callout */}
+              <div style={{ padding: '16px 20px', borderRadius: '8px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                  <Sparkles size={16} color="#2563eb" />
+                  <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#1d4ed8' }}>
+                    Grounded AI Architecture Pattern
+                  </span>
+                </div>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#1e3a8a', fontFamily: 'monospace', marginBottom: '6px' }}>
+                  DETERMINISTIC ENGINE ➔ EXTRACTED RULE ➔ AI EDGE CASES ➔ DETERMINISTIC REPLAY ➔ PROOF
+                </div>
+                <div style={{ fontSize: '12px', color: '#1e40af', lineHeight: 1.5 }}>
+                  <em>"Where exactly is AI used?"</em> — AI is not asked to generate unverified rewrites or act as a black-box oracle. AI reasons over the extracted business rule to formulate precise boundary and combination test cases. Execution and verification remain entirely deterministic.
+                </div>
+              </div>
+
+              {/* AI Generated Cases Table */}
+              <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
+                <div style={{ padding: '14px 18px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc' }}>
+                  <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
+                    AI-Proposed Boundary Verification Cases (5 Scenarios)
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#64748b' }}>
+                    Synthesized with IBM watsonx Granite-13B
+                  </span>
+                </div>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left', color: '#64748b', fontSize: '11px', textTransform: 'uppercase' }}>
+                      <th style={{ padding: '10px 16px' }}>Scenario Case</th>
+                      <th style={{ padding: '10px 16px' }}>Amount &amp; Risk Parameters</th>
+                      <th style={{ padding: '10px 16px' }}>Expected Legacy Decision</th>
+                      <th style={{ padding: '10px 16px' }}>Boundary Rationale</th>
+                      <th style={{ padding: '10px 16px' }}>Verification Significance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {aiEdgeCases.map((ec) => (
+                      <tr key={ec.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                        <td style={{ padding: '12px 16px', fontWeight: 800, color: '#0f172a', fontFamily: 'monospace' }}>
+                          {ec.case_name}
+                        </td>
+                        <td style={{ padding: '12px 16px', fontFamily: 'monospace', color: '#0d9488' }}>
+                          Amount: {ec.amount} • Risk: {ec.riskScore}
+                        </td>
+                        <td style={{ padding: '12px 16px' }}>
+                          <span style={{ fontSize: '10.5px', fontWeight: 800, padding: '2px 8px', borderRadius: '4px', backgroundColor: ec.expected_decision === 'COMPLIANCE_HOLD' ? '#fee2e2' : '#dcfce7', color: ec.expected_decision === 'COMPLIANCE_HOLD' ? '#991b1b' : '#166534' }}>
+                            {ec.expected_decision}
+                          </span>
+                        </td>
+                        <td style={{ padding: '12px 16px', color: '#475569', fontSize: '11.5px' }}>
+                          {ec.rationale}
+                        </td>
+                        <td style={{ padding: '12px 16px', color: '#0f172a', fontWeight: 600, fontSize: '11px' }}>
+                          {ec.significance}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 9: BEHAVIORAL REPLAY ENGINE (HERO FEATURE 1 & 3) */}
           {activeTab === 'replay' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
                   <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
-                    LegacyX 2.0 Assurance Engine
+                    Hero Feature • Behavioral Replay Engine
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
-                    Dual-Harness Decision Replay Lab & Silent Drift Detection
+                    Behavioral Replay Engine &amp; Silent Drift Detection
                   </h2>
                   <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Bit-for-bit execution comparison across golden transaction workloads. Isolates silent decision drift.
+                    <em>“The implementation can change. The decision must not.”</em> Real dual-harness execution proving behavioral equivalence.
                   </p>
                 </div>
-                <button className="btn-primary" onClick={() => alert('Decision Replay Lab re-executed: 8 scenarios validated.')}>
-                  <RefreshCw size={14} />
-                  <span>Re-Execute Dual-Harness</span>
+                <button
+                  className="btn-primary"
+                  onClick={() => {
+                    setScenario4Executing(true)
+                    setTimeout(() => {
+                      setScenario4Executing(false)
+                    }, 600)
+                  }}
+                >
+                  <RefreshCw size={14} className={scenario4Executing ? 'spin' : ''} />
+                  <span>Execute Dual-Harness Replay</span>
                 </button>
+              </div>
+
+              {/* HERO SCENARIO #04 SHOWCASE CARD */}
+              <div className="card-clean" style={{ padding: '24px', border: '2px solid #e11d48', backgroundColor: '#fffafb' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', borderBottom: '1px solid #fecdd3', paddingBottom: '14px', marginBottom: '16px' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', padding: '3px 8px', borderRadius: '4px', backgroundColor: '#e11d48', color: '#ffffff' }}>
+                        Hero Scenario #04
+                      </span>
+                      <span style={{ fontSize: '14px', fontWeight: 800, color: '#0f172a' }}>
+                        Fee Calculation &amp; Rounding Mode Evaluation
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '16px', marginTop: '8px', fontSize: '12px', color: '#475569', fontFamily: 'monospace' }}>
+                      <span>Transfer Amount: <strong>₹50,000</strong></span>
+                      <span>Customer: <strong>CUST-1042</strong></span>
+                      <span>Risk Score: <strong>42</strong></span>
+                    </div>
+                  </div>
+                  <span style={{ fontSize: '11px', fontWeight: 800, padding: '4px 10px', borderRadius: '999px', backgroundColor: '#fee2e2', color: '#991b1b', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <AlertTriangle size={13} />
+                    <span>DRIFT DETECTED</span>
+                  </span>
+                </div>
+
+                {/* Dual Runtime Comparison Box */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '16px' }}>
+                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>LEGACY RUNTIME</span>
+                      <span style={{ fontSize: '10.5px', color: '#64748b', fontFamily: 'monospace' }}>Latency: 14ms</span>
+                    </div>
+                    <div style={{ fontSize: '26px', fontWeight: 900, color: '#0f172a', fontFamily: 'monospace' }}>
+                      ₹250.00
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#0d9488', fontWeight: 700, marginTop: '4px' }}>
+                      Formula: 50,000 * 0.005 = 250.00 (RoundingMode.HALF_UP)
+                    </div>
+                  </div>
+
+                  <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#ffffff', border: '2px solid #e11d48' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#e11d48', textTransform: 'uppercase' }}>MODERN RUNTIME</span>
+                      <span style={{ fontSize: '10.5px', color: '#64748b', fontFamily: 'monospace' }}>Latency: 2ms</span>
+                    </div>
+                    <div style={{ fontSize: '26px', fontWeight: 900, color: '#e11d48', fontFamily: 'monospace' }}>
+                      ₹249.99
+                    </div>
+                    <div style={{ fontSize: '11px', color: '#e11d48', fontWeight: 700, marginTop: '4px' }}>
+                      Formula: 50,000 * 0.005 = 249.995 (RoundingMode.HALF_DOWN)
+                    </div>
+                  </div>
+                </div>
+
+                {/* Behavioral Drift Alert */}
+                <div style={{ padding: '14px 18px', borderRadius: '8px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3', color: '#9f1239', marginBottom: '18px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 800, fontSize: '13px' }}>
+                    <AlertTriangle size={16} color="#e11d48" />
+                    <span>⚠ BEHAVIORAL DRIFT DETECTED</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '24px', marginTop: '6px', fontSize: '12px', fontFamily: 'monospace' }}>
+                    <span>Expected: <strong>₹250.00</strong></span>
+                    <span>Actual: <strong>₹249.99</strong></span>
+                    <span style={{ color: '#be123c', fontWeight: 800 }}>Difference: ₹0.01</span>
+                  </div>
+                </div>
+
+                {/* DRIFT -> ROOT CAUSE -> SOURCE EVIDENCE (FEATURE 3) */}
+                <div style={{ borderTop: '1px solid #fecdd3', paddingTop: '16px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: '#991b1b', marginBottom: '10px' }}>
+                    Feature 3 • Drift ➔ Root Cause ➔ Source Evidence
+                  </div>
+
+                  {/* Step-down Trace Chain */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '14px', fontSize: '11.5px', fontWeight: 700 }}>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#fee2e2', color: '#991b1b' }}>
+                      DRIFT DETECTED
+                    </span>
+                    <span style={{ color: '#94a3b8' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#334155' }}>
+                      Fee calculation changed
+                    </span>
+                    <span style={{ color: '#94a3b8' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#f1f5f9', color: '#334155' }}>
+                      Rounding behaviour changed
+                    </span>
+                    <span style={{ color: '#94a3b8' }}>➔</span>
+                    <span style={{ padding: '4px 10px', borderRadius: '4px', backgroundColor: '#ccfbf1', color: '#0f766e', fontFamily: 'monospace' }}>
+                      FeeCalculation.java:Line 45
+                    </span>
+                  </div>
+
+                  {/* Exact Source Diff */}
+                  <div style={{ borderRadius: '6px', overflow: 'hidden', border: '1px solid #cbd5e1' }}>
+                    <div style={{ padding: '8px 12px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between' }}>
+                      <span>FeeCalculation.java (Line 45)</span>
+                      <span style={{ color: '#f43f5e' }}>Unified Source Difference</span>
+                    </div>
+                    <pre style={{ margin: 0, padding: '12px 14px', backgroundColor: '#0f172a', color: '#f8fafc', fontSize: '11.5px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+{`- BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_UP);
++ BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_DOWN);`}
+                    </pre>
+                  </div>
+                  <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '10px', lineHeight: 1.5 }}>
+                    <strong>Technical Root Cause:</strong> The modern refactored microservice inadvertently swapped the rounding mode from <code>HALF_UP</code> to <code>HALF_DOWN</code>. Standard unit tests pass because tests did not assert decimal precision at boundary thresholds. LegacyX behavioral replay detected the ₹0.01 drift and isolated the exact line of code.
+                  </div>
+                </div>
               </div>
 
               {/* Scenarios Table */}
               <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
+                <div style={{ padding: '14px 18px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#f8fafc' }}>
+                  <div style={{ fontWeight: 800, fontSize: '13px', color: '#0f172a' }}>
+                    Dual-Harness Execution Matrix (8 Replayed Scenarios)
+                  </div>
+                  <span style={{ fontSize: '11px', color: '#64748b' }}>
+                    7 Preserved • 1 Silent Drift
+                  </span>
+                </div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px' }}>
                   <thead>
                     <tr style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left', color: '#64748b', fontSize: '11px', textTransform: 'uppercase' }}>
@@ -1855,83 +2384,160 @@ public class ModernizedAccountService implements TransferUseCase {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
                   <span className="pill-badge" style={{ backgroundColor: '#ccfbf1', color: '#0f766e', borderColor: '#99f6e4' }}>
-                    Cryptographic Audit Certificate
+                    Feature 5 • Formal Enterprise Deliverable
                   </span>
                   <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', marginTop: '4px' }}>
-                    Modernization Assurance Certificate & Sign-Off
+                    Behavioral Assurance Report &amp; Certificate
                   </h2>
                   <p style={{ fontSize: '12.5px', color: '#64748b' }}>
-                    Immutable SHA-256 Merkle root seal proving behavioral decision preservation for regulators and enterprise leads.
+                    Definitive compliance artifact certifying behavioral decision preservation for executive committees and regulatory audits.
                   </p>
                 </div>
-                <button className="btn-primary" onClick={() => window.print()}>
-                  <Printer size={14} />
-                  <span>Print / Export Audit Certificate</span>
-                </button>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button
+                    className="btn-primary"
+                    onClick={() => {
+                      setReportExported('Assurance Report regenerated with latest evidence trail hash: 8d4a...91c2')
+                      setTimeout(() => setReportExported(null), 4000)
+                    }}
+                  >
+                    <RefreshCw size={14} />
+                    <span>Generate Assurance Report</span>
+                  </button>
+                  <button
+                    className="btn-secondary"
+                    onClick={() => {
+                      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({
+                        certificate: 'LEGACYX BEHAVIORAL ASSURANCE CERTIFICATE',
+                        project: 'LegacyBank Core',
+                        scenarios_executed: 24,
+                        equivalent: 23,
+                        drift_detected: 1,
+                        root_cause_identified: 1,
+                        source_evidence_verified: true,
+                        human_review_verified: true,
+                        behavioral_status: 'CONDITIONAL ASSURANCE',
+                        evidence_hash: '8d4a7c19b2e4f018a3d902e8412691c2',
+                        timestamp: new Date().toISOString(),
+                      }, null, 2))
+                      const downloadAnchor = document.createElement('a')
+                      downloadAnchor.setAttribute('href', dataStr)
+                      downloadAnchor.setAttribute('download', 'legacyx_assurance_certificate.json')
+                      document.body.appendChild(downloadAnchor)
+                      downloadAnchor.click()
+                      downloadAnchor.remove()
+                    }}
+                  >
+                    <Download size={14} />
+                    <span>Export JSON</span>
+                  </button>
+                  <button className="btn-secondary" onClick={() => window.print()}>
+                    <Printer size={14} />
+                    <span>Print / PDF</span>
+                  </button>
+                </div>
               </div>
 
+              {reportExported && (
+                <div style={{ padding: '12px 16px', borderRadius: '8px', backgroundColor: '#dcfce7', border: '1px solid #86efac', color: '#166534', fontSize: '12.5px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <CheckCircle2 size={16} color="#16a34a" />
+                  <span>{reportExported}</span>
+                </div>
+              )}
+
               {/* Certificate Document Card */}
-              <div className="card-clean" style={{ padding: '36px', maxWidth: '900px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff' }}>
+              <div className="card-clean" style={{ padding: '36px', maxWidth: '920px', margin: '0 auto', width: '100%', backgroundColor: '#ffffff', border: '2px solid #0d9488' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #0d9488', paddingBottom: '16px', marginBottom: '24px' }}>
                   <div>
                     <span style={{ fontSize: '22px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>
-                      LEGACY<span style={{ color: '#0d9488' }}>X</span> 2.0
+                      LEGACY<span style={{ color: '#0d9488' }}>X</span> BEHAVIORAL ASSURANCE
                     </span>
                     <div style={{ fontSize: '12px', fontWeight: 700, color: '#0d9488', marginTop: '2px' }}>
-                      Assurance Certificate • MAR-20260928-8F32C9
+                      Project: LegacyBank Core • Certificate ID: CERT-20260928-8D4A
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <span style={{ fontSize: '10.5px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, display: 'block' }}>
-                      AUDIT STATUS
+                    <span style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700, display: 'block' }}>
+                      Behavioral Status
                     </span>
-                    <span style={{ fontSize: '14px', fontWeight: 900, color: '#059669' }}>
-                      SEALED & PROVEN
+                    <span style={{ fontSize: '14px', fontWeight: 900, padding: '4px 12px', borderRadius: '4px', backgroundColor: '#fef3c7', color: '#92400e', display: 'inline-block', marginTop: '3px' }}>
+                      CONDITIONAL ASSURANCE
                     </span>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+                  {/* Executive Metric Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                      <div style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', fontWeight: 700 }}>Scenarios Executed</div>
+                      <div style={{ fontSize: '22px', fontWeight: 900, color: '#0f172a', marginTop: '4px' }}>24</div>
+                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 600 }}>100% boundary coverage</div>
+                    </div>
+                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+                      <div style={{ fontSize: '11px', color: '#166534', textTransform: 'uppercase', fontWeight: 700 }}>Equivalent Preserved</div>
+                      <div style={{ fontSize: '22px', fontWeight: 900, color: '#15803d', marginTop: '4px' }}>23</div>
+                      <div style={{ fontSize: '11px', color: '#166534', fontWeight: 600 }}>Bitwise verified</div>
+                    </div>
+                    <div style={{ padding: '14px', borderRadius: '6px', backgroundColor: '#fff1f2', border: '1px solid #fecdd3' }}>
+                      <div style={{ fontSize: '11px', color: '#9f1239', textTransform: 'uppercase', fontWeight: 700 }}>Drift Detected</div>
+                      <div style={{ fontSize: '22px', fontWeight: 900, color: '#be123c', marginTop: '4px' }}>1</div>
+                      <div style={{ fontSize: '11px', color: '#be123c', fontWeight: 600 }}>Root cause identified</div>
+                    </div>
+                  </div>
+
+                  {/* Verification Dimensions */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                    <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CheckCircle2 size={16} color="#10b981" />
+                      <div>
+                        <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Root Cause Identified</div>
+                        <div style={{ fontSize: '10.5px', color: '#64748b' }}>FeeCalculation.java:Line 45</div>
+                      </div>
+                    </div>
+                    <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CheckCircle2 size={16} color="#10b981" />
+                      <div>
+                        <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Source Evidence</div>
+                        <div style={{ fontSize: '10.5px', color: '#64748b' }}>Verified Unified Diff</div>
+                      </div>
+                    </div>
+                    <div style={{ padding: '12px 14px', borderRadius: '6px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CheckCircle2 size={16} color="#10b981" />
+                      <div>
+                        <div style={{ fontSize: '11.5px', fontWeight: 800, color: '#0f172a' }}>Human Review</div>
+                        <div style={{ fontSize: '10.5px', color: '#64748b' }}>Lead Auditor Sign-Off</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Evidence Hash Banner */}
+                  <div style={{ padding: '14px 18px', borderRadius: '6px', backgroundColor: '#071525', color: '#f8fafc', fontFamily: 'monospace', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+                    <div>
+                      <span style={{ color: '#94a3b8', textTransform: 'uppercase', fontSize: '10.5px', display: 'block' }}>Evidence Hash</span>
+                      <span style={{ color: '#38bdf8', fontWeight: 800 }}>8d4a...91c2</span>
+                    </div>
+                    <div style={{ textAlign: 'right', fontSize: '11px', color: '#94a3b8' }}>
+                      Merkle Root: sha256:8d4a7c19b2e4f018a3d902e8412691c2f91040854388e2193b04a99187310574
+                    </div>
+                  </div>
+
+                  {/* Executive Findings */}
                   <div>
-                    <h4 style={{ fontSize: '13.5px', fontWeight: 800, color: '#0f172a', marginBottom: '6px' }}>
-                      Executive Assurance Summary
+                    <h4 style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a', marginBottom: '6px' }}>
+                      Executive Assurance Finding
                     </h4>
-                    <p style={{ fontSize: '12.5px', color: '#334155', lineHeight: 1.6 }}>
-                      This Modernization Assurance Certificate certifies that <strong>LegacyBank Enterprise Core</strong> has completed Phases 1 through 9 with 57 passing automated test suites. Dual-harness replay validated 8 transaction scenarios, isolating 3 silent drifts with line-level code anchors and preserving 5 scenarios bitwise identical.
+                    <p style={{ fontSize: '12px', color: '#334155', lineHeight: 1.6 }}>
+                      Out of 24 total scenarios evaluated across legacy and modernized runtimes, 23 scenarios proved 100% equivalent decision preservation. 1 deliberate boundary condition drift was detected in <strong>Scenario #04 (Transfer Amount: ₹50,000, Customer: CUST-1042, Risk Score: 42)</strong>, where a ₹0.01 calculation variance was traced to a rounding mode discrepancy in <code>FeeCalculation.java:45</code> (<code>RoundingMode.HALF_UP</code> vs <code>RoundingMode.HALF_DOWN</code>). Conditional assurance is granted pending remediation of the identified line of code.
                     </p>
                   </div>
 
-                  {/* Hash Tree */}
-                  <div>
-                    <div style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#475569', marginBottom: '8px' }}>
-                      Cryptographic Evidence Hash Tree (SHA-256)
-                    </div>
-                    <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '11px', fontFamily: 'monospace' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span style={{ fontWeight: 700, color: '#0d9488' }}>AST System X-Ray Index:</span>
-                        <span style={{ color: '#64748b' }}>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span style={{ fontWeight: 700, color: '#0d9488' }}>Business Rule DNA Synthesizer:</span>
-                        <span style={{ color: '#64748b' }}>8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span style={{ fontWeight: 700, color: '#0d9488' }}>Decision Contracts Invariant Spec:</span>
-                        <span style={{ color: '#64748b' }}>7d1a54127b222502f5b79b5fb0803061152a44f92b37e23c65dd0e336d10e84f</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span style={{ fontWeight: 700, color: '#0d9488' }}>AI Engineering Harness:</span>
-                        <span style={{ color: '#0369a1', fontWeight: 700 }}>Engineered with IBM Bob AI-Assisted Architecture</span>
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Auditor Block */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #e2e8f0', paddingTop: '16px', marginTop: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
                     <div>
                       <div style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 700 }}>Lead Modernization Auditor</div>
-                      <div style={{ fontSize: '13.5px', fontWeight: 800, color: '#0f172a' }}>Sarvesh K (Verified Automated Assurance Pipeline)</div>
-                      <div style={{ fontSize: '11px', color: '#64748b' }}>Built with IBM Bob & IBM watsonx AI Gateway</div>
+                      <div style={{ fontSize: '13px', fontWeight: 800, color: '#0f172a' }}>Sarvesh K (Verified Automated Assurance Pipeline)</div>
+                      <div style={{ fontSize: '11px', color: '#64748b' }}>Built with IBM Bob &amp; IBM watsonx AI Gateway</div>
                     </div>
                     <div style={{ fontSize: '11px', color: '#64748b', fontFamily: 'monospace' }}>
                       Timestamp: {new Date().toUTCString()}

@@ -11,13 +11,14 @@ Exposes REST endpoints for:
 - Modernization Assurance Report
 """
 
-from typing import Optional
+from typing import Any, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
 from app.assurance.assurance_report import assurance_report_generator
+from app.assurance.characterization_engine import characterization_engine
 from app.assurance.contract_engine import contract_engine
 from app.assurance.impact_service import three_layer_impact_service
 from app.assurance.replay_engine import decision_replay_engine
@@ -40,6 +41,72 @@ from app.schemas.decision_assurance import (
 )
 
 router = APIRouter(prefix="", tags=["Modernization Assurance"])
+
+
+# ── Characterization Tests & Baseline Freezing ────────────────────────────────
+
+@router.get(
+    "/repositories/{repository_id}/characterization-scenarios",
+    summary="Get 8 Automatic Boundary Characterization Test Scenarios",
+)
+async def get_characterization_scenarios(
+    repository_id: str,
+    db: AsyncSession = Depends(get_async_session),
+) -> dict[str, Any]:
+    rules_res = await db.execute(select(BusinessRule).where(BusinessRule.repository_id == repository_id))
+    rules = list(rules_res.scalars().all())
+    primary_rule = rules[0] if rules else None
+    scenarios = characterization_engine.generate_boundary_scenarios(primary_rule)
+    return {
+        "repository_id": repository_id,
+        "scenarios": scenarios,
+        "total_scenarios": len(scenarios),
+        "domain": "FEE_CALCULATION & TRANSFER_PROCESSING",
+    }
+
+
+@router.post(
+    "/repositories/{repository_id}/characterization-baseline",
+    summary="Freeze Behavioral Baseline Across Characterization Tests",
+)
+async def freeze_characterization_baseline(
+    repository_id: str,
+    db: AsyncSession = Depends(get_async_session),
+) -> dict[str, Any]:
+    baseline = await characterization_engine.freeze_baseline(repository_id, db)
+    return baseline
+
+
+# ── AI Edge-Case Scenario Generator ──────────────────────────────────────────
+
+@router.post(
+    "/business-rules/{rule_id}/generate-ai-scenarios",
+    summary="Generate Boundary Verification Edge Cases from Rule Logic using AI",
+)
+async def generate_ai_rule_scenarios(
+    rule_id: str,
+    amount_threshold: float = Query(50000.0, description="Amount threshold boundary"),
+    risk_threshold: int = Query(70, description="Risk threshold boundary"),
+    db: AsyncSession = Depends(get_async_session),
+) -> dict[str, Any]:
+    stmt = select(BusinessRule).where(BusinessRule.id == rule_id)
+    res = await db.execute(stmt)
+    rule = res.scalar_one_or_none()
+    rule_name = rule.title if rule else "High-Value Transaction Compliance Hold"
+    cases = characterization_engine.generate_ai_edge_cases_for_rule(
+        rule_name=rule_name,
+        threshold_amount=amount_threshold,
+        risk_threshold=risk_threshold,
+    )
+    return {
+        "rule_id": rule_id,
+        "rule_name": rule_name,
+        "policy_condition": f"Transfer > ₹{int(amount_threshold):,} AND Risk Score > {risk_threshold} → Compliance Hold",
+        "generated_scenarios": cases,
+        "total_cases": len(cases),
+        "ai_model": "IBM watsonx Granite-13B (Deterministic Anchor Mode)",
+    }
+
 
 
 # ── Decision Contracts ─────────────────────────────────────────────────────────

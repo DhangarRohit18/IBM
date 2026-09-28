@@ -603,6 +603,36 @@ export const api = {
       request<BusinessRule>(`/business-rules/${ruleId}/lock?locked=${locked}`, { method: 'POST' }),
     setRuleCritical: (ruleId: string, critical = true) =>
       request<BusinessRule>(`/business-rules/${ruleId}/critical?critical=${critical}`, { method: 'POST' }),
+
+    // Automatic Characterization Tests & Baseline Freezing
+    getCharacterizationScenarios: (repositoryId: string) =>
+      request<{ repository_id: string; scenarios: any[]; total_scenarios: number; domain: string }>(
+        `/repositories/${repositoryId}/characterization-scenarios`
+      ),
+    freezeCharacterizationBaseline: (repositoryId: string) =>
+      request<{
+        baseline_id: string;
+        repository_id: string;
+        created_at: string;
+        status: string;
+        scenario_count: number;
+        baseline_checksum: string;
+        scenarios: any[];
+        message: string;
+      }>(`/repositories/${repositoryId}/characterization-baseline`, { method: 'POST' }),
+
+    // AI Edge-Case Scenario Generator
+    generateAIRuleScenarios: (ruleId: string, amountThreshold = 50000, riskThreshold = 70) =>
+      request<{
+        rule_id: string;
+        rule_name: string;
+        policy_condition: string;
+        generated_scenarios: any[];
+        total_cases: number;
+        ai_model: string;
+      }>(`/business-rules/${ruleId}/generate-ai-scenarios?amount_threshold=${amountThreshold}&risk_threshold=${riskThreshold}`, {
+        method: 'POST',
+      }),
   },
 }
 

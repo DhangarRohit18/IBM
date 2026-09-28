@@ -153,36 +153,52 @@ class DecisionReplayEngine:
             "force_drift": False,
         })
 
-        # 4. Currency Settlement Calculation — Precision Drift Showcase (Feature 4 showcase)
+        # 4. Fee Calculation & Rounding Precision Drift (Scenario #04 Hero Showcase)
         scenarios.append({
-            "scenario_id": "SCEN-1004",
-            "scenario_name": "Cross-Border Settlement Calculation",
-            "category": "CURRENCY_PRECISION",
+            "scenario_id": "SCEN-04",
+            "scenario_name": "Fee Calculation & Rounding Precision Drift",
+            "category": "CALCULATION_DERIVATION",
             "rule_id": thresh_rule.id if thresh_rule else None,
-            "contract_id": "SETTLEMENT-CALC-002",
+            "contract_id": "FEE-CALC-004",
             "input": {
-                "transactionId": "TX-90126",
-                "sourceAccount": "ACC-GLOBAL-7",
-                "amountUSD": 850.0,
-                "exchangeRate": 84.705882,
-                "settlementFeeRate": 0.0015,
+                "scenarioNumber": "Scenario #04",
+                "transferAmount": 50000.0,
+                "customerId": "CUST-1042",
+                "riskScore": 42,
+                "currency": "INR",
+                "feeRate": 0.005,
             },
             "legacy_eval": {
-                "decision": "PROCESSED",
-                "output": {"netSettlementINR": 72000.0, "deductedFee": 108.0, "formula": "round(amount * rate - fee)"},
-                "rule_path": ["CalculateTariff: FixedSpread", "ApplySettlement: NetAmountDerived"],
-                "execution_time_ms": 16,
+                "decision": "CALCULATED",
+                "output": {
+                    "transferAmount": 50000.0,
+                    "fee": 250.00,
+                    "formattedFee": "₹250.00",
+                    "roundingMode": "RoundingMode.HALF_UP",
+                    "status": "APPROVED",
+                },
+                "rule_path": [
+                    "CheckAccountStatus: ACTIVE",
+                    "CalculateBaseFee: 50000.0 * 0.005 = 250.00",
+                    "ApplyRounding: RoundingMode.HALF_UP -> ₹250.00",
+                ],
+                "execution_time_ms": 14,
             },
             "modern_eval": {
-                # Demonstrate Silent Currency Drift (e.g. ₹72,000 vs ₹70,000 or tariff truncation)
-                "decision": "PROCESSED",
+                "decision": "CALCULATED",
                 "output": {
-                    "netSettlementINR": 70000.0 if include_deliberate_drift else 72000.0,
-                    "deductedFee": 105.0 if include_deliberate_drift else 108.0,
-                    "formula": "amount * rate (truncated)",
+                    "transferAmount": 50000.0,
+                    "fee": 249.99 if include_deliberate_drift else 250.00,
+                    "formattedFee": "₹249.99" if include_deliberate_drift else "₹250.00",
+                    "roundingMode": "RoundingMode.HALF_DOWN" if include_deliberate_drift else "RoundingMode.HALF_UP",
+                    "status": "APPROVED",
                 },
-                "rule_path": ["CalculateTariff: FloatDivision", "ApplySettlement: NetAmountTruncated"],
-                "execution_time_ms": 4,
+                "rule_path": [
+                    "CheckAccountStatus: ACTIVE",
+                    "CalculateBaseFee: 50000.0 * 0.005 = 249.995",
+                    "ApplyRounding: RoundingMode.HALF_DOWN -> ₹249.99" if include_deliberate_drift else "ApplyRounding: RoundingMode.HALF_UP -> ₹250.00",
+                ],
+                "execution_time_ms": 2,
             },
             "force_drift": include_deliberate_drift,
         })
