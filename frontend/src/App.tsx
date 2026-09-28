@@ -632,10 +632,29 @@ export default function App() {
             {/* Hero Welcome Banner */}
             <div className="card-luxury" style={{ padding: '28px 32px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '14px' }}>
-                <span className="pill-badge">
-                  <ShieldCheck size={14} />
-                  LEGACYX 2.0 • Modernization Assurance Platform
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <span className="pill-badge">
+                    <ShieldCheck size={14} />
+                    LEGACYX 2.0 • Modernization Assurance Platform
+                  </span>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      padding: '3px 10px',
+                      borderRadius: '999px',
+                      backgroundColor: '#eff6ff',
+                      color: '#1d4ed8',
+                      border: '1px solid #bfdbfe',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                    }}
+                  >
+                    <Sparkles size={12} color="#2563eb" />
+                    Built with IBM Bob
+                  </span>
+                </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <button className="btn-secondary" onClick={() => setActiveTab('contracts')}>
@@ -1502,6 +1521,8 @@ export default function App() {
                       { component: 'Business Rule DNA Synthesizer', hash: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4' },
                       { component: 'Decision Contracts Invariant Spec', hash: '7d1a54127b222502f5b79b5fb0803061152a44f92b37e23c65dd0e336d10e84f' },
                       { component: 'Dual-Harness Replay Ledger', hash: '12c6fc06c99a4622474e93ad8685da010dd6d93d01bbe801b8885f0538d363ec' },
+                      { component: 'AI Engineering Engine (IBM Bob)', hash: 'Engineered with IBM Bob AI-Assisted Architecture' },
+                      { component: 'Runtime AI Gateway (IBM watsonx)', hash: 'Provider: watsonx.ai Model: granite-13b-instruct' },
                     ].map((item) => (
                       <div key={item.component} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', fontFamily: 'monospace', borderBottom: '1px solid #edf2f7', paddingBottom: '6px' }}>
                         <span style={{ fontWeight: 700, color: '#0c645d' }}>{item.component}</span>
@@ -1521,7 +1542,7 @@ export default function App() {
                       Sarvesh K (Verified Automated Assurance Pipeline)
                     </span>
                     <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>
-                      LegacyX National Assurance Council • ISO/SOC2 Compliance Chain
+                      LegacyX National Assurance Council • Built with IBM Bob & IBM watsonx AI Gateway
                     </span>
                   </div>
 
@@ -1557,8 +1578,27 @@ export default function App() {
           <span>•</span>
           <span>Dual-Harness Behavioral Verification</span>
         </div>
-        <div style={{ fontFamily: 'monospace', fontSize: '10.5px' }}>
-          Deterministic Verification Protocol Active
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '11px' }}>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '5px',
+              fontWeight: 700,
+              color: '#1d4ed8',
+              backgroundColor: '#eff6ff',
+              padding: '2px 8px',
+              borderRadius: '999px',
+              border: '1px solid #bfdbfe',
+              fontSize: '10.5px',
+            }}
+          >
+            <Sparkles size={11} color="#2563eb" />
+            Built with IBM Bob
+          </span>
+          <span style={{ color: '#0c645d', fontWeight: 600 }}>
+            AI Gateway: IBM watsonx
+          </span>
         </div>
       </footer>
 
@@ -1644,9 +1684,14 @@ export default function App() {
 
                 {investigatingScenario.root_cause_explanation && (
                   <div style={{ background: '#e6f5f3', border: '1px solid #a8ded7', borderRadius: '12px', padding: '14px' }}>
-                    <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#0c645d', display: 'block', marginBottom: '4px' }}>
-                      ROOT-CAUSE CODE ANCHOR
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', color: '#0c645d' }}>
+                        ROOT-CAUSE CODE ANCHOR
+                      </span>
+                      <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 7px', borderRadius: '999px', background: '#d1fae5', color: '#065f46', border: '1px solid #a7f3d0' }}>
+                        IBM watsonx AI Diagnostic
+                      </span>
+                    </div>
                     <p style={{ fontSize: '12.5px', color: '#0b2321', lineHeight: 1.5 }}>
                       {investigatingScenario.root_cause_explanation}
                     </p>
