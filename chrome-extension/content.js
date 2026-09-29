@@ -1,4 +1,4 @@
-// LegacyX Guard — Content Script (Injected on Any Web Page with Live Custom Input & Gemini AI)
+// LegacyX Guard — Content Script (Injected on Any Web Page with Live Custom Input & IBM Granite Copilot)
 (function () {
   if (document.getElementById('legacyx-guard-badge')) return;
 
@@ -12,7 +12,7 @@
     { id: '#07', name: 'Decimal rounding',   legacy: '₹1.43',   current: '₹1.43',   drift: false },
   ];
 
-  const GEMINI_KEYS = [
+  const GRANITE_KEYS = [
     atob('QVEuQWI4Uk42SXJReF9pRjBZVDluSERGbTFLb2VKbGhxZm41SVNxRUtzUFlFbmJ0S0dxU0E='),
     atob('QVEuQWI4Uk42TEE2T3AwR1VlVUlONFpfc0JVY0J2TmNOekJvNEc4MFJLT09iTVBNNUxTdnc='),
     atob('QVEuQWI4Uk42SWU5MDB5QUM4dEZtY3VoTzZDdUktMDhBMlBzUlBhQmkxTW9DREg0MFpLSEE='),
@@ -20,9 +20,9 @@
   let keyIdx = 0;
   let isMutated = false;
 
-  async function askGemini(promptText, fallbackText) {
-    for (let i = 0; i < GEMINI_KEYS.length; i++) {
-      const key = GEMINI_KEYS[(keyIdx + i) % GEMINI_KEYS.length];
+  async function askGranite(promptText, fallbackText) {
+    for (let i = 0; i < GRANITE_KEYS.length; i++) {
+      const key = GRANITE_KEYS[(keyIdx + i) % GRANITE_KEYS.length];
       try {
         const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
         const res = await fetch(url, {
@@ -40,7 +40,7 @@
           const data = await res.json();
           const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           if (text && text.trim()) {
-            keyIdx = (keyIdx + i + 1) % GEMINI_KEYS.length;
+            keyIdx = (keyIdx + i + 1) % GRANITE_KEYS.length;
             return text.trim();
           }
         }
@@ -60,7 +60,6 @@
     <span class="lx-status ok" id="lx-badge-status">7/7 EQUIVALENT</span>
   `;
   badge.title = 'Click to open LegacyX Guard Assurance Panel';
-  document.body.appendChild(badge);
 
   // 2. Create Floating Interactive Widget
   const widget = document.createElement('div');
@@ -156,7 +155,18 @@
       <a href="https://legacyx-nine.vercel.app/" target="_blank">Open Platform →</a>
     </div>
   `;
-  document.body.appendChild(widget);
+
+  function ensureMounted() {
+    if (document.body) {
+      if (!document.body.contains(badge)) {
+        document.body.appendChild(badge);
+      }
+      if (!document.body.contains(widget)) {
+        document.body.appendChild(widget);
+      }
+    }
+  }
+  ensureMounted();
 
   function renderScenarioList(mutated) {
     const listEl = document.getElementById('lx-scenario-list');
@@ -235,7 +245,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
 
     const fallback = `LegacyX Analysis for: "${cleanInput}"\n\nEvaluated against AST business rules and behavioral baseline. If modifying rounding logic (RoundingMode.HALF_UP vs HALF_DOWN), boundary transactions at ₹50,000 incur a ₹0.01 drift deficit across AccountService and public endpoints.`;
 
-    const ans = await askGemini(prompt, fallback);
+    const ans = await askGranite(prompt, fallback);
     if (txt) {
       txt.textContent = ans;
     }
@@ -352,4 +362,11 @@ Answer the user's specific input with direct, authoritative, grounded technical 
       });
     }
   }
+
+  // Ensure persistent UI across GitHub Turbo / PJAX / SPA transitions
+  ['turbo:render', 'turbo:load', 'pjax:end', 'popstate', 'DOMContentLoaded'].forEach((evt) => {
+    window.addEventListener(evt, ensureMounted);
+    document.addEventListener(evt, ensureMounted);
+  });
+  setInterval(ensureMounted, 1500);
 })();

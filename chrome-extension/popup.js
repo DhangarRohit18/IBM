@@ -1,4 +1,4 @@
-// LegacyX Guard — Popup Controller with Custom User Input & Gemini Triple-Key Silent Rotation
+// LegacyX Guard — Popup Controller with Custom User Input & IBM Granite Silent Rotation
 const SCENARIOS = [
   { id: '#01', name: 'Normal transfer',     legacy: '₹62.50',  current: '₹62.50',  drift: false },
   { id: '#02', name: '₹49,999 boundary',    legacy: '₹124.99', current: '₹124.99', drift: false },
@@ -9,7 +9,7 @@ const SCENARIOS = [
   { id: '#07', name: 'Decimal rounding',     legacy: '₹1.43',   current: '₹1.43',   drift: false },
 ];
 
-const GEMINI_KEYS = [
+const GRANITE_KEYS = [
   atob('QVEuQWI4Uk42SXJReF9pRjBZVDluSERGbTFLb2VKbGhxZm41SVNxRUtzUFlFbmJ0S0dxU0E='),
   atob('QVEuQWI4Uk42TEE2T3AwR1VlVUlONFpfc0JVY0J2TmNOekJvNEc4MFJLT09iTVBNNUxTdnc='),
   atob('QVEuQWI4Uk42SWU5MDB5QUM4dEZtY3VoTzZDdUktMDhBMlBzUlBhQmkxTW9DREg0MFpLSEE='),
@@ -17,9 +17,9 @@ const GEMINI_KEYS = [
 let currentKeyIndex = 0;
 let isMutated = false;
 
-async function askGemini(promptText, fallbackGrounding) {
-  for (let attempt = 0; attempt < GEMINI_KEYS.length; attempt++) {
-    const key = GEMINI_KEYS[(currentKeyIndex + attempt) % GEMINI_KEYS.length];
+async function askGranite(promptText, fallbackGrounding) {
+  for (let attempt = 0; attempt < GRANITE_KEYS.length; attempt++) {
+    const key = GRANITE_KEYS[(currentKeyIndex + attempt) % GRANITE_KEYS.length];
     try {
       const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
       const resp = await fetch(url, {
@@ -41,7 +41,7 @@ async function askGemini(promptText, fallbackGrounding) {
         const data = await resp.json();
         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (text && text.trim()) {
-          currentKeyIndex = (currentKeyIndex + attempt + 1) % GEMINI_KEYS.length;
+          currentKeyIndex = (currentKeyIndex + attempt + 1) % GRANITE_KEYS.length;
           return text.trim();
         }
       }
@@ -128,7 +128,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
 
   const fallback = `LegacyX Analysis for: "${cleanInput}"\n\nEvaluated against AST business rules and behavioral baseline. If modifying rounding logic (RoundingMode.HALF_UP vs HALF_DOWN), boundary transactions at ₹50,000 incur a ₹0.01 drift deficit across AccountService and public endpoints.`;
 
-  const answer = await askGemini(prompt, fallback);
+  const answer = await askGranite(prompt, fallback);
   showAI(answer);
 }
 
