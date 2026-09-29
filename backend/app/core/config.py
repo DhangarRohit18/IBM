@@ -69,6 +69,12 @@ class Settings(BaseSettings):
     jwt_access_token_expire_minutes: int = 60
 
     # ── AI Providers (Phase 4+) ────────────────────────────────────────────────
+    ai_provider: str = "watsonx"
+    bob_api_key: str = ""
+    ibm_bob_apikey: str = ""
+    watsonx_apikey: str = ""
+    watsonx_project_id: str = ""
+    watsonx_url: str = "https://us-south.ml.cloud.ibm.com"
     ibm_watsonx_api_key: str = ""
     ibm_watsonx_project_id: str = ""
     ibm_watsonx_url: str = ""
