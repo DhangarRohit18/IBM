@@ -157,12 +157,13 @@
   `;
 
   function ensureMounted() {
-    if (document.body) {
-      if (!document.body.contains(badge)) {
-        document.body.appendChild(badge);
+    const parent = document.body || document.documentElement;
+    if (parent) {
+      if (!parent.contains(badge)) {
+        parent.appendChild(badge);
       }
-      if (!document.body.contains(widget)) {
-        document.body.appendChild(widget);
+      if (!parent.contains(widget)) {
+        parent.appendChild(widget);
       }
     }
   }
@@ -262,7 +263,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
     }
   });
 
-  const closeBtn = document.getElementById('lx-close-btn');
+  const closeBtn = widget.querySelector('#lx-close-btn');
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       widget.classList.add('lx-hidden');
@@ -270,8 +271,8 @@ Answer the user's specific input with direct, authoritative, grounded technical 
   }
 
   // User Custom Input Handling
-  const promptInput = document.getElementById('lx-prompt-input');
-  const btnSubmit = document.getElementById('lx-btn-submit');
+  const promptInput = widget.querySelector('#lx-prompt-input');
+  const btnSubmit = widget.querySelector('#lx-btn-submit');
 
   if (btnSubmit && promptInput) {
     btnSubmit.addEventListener('click', () => {
@@ -286,7 +287,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
   }
 
   // Grab Selected Text from page
-  const btnGrab = document.getElementById('lx-btn-grab');
+  const btnGrab = widget.querySelector('#lx-btn-grab');
   if (btnGrab && promptInput) {
     btnGrab.addEventListener('click', () => {
       const selected = window.getSelection().toString().trim();
@@ -314,7 +315,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
   });
 
   // Verify Replay
-  const btnVerify = document.getElementById('lx-btn-verify');
+  const btnVerify = widget.querySelector('#lx-btn-verify');
   if (btnVerify) {
     btnVerify.addEventListener('click', () => {
       btnVerify.textContent = '⟳ Replaying...';
@@ -326,7 +327,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
   }
 
   // Inject Drift
-  const btnMutate = document.getElementById('lx-btn-mutate');
+  const btnMutate = widget.querySelector('#lx-btn-mutate');
   if (btnMutate) {
     btnMutate.addEventListener('click', () => {
       const next = !isMutated;
