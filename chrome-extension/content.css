@@ -1,0 +1,61 @@
+/* LegacyX Guard — Content Script Injected Floating Badge */
+#legacyx-guard-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  transition: all 200ms ease;
+  user-select: none;
+}
+#legacyx-guard-badge:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+#legacyx-guard-badge .lx-shield {
+  width: 22px;
+  height: 22px;
+  background: #e8720c;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-size: 10px;
+}
+#legacyx-guard-badge .lx-status {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+#legacyx-guard-badge .lx-status.ok {
+  background: #fff7ed;
+  color: #e8720c;
+  border: 1px solid #fed7aa;
+}
+#legacyx-guard-badge .lx-status.drift {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  animation: lx-pulse 1.5s ease infinite;
+}
+@keyframes lx-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
