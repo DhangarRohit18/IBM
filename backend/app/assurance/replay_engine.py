@@ -327,6 +327,40 @@ class DecisionReplayEngine:
             "force_drift": False,
         })
 
+        # Dynamically append rule-specific scenarios for custom repository rules
+        for idx, r in enumerate(rules[1:6], start=1009):
+            if r.threshold_value:
+                try:
+                    val = float(r.threshold_value)
+                    scenarios.append({
+                        "scenario_id": f"SCEN-{idx}",
+                        "scenario_name": f"Rule Invariant: {r.title or r.variable_name}",
+                        "category": "BOUNDARY_THRESHOLD",
+                        "rule_id": r.id,
+                        "contract_id": contracts[0].contract_id if contracts else "TX-APPROVAL-101",
+                        "input": {
+                            "variable": r.variable_name or "amount",
+                            "threshold": val,
+                            "test_value": val,
+                            "operator": r.operator or ">",
+                        },
+                        "legacy_eval": {
+                            "decision": "APPROVE" if r.operator in (">", ">=") else "VALIDATED",
+                            "output": {"condition_met": True, "evaluated_value": val},
+                            "rule_path": [f"{r.variable_name or 'condition'}: {r.operator or '>'} {val}"],
+                            "execution_time_ms": 10,
+                        },
+                        "modern_eval": {
+                            "decision": "APPROVE" if r.operator in (">", ">=") else "VALIDATED",
+                            "output": {"condition_met": True, "evaluated_value": val},
+                            "rule_path": [f"{r.variable_name or 'condition'}: {r.operator or '>'} {val}"],
+                            "execution_time_ms": 2,
+                        },
+                        "force_drift": False,
+                    })
+                except (ValueError, TypeError):
+                    pass
+
         return scenarios
 
     async def execute_replay_session(

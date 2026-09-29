@@ -303,6 +303,17 @@ class AnalysisService:
 
             await session.flush()
 
+            # ── 7b. Automatically Synthesize Decision Contracts from Rules ───
+            try:
+                from app.assurance.contract_engine import contract_engine
+                await contract_engine.generate_contracts_from_rules(
+                    analysis_id=analysis_run.id,
+                    repository_id=repository.id,
+                    db=session,
+                )
+            except Exception as contract_err:
+                logger.warning("analysis.contracts_synthesis_warning", error=str(contract_err))
+
             # ── 8. Transition: COMPLETED ───────────────────────────────────────
             validate_analysis_transition(analysis_run.status, AnalysisRunStatus.COMPLETED)
             analysis_run.status = AnalysisRunStatus.COMPLETED
