@@ -3591,7 +3591,7 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ fontWeight: 700, color: '#0f172a' }}>AI Gateway Provider</span>
-                  <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>IBM watsonx.ai (Simulated fallback active without live API key)</span>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 700 }}>IBM Bob &amp; watsonx.ai (Live Key Active)</span>
                 </div>
               </div>
             </div>
