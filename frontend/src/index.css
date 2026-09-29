@@ -365,3 +365,34 @@ code, pre, kbd, samp {
   font-size: 11.5px;
   line-height: 1.6;
 }
+
+/* ── Color Compatibility & High-Contrast Form Controls ────────────────────── */
+:root {
+  color-scheme: light;
+}
+
+textarea, input[type="text"], input[type="search"], select {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+textarea::placeholder, input::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+}
+
+.guard-input-textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #ea580c !important;
+  border: 1.5px solid #fed7aa !important;
+}
+
+.guard-input-textarea:focus {
+  border-color: #ea580c !important;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15) !important;
+}
+

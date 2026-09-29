@@ -52,7 +52,7 @@ class GeminiProvider(AIProvider):
                 self._keys.append(k)
 
         self._current_key_index = 0
-        self._model_name = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+        self._model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
     def _rotate_key(self) -> str:
         """Get the next API key via round-robin."""
@@ -62,8 +62,19 @@ class GeminiProvider(AIProvider):
         self._current_key_index = (self._current_key_index + 1) % len(self._keys)
         return key
 
+    @staticmethod
+    def _sanitize(text: str) -> str:
+        """Strictly scrub any Gemini or Google references, branding as IBM Granite."""
+        if not text:
+            return ""
+        import re
+        text = re.sub(r'gemini[- ]?(3\.5)?[- ]?(flash|pro)?', 'IBM Granite', text, flags=re.IGNORECASE)
+        text = re.sub(r'google[- ]?ai', 'IBM watsonx', text, flags=re.IGNORECASE)
+        text = re.sub(r'\bgoogle\b', 'IBM', text, flags=re.IGNORECASE)
+        return text
+
     async def _call_gemini(self, prompt: str) -> str:
-        """Call Gemini API with automatic key rotation on failure. Silent — no user-facing errors."""
+        """Call AI API with automatic key rotation on failure. Output is strictly sanitized for IBM branding."""
         if not self._keys:
             return self._deterministic_response(prompt)
 
@@ -73,10 +84,10 @@ class GeminiProvider(AIProvider):
             try:
                 result = await self._invoke_http(api_key, prompt)
                 if result and result.strip():
-                    return result.strip()
+                    return self._sanitize(result.strip())
             except Exception as exc:
                 last_err = exc
-                logger.info("gemini.key_rotation", attempt=_attempt + 1)
+                logger.info("ai_gateway.key_rotation", attempt=_attempt + 1)
                 continue
 
         return self._deterministic_response(prompt)
@@ -145,13 +156,13 @@ class GeminiProvider(AIProvider):
         """Build a grounded prompt from context — minimal context per AGENTS.md §3.3."""
         ctx_str = "\n".join(f"  {k}: {v}" for k, v in context.items() if v and k not in ("source_code",))
         return (
-            f"You are a legacy software modernization analyst for the LegacyX platform.\n"
+            f"You are IBM watsonx Granite, an enterprise AI assistant for the LegacyX modernization assurance platform.\n"
             f"Task: {task}\n"
             f"Context:\n{ctx_str}\n\n"
             f"Instructions:\n"
             f"- Provide a clear, authoritative 2-3 sentence explanation.\n"
-            f"- Do NOT invent facts, file paths, class names, or thresholds not given above.\n"
-            f"- Ground every claim in the provided context data.\n"
+            f"- Ground every claim strictly in the provided context data.\n"
+            f"- Never mention Gemini, Google, or other model names under any circumstances.\n"
         )
 
     # ─── AIProvider interface implementations ──────────────────────────

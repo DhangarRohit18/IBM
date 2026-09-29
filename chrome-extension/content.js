@@ -20,11 +20,19 @@
   let keyIdx = 0;
   let isMutated = false;
 
+  function sanitizeGranite(txt) {
+    if (!txt) return '';
+    return txt
+      .replace(/gemini[- ]?(3\.5)?[- ]?(flash|pro)?/gi, 'IBM Granite')
+      .replace(/google[- ]?ai/gi, 'IBM watsonx')
+      .replace(/\bgoogle\b/gi, 'IBM');
+  }
+
   async function askGranite(promptText, fallbackText) {
     for (let i = 0; i < GRANITE_KEYS.length; i++) {
       const key = GRANITE_KEYS[(keyIdx + i) % GRANITE_KEYS.length];
       try {
-        const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
         const res = await fetch(url, {
           method: 'POST',
           headers: {
@@ -41,14 +49,14 @@
           const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           if (text && text.trim()) {
             keyIdx = (keyIdx + i + 1) % GRANITE_KEYS.length;
-            return text.trim();
+            return sanitizeGranite(text.trim());
           }
         }
       } catch (e) {
         continue;
       }
     }
-    return fallbackText;
+    return sanitizeGranite(fallbackText);
   }
 
   // 1. Create Floating Badge
@@ -227,7 +235,7 @@
       txt.textContent = `Analyzing "${cleanInput.length > 30 ? cleanInput.substring(0, 30) + '...' : cleanInput}" with IBM Granite...`;
     }
 
-    const prompt = `You are LegacyX Guard, an AI copilot for enterprise software modernization assurance.
+    const prompt = `You are IBM watsonx Granite, an enterprise AI assistant for the LegacyX modernization assurance platform.
 User Input:
 "${cleanInput}"
 
@@ -238,7 +246,8 @@ Context / Reference Facts:
 - Downstream services: AccountService, TransferService, AuditLedgerService.
 
 Instructions:
-Answer the user's specific input with direct, authoritative, grounded technical analysis in 2-3 sentences.`;
+Answer directly and authoritatively in 2-3 sentences. Explain boundary conditions or drift risks clearly.
+NEVER mention Gemini, Google, or any Google AI model. Identify strictly as IBM watsonx Granite.`;
 
     const fallback = `LegacyX Analysis for: "${cleanInput}"\n\nEvaluated against AST business rules and behavioral baseline. If modifying rounding logic (RoundingMode.HALF_UP vs HALF_DOWN), boundary transactions at ₹50,000 incur a ₹0.01 drift deficit across AccountService and public endpoints.`;
 

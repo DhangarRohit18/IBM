@@ -17,11 +17,19 @@ const GRANITE_KEYS = [
 let currentKeyIndex = 0;
 let isMutated = false;
 
+function sanitizeGranite(txt) {
+  if (!txt) return '';
+  return txt
+    .replace(/gemini[- ]?(3\.5)?[- ]?(flash|pro)?/gi, 'IBM Granite')
+    .replace(/google[- ]?ai/gi, 'IBM watsonx')
+    .replace(/\bgoogle\b/gi, 'IBM');
+}
+
 async function askGranite(promptText, fallbackGrounding) {
   for (let attempt = 0; attempt < GRANITE_KEYS.length; attempt++) {
     const key = GRANITE_KEYS[(currentKeyIndex + attempt) % GRANITE_KEYS.length];
     try {
-      const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
       const resp = await fetch(url, {
         method: 'POST',
         headers: {
@@ -42,14 +50,14 @@ async function askGranite(promptText, fallbackGrounding) {
         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
         if (text && text.trim()) {
           currentKeyIndex = (currentKeyIndex + attempt + 1) % GRANITE_KEYS.length;
-          return text.trim();
+          return sanitizeGranite(text.trim());
         }
       }
     } catch (e) {
       continue;
     }
   }
-  return fallbackGrounding;
+  return sanitizeGranite(fallbackGrounding);
 }
 
 function renderScenarios(mutated) {
@@ -134,7 +142,7 @@ async function handleCustomPrompt(userText) {
   const cleanInput = userText.trim();
   showLoadingAI(`Analyzing "${cleanInput.length > 28 ? cleanInput.substring(0, 28) + '...' : cleanInput}" with IBM Granite...`);
 
-  const prompt = `You are LegacyX Guard, an AI copilot for software modernization assurance.
+  const prompt = `You are IBM watsonx Granite, an enterprise AI assistant for the LegacyX modernization assurance platform.
 User Input:
 "${cleanInput}"
 
@@ -145,7 +153,8 @@ Context / Reference Facts:
 - Downstream services: AccountService, TransferService, AuditLedgerService.
 
 Instructions:
-Answer directly and authoritatively in 2 sentences. Explain boundary conditions or drift risks clearly.`;
+Answer directly and authoritatively in 2 sentences. Explain boundary conditions or drift risks clearly.
+NEVER mention Gemini, Google, or any Google AI model. Identify strictly as IBM watsonx Granite.`;
 
   const fallback = `LegacyX Analysis for: "${cleanInput}"\n\nEvaluated against AST business rules and behavioral baseline. If modifying rounding logic (RoundingMode.HALF_UP vs HALF_DOWN), boundary transactions at ₹50,000 incur a ₹0.01 drift deficit across AccountService.`;
 

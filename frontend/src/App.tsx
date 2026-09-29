@@ -562,7 +562,15 @@ export default function App() {
     setGuardAiLoading(true)
     setGuardAiAnswer(`Analyzing "${textClean.length > 40 ? textClean.slice(0, 40) + '...' : textClean}" with IBM watsonx Granite...`)
 
-    const prompt = `You are LegacyX Guard, an AI copilot for enterprise software modernization assurance.
+    const sanitizeGranite = (txt: string) => {
+      if (!txt) return ''
+      return txt
+        .replace(/gemini[- ]?(3\.5)?[- ]?(flash|pro)?/gi, 'IBM Granite')
+        .replace(/google[- ]?ai/gi, 'IBM watsonx')
+        .replace(/\bgoogle\b/gi, 'IBM')
+    }
+
+    const prompt = `You are IBM watsonx Granite, an enterprise AI assistant for the LegacyX modernization assurance platform.
 User Input:
 "${textClean}"
 
@@ -573,7 +581,8 @@ Context / Reference Facts:
 - Downstream services: AccountService, TransferService, AuditLedgerService.
 
 Instructions:
-Answer the user's specific input with direct, authoritative, grounded technical analysis in 2-3 sentences.`
+Answer directly and authoritatively in 2-3 sentences. Explain boundary conditions or drift risks clearly.
+NEVER mention Gemini, Google, or any Google AI model. Identify strictly as IBM watsonx Granite.`
 
     const fallback = `LegacyX Analysis for: "${textClean}"\n\nEvaluated against AST business rules and behavioral baseline. If modifying rounding logic (RoundingMode.HALF_UP vs HALF_DOWN), boundary transactions at ₹50,000 incur a ₹0.01 drift deficit across AccountService and public endpoints.`
 
@@ -581,7 +590,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
     try {
       const res = await api.guard.askLegacyX(textClean)
       if (res && res.explanation && !res.explanation.toLowerCase().includes('unavailable')) {
-        ans = res.explanation
+        ans = sanitizeGranite(res.explanation)
       }
     } catch {
       // fallback
@@ -595,7 +604,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
       ]
       for (const k of keys) {
         try {
-          const resp = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent', {
+          const resp = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-goog-api-key': k },
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 600, temperature: 0.2 } }),
@@ -604,7 +613,7 @@ Answer the user's specific input with direct, authoritative, grounded technical 
             const data = await resp.json()
             const txt = data?.candidates?.[0]?.content?.parts?.[0]?.text
             if (txt && txt.trim()) {
-              ans = txt.trim()
+              ans = sanitizeGranite(txt.trim())
               break
             }
           }
@@ -3312,15 +3321,21 @@ public class ModernizedAccountService implements TransferUseCase {
                       }
                     }}
                     placeholder="Ask rule, test amount (e.g. ₹50,000), or paste Java code snippet..."
+                    className="guard-input-textarea"
                     style={{
                       flex: 1,
                       padding: '10px 12px',
                       borderRadius: '8px',
-                      border: '1px solid var(--border-color)',
+                      border: '1.5px solid #fed7aa',
+                      backgroundColor: '#ffffff',
+                      color: '#0f172a',
+                      WebkitTextFillColor: '#0f172a',
+                      caretColor: '#ea580c',
                       fontFamily: 'inherit',
                       fontSize: '12.5px',
                       resize: 'none',
                       outline: 'none',
+                      boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.04)',
                     }}
                   />
                   <button
