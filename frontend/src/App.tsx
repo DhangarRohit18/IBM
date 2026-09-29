@@ -2137,12 +2137,12 @@ Answer the user's specific input with direct, authoritative, grounded technical 
               {/* Side-by-side Code Comparison */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 {/* Left: Legacy */}
-                <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                  <div style={{ padding: '10px 16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
-                    <span>LEGACY SOURCE (Java EE 6 / Spring 3)</span>
-                    <span style={{ color: 'var(--accent-color)' }}>IMMUTABLE READ-ONLY</span>
+                <div className="card-clean" style={{ padding: '0', overflow: 'hidden', backgroundColor: '#0b132b', border: '1px solid #1e293b' }}>
+                  <div style={{ padding: '10px 16px', backgroundColor: '#0f172a', borderBottom: '1px solid #1e293b', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#cbd5e1' }}>LEGACY SOURCE (Java EE 6 / Spring 3)</span>
+                    <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px', backgroundColor: 'rgba(234, 88, 12, 0.15)', color: '#fb923c', border: '1px solid rgba(234, 88, 12, 0.3)', fontWeight: 800 }}>IMMUTABLE READ-ONLY</span>
                   </div>
-                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#0b132b', color: '#e2e8f0', fontSize: '12px', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', lineHeight: 1.65, overflowX: 'auto' }}>
 {`// AccountService.java (Legacy Monolith)
 public class AccountService {
     @Autowired
@@ -2168,12 +2168,12 @@ public class AccountService {
                 </div>
 
                 {/* Right: Modern Proposal */}
-                <div className="card-clean" style={{ padding: '0', overflow: 'hidden' }}>
-                  <div style={{ padding: '10px 16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
-                    <span>MODERNIZED PROPOSAL (Spring Boot 3 / Java 21)</span>
-                    <span style={{ color: 'var(--accent-color)' }}>ISOLATED PROPOSAL</span>
+                <div className="card-clean" style={{ padding: '0', overflow: 'hidden', backgroundColor: '#0b132b', border: '1px solid #1e293b' }}>
+                  <div style={{ padding: '10px 16px', backgroundColor: '#0f172a', borderBottom: '1px solid #1e293b', color: '#94a3b8', fontSize: '11.5px', fontWeight: 700, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#cbd5e1' }}>MODERNIZED PROPOSAL (Spring Boot 3 / Java 21)</span>
+                    <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '4px', backgroundColor: 'rgba(5, 150, 105, 0.15)', color: '#34d399', border: '1px solid rgba(5, 150, 105, 0.3)', fontWeight: 800 }}>ISOLATED PROPOSAL</span>
                   </div>
-                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#f8fafc', border: '1px solid #e5e7eb', color: '#f8fafc', fontSize: '11px', fontFamily: 'monospace', lineHeight: 1.6, overflowX: 'auto' }}>
+                  <pre style={{ margin: 0, padding: '16px', backgroundColor: '#0b132b', color: '#e2e8f0', fontSize: '12px', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', lineHeight: 1.65, overflowX: 'auto' }}>
 {`// ModernizedAccountService.java (Clean Architecture)
 @Service
 @Transactional
@@ -2184,11 +2184,11 @@ public class ModernizedAccountService implements TransferUseCase {
 
     @Override
     public TransferResult transfer(@Valid TransferCommand cmd) {
-        // Invariant Preserved: BR-001
+        // Invariant Preserved: BR-001 (High-Value Threshold ₹50k)
         if (cmd.amount().compareTo(THRESHOLD_50K) > 0) {
             auditPort.recordComplianceEvent(cmd);
         }
-        // Invariant Preserved: BR-002
+        // Invariant Preserved: BR-002 (Balance Invariant)
         Account account = repository.findById(cmd.fromId())
             .orElseThrow(() -> new AccountNotFoundException());
         
@@ -3198,13 +3198,13 @@ public class ModernizedAccountService implements TransferUseCase {
                 </div>
               </div>
 
-              {/* The Hero Wow Quote Banner */}
+              {/* Sleek Assurance Status Metric Strip */}
               <div
                 className="card-clean"
                 style={{
-                  padding: '18px 24px',
-                  backgroundColor: 'var(--accent-light)',
-                  border: '1px solid var(--accent-border)',
+                  padding: '12px 18px',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -3212,20 +3212,35 @@ public class ModernizedAccountService implements TransferUseCase {
                   gap: '12px',
                 }}
               >
-                <div>
-                  <div style={{ fontSize: '10.5px', textTransform: 'uppercase', color: 'var(--accent-color)', letterSpacing: '0.06em', fontWeight: 800 }}>
-                    Core Thesis in the Developer Workflow
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 800 }}>Target:</span>
+                    <span style={{ fontSize: '12px', fontWeight: 700, fontFamily: 'monospace', color: '#0f172a' }}>FeeCalculation.java:45</span>
                   </div>
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#111827', marginTop: '3px' }}>
-                    “The compiler said this change was valid. <span style={{ color: 'var(--accent-color)' }}>LegacyX said the business decision wasn't.”</span>
+                  <div style={{ width: '1px', height: '14px', backgroundColor: '#e2e8f0' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 800 }}>Invariants:</span>
+                    <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--accent-color)' }}>3 Grounded</span>
+                  </div>
+                  <div style={{ width: '1px', height: '14px', backgroundColor: '#e2e8f0' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ fontSize: '10px', textTransform: 'uppercase', color: '#64748b', fontWeight: 800 }}>Harness:</span>
+                    <span style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a' }}>7 Scenarios Replayed</span>
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '11px', padding: '4px 10px', borderRadius: '4px', backgroundColor: '#ffffff', border: '1px solid var(--accent-border)', color: '#4b5563', fontFamily: 'monospace' }}>
-                    File: FeeCalculation.java:45
-                  </span>
-                  <span className="pill-badge" style={{ backgroundColor: guardMutated ? 'var(--accent-color)' : '#ffffff', color: guardMutated ? '#ffffff' : 'var(--accent-color)' }}>
-                    {guardMutated ? '1 DRIFT DETECTED' : '7/7 EQUIVALENT'}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span
+                    className="pill-badge"
+                    style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      backgroundColor: guardMutated ? '#fef2f2' : '#ecfdf5',
+                      color: guardMutated ? '#dc2626' : '#059669',
+                      border: guardMutated ? '1px solid #fecaca' : '1px solid #a7f3d0',
+                      fontWeight: 800,
+                    }}
+                  >
+                    {guardMutated ? '● 1 DRIFT DETECTED' : '● 7/7 EQUIVALENT'}
                   </span>
                 </div>
               </div>
@@ -3296,7 +3311,7 @@ public class ModernizedAccountService implements TransferUseCase {
                         handleGuardAiSubmit(guardCustomInput)
                       }
                     }}
-                    placeholder="Type custom question, rule, transfer amount, or paste Java code (e.g. Test ₹50,000 fee, analyze calculateTransferFee, or check HALF_DOWN)..."
+                    placeholder="Ask rule, test amount (e.g. ₹50,000), or paste Java code snippet..."
                     style={{
                       flex: 1,
                       padding: '10px 12px',
