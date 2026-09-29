@@ -353,6 +353,32 @@ Answer the user's specific input with direct, authoritative, grounded technical 
           sendResponse({ text: selected });
           return true;
         }
+        if (msg.type === 'OPEN_WIDGET') {
+          ensureMounted();
+          widget.classList.remove('lx-hidden');
+          const selected = window.getSelection().toString().trim();
+          const pInput = widget.querySelector('#lx-prompt-input');
+          if (selected && pInput) {
+            pInput.value = selected;
+            handleCustomPrompt(selected);
+          }
+          sendResponse({ opened: true });
+          return true;
+        }
+        if (msg.type === 'ANALYZE_SELECTION') {
+          ensureMounted();
+          widget.classList.remove('lx-hidden');
+          const text = msg.text || window.getSelection().toString().trim();
+          const pInput = widget.querySelector('#lx-prompt-input');
+          if (pInput && text) {
+            pInput.value = text;
+          }
+          if (text) {
+            handleCustomPrompt(text);
+          }
+          sendResponse({ analyzed: true });
+          return true;
+        }
       });
     }
     if (chrome.runtime.sendMessage) {

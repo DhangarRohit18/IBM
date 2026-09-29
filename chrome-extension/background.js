@@ -8,7 +8,26 @@ chrome.runtime.onInstalled.addListener(() => {
     decisionsFound: 3,
     lastVerification: null,
   });
+
+  if (chrome.contextMenus) {
+    chrome.contextMenus.create({
+      id: 'legacyx-analyze-selection',
+      title: '🛡️ LegacyX Guard: Analyze with IBM Granite',
+      contexts: ['selection'],
+    });
+  }
 });
+
+if (chrome.contextMenus && chrome.contextMenus.onClicked) {
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId === 'legacyx-analyze-selection' && tab && tab.id) {
+      chrome.tabs.sendMessage(tab.id, {
+        type: 'ANALYZE_SELECTION',
+        text: info.selectionText,
+      }).catch(() => {});
+    }
+  });
+}
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'GET_STATE') {

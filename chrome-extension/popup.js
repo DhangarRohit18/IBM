@@ -163,6 +163,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Auto-grab selected text on popup open (if user selected code on page before clicking icon)
+  if (chrome && chrome.tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_SELECTED_TEXT' }, (resp) => {
+          if (resp && resp.text && resp.text.trim() && promptInput && !promptInput.value) {
+            promptInput.value = resp.text.trim();
+            handleCustomPrompt(resp.text.trim());
+          }
+        });
+      }
+    });
+  }
+
+  // Float on Page (switches from popup to persistent in-page drawer)
+  const btnPinToPage = document.getElementById('btnPinToPage');
+  if (btnPinToPage) {
+    btnPinToPage.addEventListener('click', () => {
+      if (chrome && chrome.tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          if (tabs && tabs[0]) {
+            chrome.tabs.sendMessage(tabs[0].id, { type: 'OPEN_WIDGET' });
+            window.close();
+          }
+        });
+      }
+    });
+  }
+
   // Grab Selected Text from Active Tab
   const btnGrabSelection = document.getElementById('btnGrabSelection');
   if (btnGrabSelection && promptInput) {

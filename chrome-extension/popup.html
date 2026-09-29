@@ -370,9 +370,10 @@
     <!-- INTERACTIVE AI INPUT SECTION -->
     <div class="ai-input-card">
       <div class="ai-input-header">
-        <span class="ai-input-title">✨ Grounded Modernization Copilot</span>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <button id="btnGrabSelection" class="quick-pill" style="border-color:var(--accent-border); color:var(--accent); font-weight:700;" title="Grab highlighted text from active tab">📋 Grab Selection</button>
+        <span class="ai-input-title">✨ Grounded Copilot</span>
+        <div style="display:flex; align-items:center; gap:5px;">
+          <button id="btnPinToPage" class="quick-pill" style="border-color:#fed7aa; color:#e8720c; font-weight:700; background:#fff7ed;" title="Open persistent overlay on this webpage that never closes">📌 Float on Page</button>
+          <button id="btnGrabSelection" class="quick-pill" style="border-color:var(--accent-border); color:var(--accent); font-weight:700;" title="Grab highlighted text from active tab">📋 Grab</button>
           <span class="ai-badge">IBM GRANITE</span>
         </div>
       </div>
@@ -381,6 +382,9 @@
         <button id="btnSubmitPrompt" class="btn-submit" title="Send to LegacyX AI">
           <span>Run</span> ➔
         </button>
+      </div>
+      <div style="font-size: 10px; color: #6b7280; margin-top: 4px; line-height: 1.35;">
+        💡 <b>Pro-Tip:</b> Highlight code on GitHub <i>first</i>, then click popup (auto-grabs!) — or click <b>📌 Float on Page</b> so the panel stays open while you select text.
       </div>
       <div class="quick-prompts">
         <button class="quick-pill" data-query="Explain calculateTransferFee() rules and risk score">🔍 Fee Rule</button>

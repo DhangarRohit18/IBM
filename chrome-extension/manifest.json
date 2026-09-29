@@ -4,7 +4,7 @@
   "short_name": "LegacyX Guard",
   "version": "1.0.0",
   "description": "Know what your code change changes. Catch behavioral drift before it reaches production. Built with IBM Bob.",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "contextMenus"],
   "host_permissions": [
     "https://generativelanguage.googleapis.com/*",
     "http://localhost:8000/*",
