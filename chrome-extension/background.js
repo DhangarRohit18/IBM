@@ -22,6 +22,19 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         mutationState: next,
         activeRounding: next ? 'HALF_DOWN' : 'HALF_UP',
       });
+      // Broadcast state to all open tabs
+      chrome.tabs.query({}, (tabs) => {
+        if (tabs && tabs.length) {
+          tabs.forEach((tab) => {
+            if (tab && tab.id) {
+              chrome.tabs.sendMessage(tab.id, {
+                type: 'DRIFT_STATE',
+                mutated: next,
+              }).catch(() => {});
+            }
+          });
+        }
+      });
       sendResponse({ mutated: next });
     });
     return true;
@@ -32,7 +45,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         ? {
             status: 'BEHAVIORAL_DRIFT_DETECTED',
             equivalence: false,
-            total: 7, equivalent: 6, drift: 1,
+            total: 7,
+            equivalent: 6,
+            drift: 1,
             hero: {
               scenario: 'SCEN-04',
               name: 'Fee Calculation & Rounding Precision',
@@ -47,7 +62,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         : {
             status: 'BEHAVIORALLY_EQUIVALENT',
             equivalence: true,
-            total: 7, equivalent: 7, drift: 0,
+            total: 7,
+            equivalent: 7,
+            drift: 0,
             hero: null,
           };
       chrome.storage.local.set({ lastVerification: result });

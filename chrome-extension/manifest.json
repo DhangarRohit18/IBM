@@ -5,6 +5,12 @@
   "version": "1.0.0",
   "description": "Know what your code change changes. Catch behavioral drift before it reaches production. Built with IBM Bob.",
   "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*",
+    "http://localhost:8000/*",
+    "https://legacyx-nine.vercel.app/*",
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

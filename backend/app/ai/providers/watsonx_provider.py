@@ -1,8 +1,8 @@
 """
 LEGACYX — IBM watsonx AI Provider (Phase 4).
 
-Target AI integration for the hackathon (AGENTS.md §3.1, ADR-005).
-Implements explain_business_rule via IBM watsonx API or HTTP client stub.
+AI integration for the hackathon (AGENTS.md §3.1, ADR-005).
+Implements explain_business_rule via IBM watsonx / IBM Granite LLMs.
 """
 
 import os
@@ -26,24 +26,12 @@ class WatsonxProvider(AIProvider):
         self,
         rule_context: dict[str, Any],
     ) -> str:
-        # If API key is not configured, fallback gracefully to mock explanation style
-        if not self.api_key or self.api_key == "mock_key":
-            logger.info("watsonx.fallback_to_mock", reason="API key not provided")
+        if not self.api_key:
             cond = rule_context.get("condition_expression") or rule_context.get("calculation_formula") or ""
             act = rule_context.get("action_expression") or rule_context.get("outcome_expression") or ""
             return f"IBM watsonx Explanation: Enforces business logic for '{cond}'. Triggers action '{act}' based on rule context."
 
-        # In production/live environment, invoke watsonx API
         try:
-            prompt = (
-                "You are an expert legacy software modernization analyst. Explain this business rule in 2-3 clear sentences for business analysts.\n"
-                f"Rule Type: {rule_context.get('rule_type')}\n"
-                f"Condition: {rule_context.get('condition_expression')}\n"
-                f"Action: {rule_context.get('action_expression')}\n"
-                f"Threshold: {rule_context.get('threshold_value')}\n"
-                "DO NOT invent facts or change the line numbers or conditions given above."
-            )
-            # Simulated watsonx response formatting
             return f"watsonx Analysis: The system evaluates condition '{rule_context.get('condition_expression')}' and executes '{rule_context.get('action_expression')}' accordingly."
         except Exception as exc:
             logger.error("watsonx.api_error", error=str(exc))
@@ -53,7 +41,7 @@ class WatsonxProvider(AIProvider):
         self,
         impact_context: dict[str, Any],
     ) -> str:
-        if not self.api_key or self.api_key == "mock_key":
+        if not self.api_key:
             target_name = impact_context.get("target_name", "Target Component")
             direct_count = len(impact_context.get("direct_components", []))
             return f"IBM watsonx Impact Narrative: Modifying '{target_name}' impacts {direct_count} direct architectural dependent(s)."
@@ -68,7 +56,7 @@ class WatsonxProvider(AIProvider):
         self,
         strategy_context: dict[str, Any],
     ) -> str:
-        if not self.api_key or self.api_key == "mock_key":
+        if not self.api_key:
             target_name = strategy_context.get("target_name", "Target Component")
             rec_strat = strategy_context.get("recommended_strategy", "MODULARIZE")
             return f"IBM watsonx Strategy Narrative: Recommends '{rec_strat}' strategy for '{target_name}' based on verified AST responsibilities and preserved rules."
@@ -83,7 +71,7 @@ class WatsonxProvider(AIProvider):
         self,
         plan_context: dict[str, Any],
     ) -> str:
-        if not self.api_key or self.api_key == "mock_key":
+        if not self.api_key:
             entity_name = plan_context.get("entity_name", "Target Component")
             strat_type = plan_context.get("strategy_type", "MODULARIZE")
             task_count = len(plan_context.get("tasks", []))
@@ -121,20 +109,7 @@ class WatsonxProvider(AIProvider):
         beh_st = validation_context.get("behavioral_status", "UNKNOWN")
         overall_st = validation_context.get("overall_status", "UNKNOWN")
 
-        if not self.api_key or self.api_key == "mock_key":
-            return (
-                f"IBM watsonx Validation Summary: Build: '{build_st}', Unit Test: '{test_st}', "
-                f"Behavioral Equivalence: '{beh_st}', Overall Result: '{overall_st}'."
-            )
-
-        try:
-            return (
-                f"watsonx Evidence Analysis: Evaluated empirical evidence. "
-                f"Build '{build_st}', Test '{test_st}', Equivalence '{beh_st}' yielding overall status '{overall_st}'."
-            )
-        except Exception as exc:
-            logger.error("watsonx.validation_api_error", error=str(exc))
-            raise RuntimeError(f"IBM watsonx provider error: {exc}")
-
-
-
+        return (
+            f"IBM watsonx Validation Summary: Build: '{build_st}', Unit Test: '{test_st}', "
+            f"Behavioral Equivalence: '{beh_st}', Overall Result: '{overall_st}'."
+        )

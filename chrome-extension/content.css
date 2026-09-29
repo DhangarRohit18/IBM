@@ -1,46 +1,48 @@
-/* LegacyX Guard — Content Script Injected Floating Badge */
+/* LegacyX Guard — Content Script Styles for Injected Widget on Any Website */
+
 #legacyx-guard-badge {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 2147483647;
+  z-index: 2147483646;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 10px;
+  padding: 8px 14px;
+  border-radius: 20px;
   background: #ffffff;
-  border: 1.5px solid #e5e7eb;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  border: 1.5px solid #fed7aa;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: #111827;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 180ms ease;
   user-select: none;
 }
 #legacyx-guard-badge:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 32px rgba(232, 114, 12, 0.2);
   transform: translateY(-2px);
+  border-color: #e8720c;
 }
 #legacyx-guard-badge .lx-shield {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   background: #e8720c;
-  border-radius: 5px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #ffffff;
   font-weight: 900;
   font-size: 10px;
 }
 #legacyx-guard-badge .lx-status {
-  font-size: 10px;
+  font-size: 9.5px;
   padding: 2px 7px;
   border-radius: 4px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -55,6 +57,344 @@
   border: 1px solid #fecaca;
   animation: lx-pulse 1.5s ease infinite;
 }
+
+/* Floating Interactive Card on Any Web Page */
+#legacyx-guard-widget {
+  position: fixed;
+  bottom: 64px;
+  right: 20px;
+  width: 380px;
+  max-height: 580px;
+  z-index: 2147483647;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: opacity 150ms ease, transform 150ms ease;
+  box-sizing: border-box;
+}
+
+#legacyx-guard-widget * {
+  box-sizing: border-box;
+}
+
+#legacyx-guard-widget.lx-hidden {
+  display: none !important;
+}
+
+.lx-widget-header {
+  padding: 10px 14px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lx-widget-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lx-widget-brand .lx-logo {
+  width: 24px;
+  height: 24px;
+  background: #e8720c;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 11px;
+}
+.lx-widget-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.2;
+}
+.lx-widget-sub {
+  font-size: 9.5px;
+  color: #6b7280;
+}
+.lx-widget-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 120ms;
+}
+.lx-widget-close:hover {
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.lx-widget-body {
+  padding: 10px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.lx-quote-banner {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.4;
+}
+.lx-quote-banner span {
+  color: #e8720c;
+  font-weight: 800;
+}
+
+.lx-widget-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.lx-widget-metric {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 5px 4px;
+  text-align: center;
+}
+.lx-widget-metric-val {
+  font-size: 15px;
+  font-weight: 900;
+  color: #e8720c;
+}
+.lx-widget-metric-lbl {
+  font-size: 8px;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Custom Interactive Input Card */
+.lx-input-card {
+  background: #ffffff;
+  border: 1.5px solid #e8720c;
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-shadow: 0 2px 8px rgba(232, 114, 12, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lx-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lx-input-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #e8720c;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.lx-badge-granite {
+  font-size: 8px;
+  font-weight: 800;
+  background: #fff7ed;
+  color: #e8720c;
+  border: 1px solid #fed7aa;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.lx-input-row {
+  display: flex;
+  gap: 6px;
+}
+.lx-textarea {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: 1px solid #e5e7eb;
+  font-family: inherit;
+  font-size: 11px;
+  color: #111827;
+  resize: none;
+  outline: none;
+}
+.lx-textarea:focus {
+  border-color: #e8720c;
+}
+.lx-btn-submit {
+  padding: 0 10px;
+  background: #e8720c;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lx-btn-submit:hover {
+  background: #c25e0a;
+}
+.lx-quick-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.lx-pill {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+}
+.lx-pill:hover {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #e8720c;
+}
+
+.lx-widget-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lx-btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.lx-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  transition: all 120ms ease;
+}
+.lx-btn:hover {
+  background: #f9fafb;
+}
+.lx-btn-primary {
+  background: #e8720c;
+  border-color: #e8720c;
+  color: #ffffff;
+}
+.lx-btn-primary:hover {
+  background: #c25e0a;
+}
+.lx-btn-mutate-on {
+  background: #fff7ed;
+  border-color: #e8720c;
+  color: #e8720c;
+}
+
+.lx-scenarios {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 10px;
+}
+.lx-scenarios-head {
+  background: #f9fafb;
+  padding: 5px 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+}
+.lx-scenario-row {
+  display: grid;
+  grid-template-columns: 24px 1fr 50px 50px 60px;
+  padding: 5px 8px;
+  align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+  gap: 4px;
+}
+.lx-scenario-row:last-child {
+  border-bottom: none;
+}
+.lx-tag-ok {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #fff7ed;
+  color: #e8720c;
+  text-align: center;
+}
+.lx-tag-drift {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #fef2f2;
+  color: #dc2626;
+  text-align: center;
+  animation: lx-pulse 1.5s ease infinite;
+}
+
+.lx-ai-answer {
+  background: #fff7ed;
+  border: 1.5px solid #fed7aa;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #111827;
+  line-height: 1.45;
+}
+.lx-ai-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #e8720c;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lx-widget-footer {
+  padding: 8px 14px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: #6b7280;
+}
+.lx-widget-footer a {
+  color: #e8720c;
+  text-decoration: none;
+  font-weight: 700;
+}
+
 @keyframes lx-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }

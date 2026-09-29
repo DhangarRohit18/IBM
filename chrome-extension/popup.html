@@ -31,7 +31,7 @@
     /* Header */
     .header {
       background: var(--bg);
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -67,21 +67,21 @@
     }
 
     /* Content */
-    .content { padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .content { padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
 
     /* Quote Banner */
     .quote-banner {
       background: var(--accent-light);
       border: 1px solid var(--accent-border);
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
     }
     .quote-label {
       font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.06em;
       color: var(--accent); font-weight: 800;
     }
     .quote-text {
-      font-size: 12.5px; font-weight: 700; color: var(--text); margin-top: 3px; line-height: 1.5;
+      font-size: 12px; font-weight: 700; color: var(--text); margin-top: 3px; line-height: 1.45;
     }
     .quote-text span { color: var(--accent); }
 
@@ -93,29 +93,120 @@
       background: var(--bg-alt);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px;
+      padding: 8px 6px;
       text-align: center;
     }
     .metric-value {
-      font-size: 20px; font-weight: 900; color: var(--accent);
+      font-size: 18px; font-weight: 900; color: var(--accent);
     }
     .metric-label {
-      font-size: 9.5px; color: var(--text-muted); font-weight: 600; margin-top: 2px;
+      font-size: 9px; color: var(--text-muted); font-weight: 600; margin-top: 2px;
       text-transform: uppercase; letter-spacing: 0.03em;
     }
 
-    /* Action Buttons */
-    .actions { display: flex; flex-direction: column; gap: 8px; }
-    .btn {
-      padding: 10px 14px;
+    /* Interactive AI Input Section */
+    .ai-input-card {
+      background: #ffffff;
+      border: 1.5px solid var(--accent);
       border-radius: 8px;
-      font-size: 12px;
+      padding: 12px;
+      box-shadow: 0 4px 12px rgba(232, 114, 12, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ai-input-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ai-input-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .ai-badge {
+      font-size: 8.5px;
+      font-weight: 700;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .ai-input-wrapper {
+      display: flex;
+      gap: 6px;
+    }
+    .ai-textarea {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-size: 11.5px;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      transition: border-color 150ms;
+    }
+    .ai-textarea:focus {
+      border-color: var(--accent);
+    }
+    .btn-submit {
+      padding: 0 14px;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 11.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 120ms;
+    }
+    .btn-submit:hover {
+      opacity: 0.9;
+    }
+    .quick-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .quick-pill {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3px 8px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 120ms;
+    }
+    .quick-pill:hover {
+      background: var(--accent-light);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+
+    /* Action Buttons */
+    .actions { display: flex; flex-direction: column; gap: 6px; }
+    .btn {
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 11.5px;
       font-weight: 700;
       cursor: pointer;
       border: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 6px;
       transition: all 120ms ease;
       font-family: inherit;
     }
@@ -134,8 +225,8 @@
       border: 1.5px solid var(--accent);
       color: var(--accent);
     }
-    .btn-icon { font-size: 14px; }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn-icon { font-size: 13px; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 
     /* Scenario Table */
     .scenario-section {
@@ -145,8 +236,8 @@
     }
     .scenario-header {
       background: var(--bg-alt);
-      padding: 8px 12px;
-      font-size: 10.5px;
+      padding: 7px 12px;
+      font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -155,8 +246,8 @@
     }
     .scenario-row {
       display: grid;
-      grid-template-columns: 28px 1fr 70px 70px 80px;
-      padding: 7px 12px;
+      grid-template-columns: 28px 1fr 65px 65px 75px;
+      padding: 6px 12px;
       font-size: 11px;
       border-bottom: 1px solid #f3f4f6;
       align-items: center;
@@ -165,13 +256,13 @@
     .scenario-row:last-child { border-bottom: none; }
     .scenario-id { color: var(--text-muted); font-weight: 600; font-size: 10px; }
     .scenario-name { font-weight: 600; color: var(--text); }
-    .scenario-val { font-family: 'Consolas', monospace; font-size: 10.5px; color: var(--text); text-align: right; }
+    .scenario-val { font-family: 'Consolas', monospace; font-size: 10px; color: var(--text); text-align: right; }
     .tag-preserved {
-      font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+      font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 3px;
       background: var(--accent-light); color: var(--accent); text-align: center;
     }
     .tag-drift {
-      font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+      font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 3px;
       background: #fef2f2; color: #dc2626; text-align: center;
       animation: pulse-drift 1.5s ease infinite;
     }
@@ -185,37 +276,37 @@
       background: #ffffff;
       border: 1.5px solid var(--accent);
       border-radius: 8px;
-      padding: 14px;
+      padding: 12px;
     }
     .drift-title {
-      font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
       color: var(--accent); display: flex; align-items: center; gap: 6px;
     }
     .drift-detail {
-      margin-top: 8px; font-size: 11.5px; color: var(--text); line-height: 1.6;
+      margin-top: 6px; font-size: 11px; color: var(--text); line-height: 1.5;
     }
     .drift-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;
     }
     .drift-box {
-      padding: 8px 10px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 11px;
+      padding: 6px 8px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 10.5px;
     }
     .drift-legacy { background: var(--bg-alt); border: 1px solid var(--border); }
     .drift-current { background: var(--accent-light); border: 1px solid var(--accent-border); }
-    .drift-label { font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-    .drift-val { font-size: 16px; font-weight: 900; margin-top: 2px; }
+    .drift-label { font-size: 8.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+    .drift-val { font-size: 15px; font-weight: 900; margin-top: 2px; }
 
     .diff-block {
-      margin-top: 10px; padding: 8px 10px; border-radius: 6px;
+      margin-top: 8px; padding: 6px 8px; border-radius: 6px;
       background: var(--bg-alt); border: 1px solid var(--border);
-      font-family: 'Consolas', monospace; font-size: 10.5px; line-height: 1.7;
+      font-family: 'Consolas', monospace; font-size: 10px; line-height: 1.6;
     }
     .diff-del { color: #dc2626; }
     .diff-add { color: #16a34a; }
 
     /* Footer */
     .footer {
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -276,7 +367,30 @@
       </div>
     </div>
 
-    <!-- Actions -->
+    <!-- INTERACTIVE AI INPUT SECTION -->
+    <div class="ai-input-card">
+      <div class="ai-input-header">
+        <span class="ai-input-title">✨ Grounded Modernization Copilot</span>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button id="btnGrabSelection" class="quick-pill" style="border-color:var(--accent-border); color:var(--accent); font-weight:700;" title="Grab highlighted text from active tab">📋 Grab Selection</button>
+          <span class="ai-badge">IBM GRANITE</span>
+        </div>
+      </div>
+      <div class="ai-input-wrapper">
+        <textarea id="aiPromptInput" class="ai-textarea" rows="2" placeholder="Type custom question, rule, or code (e.g., Test ₹50,000 fee, analyze calculateTransferFee, or paste Java)..."></textarea>
+        <button id="btnSubmitPrompt" class="btn-submit" title="Send to LegacyX AI">
+          <span>Run</span> ➔
+        </button>
+      </div>
+      <div class="quick-prompts">
+        <button class="quick-pill" data-query="Explain calculateTransferFee() rules and risk score">🔍 Fee Rule</button>
+        <button class="quick-pill" data-query="Why did ₹50,000 fee drop from ₹250.00 to ₹249.99 under HALF_DOWN?">⚠ Explain ₹0.01 Drift</button>
+        <button class="quick-pill" data-query="What is the blast radius of modifying FeeCalculation.java?">💥 Blast Radius</button>
+        <button class="quick-pill" data-query="How does RoundingMode.HALF_UP vs HALF_DOWN affect banking calculations?">⚖ Rounding Mode</button>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
     <div class="actions">
       <div class="btn-row">
         <button class="btn btn-primary" id="btnVerify">
@@ -290,18 +404,16 @@
         <button class="btn btn-secondary" id="btnAnalyze">
           <span class="btn-icon">🔍</span> 01 — Understand
         </button>
-        <button class="btn btn-secondary" id="btnBaseline">
-          <span class="btn-icon">📌</span> 02 — Capture Baseline
-        </button>
-      </div>
-      <div class="btn-row">
         <button class="btn btn-secondary" id="btnImpact">
           <span class="btn-icon">💥</span> 03 — Blast Radius
         </button>
-        <button class="btn btn-secondary" id="btnAsk">
-          <span class="btn-icon">✨</span> Ask LegacyX AI
-        </button>
       </div>
+    </div>
+
+    <!-- AI Output Box -->
+    <div id="aiAnswer" class="drift-evidence hidden" style="border-color: var(--accent-border);">
+      <div class="drift-title" style="color: var(--accent);">✨ LegacyX Grounded AI Response</div>
+      <div id="aiAnswerText" class="drift-detail" style="font-size: 11.5px; line-height: 1.55;"></div>
     </div>
 
     <!-- Scenario Replay Table -->
@@ -335,15 +447,9 @@
         <div class="diff-del">- BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_UP);</div>
         <div class="diff-add">+ BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_DOWN);</div>
       </div>
-      <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
+      <div style="margin-top: 6px; font-size: 10.5px; color: var(--text-muted);">
         <strong>Root Cause:</strong> RoundingMode changed HALF_UP → HALF_DOWN at <code>FeeCalculation.java:45</code>
       </div>
-    </div>
-
-    <!-- AI Answer (hidden by default) -->
-    <div id="aiAnswer" class="drift-evidence hidden" style="border-color: var(--accent-border);">
-      <div class="drift-title" style="color: var(--accent);">✨ Ask LegacyX — Grounded AI Reasoning</div>
-      <div id="aiAnswerText" class="drift-detail" style="font-size: 12px; line-height: 1.6;"></div>
     </div>
 
   </div>
