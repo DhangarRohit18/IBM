@@ -2,466 +2,452 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=480">
+  <meta name="viewport" content="width=400">
   <title>LegacyX Guard</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
     :root {
-      --accent: #e8720c;
-      --accent-light: #fff7ed;
-      --accent-border: #fed7aa;
+      --primary: #ea580c;
+      --primary-light: #fff7ed;
+      --primary-border: #ffedd5;
+      --primary-dark: #c2410c;
       --bg: #ffffff;
-      --bg-alt: #f9fafb;
-      --text: #111827;
-      --text-muted: #6b7280;
-      --border: #e5e7eb;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --success: #059669;
+      --success-light: #ecfdf5;
+      --success-border: #a7f3d0;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --danger-border: #fecaca;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      width: 440px;
-      font-family: 'Inter', -apple-system, sans-serif;
+      width: 390px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* Header */
+    /* Top Bar */
     .header {
-      background: var(--bg);
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background: #ffffff;
     }
-    .header-left {
+    .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
     }
-    .header-logo {
-      width: 28px; height: 28px;
-      background: var(--accent);
-      border-radius: 7px;
+    .brand-icon {
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 900; font-size: 14px;
+      color: #ffffff; font-weight: 900; font-size: 12px;
+      letter-spacing: -0.02em;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
     }
-    .header-title {
-      font-size: 15px; font-weight: 800; color: var(--text);
+    .brand-title {
+      font-size: 13.5px; font-weight: 800; color: var(--text); line-height: 1.15;
     }
-    .header-sub {
+    .brand-sub {
       font-size: 10px; color: var(--text-muted); font-weight: 500;
     }
     .status-badge {
-      font-size: 9.5px; font-weight: 700; padding: 3px 8px;
-      border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;
+      font-size: 10px; font-weight: 700; padding: 3px 8px;
+      border-radius: 999px; text-transform: uppercase; letter-spacing: 0.03em;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: all 180ms ease;
     }
     .status-active {
-      background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border);
+      background: var(--success-light); color: var(--success); border: 1px solid var(--success-border);
     }
     .status-drift {
-      background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;
+      background: var(--danger-light); color: var(--danger); border: 1px solid var(--danger-border);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
     }
 
-    /* Content */
-    .content { padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
-
-    /* Quote Banner */
-    .quote-banner {
-      background: var(--accent-light);
-      border: 1px solid var(--accent-border);
-      border-radius: 8px;
-      padding: 10px 12px;
-    }
-    .quote-label {
-      font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--accent); font-weight: 800;
-    }
-    .quote-text {
-      font-size: 12px; font-weight: 700; color: var(--text); margin-top: 3px; line-height: 1.45;
-    }
-    .quote-text span { color: var(--accent); }
-
-    /* Metric Row */
-    .metric-row {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-    }
-    .metric-card {
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 6px;
-      text-align: center;
-    }
-    .metric-value {
-      font-size: 18px; font-weight: 900; color: var(--accent);
-    }
-    .metric-label {
-      font-size: 9px; color: var(--text-muted); font-weight: 600; margin-top: 2px;
-      text-transform: uppercase; letter-spacing: 0.03em;
-    }
-
-    /* Interactive AI Input Section */
-    .ai-input-card {
-      background: #ffffff;
-      border: 1.5px solid var(--accent);
-      border-radius: 8px;
-      padding: 12px;
-      box-shadow: 0 4px 12px rgba(232, 114, 12, 0.08);
+    /* Main Container */
+    .container {
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
-    .ai-input-header {
+
+    /* 4-Stat Strip */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 4px;
+      text-align: center;
+      transition: all 150ms ease;
+    }
+    .stat-val {
+      font-size: 15px; font-weight: 800; color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-lbl {
+      font-size: 8.5px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1px;
+    }
+
+    /* Copilot Card */
+    .copilot-card {
+      background: #ffffff;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .copilot-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .ai-input-title {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .copilot-label {
+      font-size: 11px; font-weight: 700; color: var(--primary-dark);
+      display: flex; align-items: center; gap: 4px;
     }
-    .ai-badge {
-      font-size: 8.5px;
-      font-weight: 700;
-      background: var(--accent-light);
-      color: var(--accent);
-      border: 1px solid var(--accent-border);
-      padding: 1px 6px;
-      border-radius: 4px;
-    }
-    .ai-input-wrapper {
-      display: flex;
-      gap: 6px;
-    }
-    .ai-textarea {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      font-family: inherit;
-      font-size: 11.5px;
-      color: var(--text);
-      resize: none;
-      outline: none;
-      transition: border-color 150ms;
-    }
-    .ai-textarea:focus {
-      border-color: var(--accent);
-    }
-    .btn-submit {
-      padding: 0 14px;
-      background: var(--accent);
-      border: none;
-      border-radius: 6px;
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 11.5px;
-      cursor: pointer;
+    .copilot-actions {
       display: flex;
       align-items: center;
       gap: 4px;
-      transition: opacity 120ms;
     }
-    .btn-submit:hover {
-      opacity: 0.9;
+    .btn-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 2.5px 7px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 3px;
+      transition: all 120ms;
     }
-    .quick-prompts {
+    .btn-pill:hover {
+      background: var(--primary-light);
+      border-color: #fdba74;
+      color: var(--primary-dark);
+    }
+    .tag-granite {
+      font-size: 8.5px; font-weight: 700;
+      background: #fff7ed; color: #ea580c;
+      border: 1px solid #fed7aa;
+      padding: 1.5px 5px; border-radius: 4px;
+    }
+    .input-bar {
+      display: flex;
+      gap: 5px;
+    }
+    .copilot-input {
+      flex: 1;
+      padding: 6px 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 11px;
+      color: var(--text);
+      resize: none;
+      outline: none;
+      min-height: 34px;
+      max-height: 60px;
+      line-height: 1.4;
+      transition: border-color 150ms;
+    }
+    .copilot-input:focus {
+      border-color: var(--primary);
+    }
+    .btn-run {
+      background: var(--primary);
+      border: none;
+      border-radius: 6px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 11px;
+      padding: 0 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transition: background 150ms;
+    }
+    .btn-run:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Prompt Chips */
+    .chip-row {
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
     }
     .quick-pill {
-      background: var(--bg-alt);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 3px 8px;
-      font-size: 9.5px;
+      padding: 2px 7px;
+      font-size: 9px;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 120ms;
     }
     .quick-pill:hover {
-      background: var(--accent-light);
-      border-color: var(--accent-border);
-      color: var(--accent);
+      background: var(--primary-light);
+      border-color: #fdba74;
+      color: var(--primary);
     }
 
-    /* Action Buttons */
-    .actions { display: flex; flex-direction: column; gap: 6px; }
-    .btn {
-      padding: 8px 12px;
+    /* Primary Actions */
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .btn-act {
+      padding: 8px;
       border-radius: 7px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      transition: all 120ms ease;
-      font-family: inherit;
+      gap: 5px;
+      transition: all 150ms;
+      border: 1px solid transparent;
     }
-    .btn-primary {
-      background: var(--accent); color: white;
+    .btn-verify {
+      background: var(--primary);
+      color: #ffffff;
     }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-secondary {
-      background: var(--bg);
-      border: 1px solid var(--border);
+    .btn-verify:hover {
+      background: var(--primary-dark);
+    }
+    .btn-mutate {
+      background: var(--surface);
+      border-color: var(--border);
       color: var(--text);
     }
-    .btn-secondary:hover { background: var(--bg-alt); }
-    .btn-mutation-on {
-      background: var(--accent-light);
-      border: 1.5px solid var(--accent);
-      color: var(--accent);
+    .btn-mutate:hover {
+      background: #f1f5f9;
     }
-    .btn-icon { font-size: 13px; }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .btn-mutate.active-drift {
+      background: var(--danger-light);
+      border-color: var(--danger-border);
+      color: var(--danger);
+    }
 
-    /* Scenario Table */
-    .scenario-section {
+    /* AI Response Card */
+    .ai-card {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-left: 3px solid var(--primary);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #1c1917;
+      display: none;
+    }
+    .ai-card-title {
+      font-size: 9.5px; font-weight: 700; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px;
+    }
+
+    /* Scenario Replay Table */
+    .scenario-card {
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
     }
-    .scenario-header {
-      background: var(--bg-alt);
-      padding: 7px 12px;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-muted);
+    .scenario-head {
+      background: var(--surface);
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .scenario-list {
+      max-height: 175px;
+      overflow-y: auto;
     }
     .scenario-row {
       display: grid;
-      grid-template-columns: 28px 1fr 65px 65px 75px;
-      padding: 6px 12px;
-      font-size: 11px;
-      border-bottom: 1px solid #f3f4f6;
+      grid-template-columns: 28px 1fr 54px 54px 50px;
       align-items: center;
-      gap: 6px;
+      padding: 6px 10px;
+      font-size: 10.5px;
+      border-bottom: 1px solid #f1f5f9;
+      gap: 4px;
     }
-    .scenario-row:last-child { border-bottom: none; }
-    .scenario-id { color: var(--text-muted); font-weight: 600; font-size: 10px; }
-    .scenario-name { font-weight: 600; color: var(--text); }
-    .scenario-val { font-family: 'Consolas', monospace; font-size: 10px; color: var(--text); text-align: right; }
-    .tag-preserved {
-      font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 3px;
-      background: var(--accent-light); color: var(--accent); text-align: center;
+    .scenario-row:last-child {
+      border-bottom: none;
+    }
+    .scenario-id {
+      color: var(--text-muted); font-weight: 600; font-size: 9.5px;
+    }
+    .scenario-name {
+      font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .scenario-val {
+      text-align: right; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10px; color: var(--text-muted);
+    }
+    .tag-pass {
+      font-size: 9px; font-weight: 700;
+      background: var(--success-light); color: var(--success);
+      padding: 1px 5px; border-radius: 4px; text-align: center;
     }
     .tag-drift {
-      font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 3px;
-      background: #fef2f2; color: #dc2626; text-align: center;
-      animation: pulse-drift 1.5s ease infinite;
+      font-size: 9px; font-weight: 800;
+      background: var(--danger-light); color: var(--danger);
+      padding: 1px 5px; border-radius: 4px; text-align: center;
+      animation: pulse 1.5s infinite;
     }
-    @keyframes pulse-drift {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-
-    /* Drift Evidence */
-    .drift-evidence {
-      background: #ffffff;
-      border: 1.5px solid var(--accent);
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .drift-title {
-      font-size: 10px; font-weight: 800; text-transform: uppercase;
-      color: var(--accent); display: flex; align-items: center; gap: 6px;
-    }
-    .drift-detail {
-      margin-top: 6px; font-size: 11px; color: var(--text); line-height: 1.5;
-    }
-    .drift-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;
-    }
-    .drift-box {
-      padding: 6px 8px; border-radius: 6px; font-family: 'Consolas', monospace; font-size: 10.5px;
-    }
-    .drift-legacy { background: var(--bg-alt); border: 1px solid var(--border); }
-    .drift-current { background: var(--accent-light); border: 1px solid var(--accent-border); }
-    .drift-label { font-size: 8.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-    .drift-val { font-size: 15px; font-weight: 900; margin-top: 2px; }
-
-    .diff-block {
-      margin-top: 8px; padding: 6px 8px; border-radius: 6px;
-      background: var(--bg-alt); border: 1px solid var(--border);
-      font-family: 'Consolas', monospace; font-size: 10px; line-height: 1.6;
-    }
-    .diff-del { color: #dc2626; }
-    .diff-add { color: #16a34a; }
 
     /* Footer */
     .footer {
-      padding: 10px 18px;
+      padding: 8px 16px;
+      background: var(--surface);
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 10px;
+      color: var(--text-muted);
     }
-    .footer-text { font-size: 9.5px; color: var(--text-muted); font-weight: 500; }
-    .footer-link {
-      font-size: 9.5px; color: var(--accent); font-weight: 700; text-decoration: none;
+    .footer a {
+      color: var(--primary); text-decoration: none; font-weight: 600;
     }
-
-    .hidden { display: none !important; }
-    .spin { animation: spin 1s linear infinite; }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- Top Bar -->
   <div class="header">
-    <div class="header-left">
-      <div class="header-logo">LX</div>
+    <div class="brand-wrap">
+      <div class="brand-icon">LX</div>
       <div>
-        <div class="header-title">LegacyX Guard</div>
-        <div class="header-sub">Behavioral Assurance — IBM Bob</div>
+        <div class="brand-title">LegacyX Guard</div>
+        <div class="brand-sub">IBM watsonx Granite Active</div>
       </div>
     </div>
-    <div id="statusBadge" class="status-badge status-active">GUARD ACTIVE</div>
+    <div id="statusBadge" class="status-badge status-active">● 7/7 EQUIVALENT</div>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <div class="container">
 
-    <!-- Quote -->
-    <div class="quote-banner">
-      <div class="quote-label">Core Thesis</div>
-      <div class="quote-text">
-        "The compiler said this change was valid. <span>LegacyX said the business decision wasn't.</span>"
+    <!-- 4 Stats -->
+    <div class="stat-strip">
+      <div class="stat-card">
+        <div class="stat-val">3</div>
+        <div class="stat-lbl">Invariants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">7</div>
+        <div class="stat-lbl">Replays</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="driftCount">0</div>
+        <div class="stat-lbl">Drift</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="equivPct">100%</div>
+        <div class="stat-lbl">Equiv.</div>
       </div>
     </div>
 
-    <!-- Metrics -->
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-value">3</div>
-        <div class="metric-label">Decisions</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">7</div>
-        <div class="metric-label">Scenarios</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value" id="driftCount">0</div>
-        <div class="metric-label">Drift</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value" id="equivPct">100%</div>
-        <div class="metric-label">Equiv.</div>
-      </div>
-    </div>
-
-    <!-- INTERACTIVE AI INPUT SECTION -->
-    <div class="ai-input-card">
-      <div class="ai-input-header">
-        <span class="ai-input-title">✨ Grounded Copilot</span>
-        <div style="display:flex; align-items:center; gap:5px;">
-          <button id="btnPinToPage" class="quick-pill" style="border-color:#fed7aa; color:#e8720c; font-weight:700; background:#fff7ed;" title="Open persistent overlay on this webpage that never closes">📌 Float on Page</button>
-          <button id="btnGrabSelection" class="quick-pill" style="border-color:var(--accent-border); color:var(--accent); font-weight:700;" title="Grab highlighted text from active tab">📋 Grab</button>
-          <span class="ai-badge">IBM GRANITE</span>
+    <!-- Copilot Input -->
+    <div class="copilot-card">
+      <div class="copilot-top">
+        <span class="copilot-label">✨ Assurance Copilot</span>
+        <div class="copilot-actions">
+          <button id="btnPinToPage" class="btn-pill" title="Keep open on page while you browse">📌 Float on Page</button>
+          <button id="btnGrabSelection" class="btn-pill" title="Grab highlighted code on page">📋 Grab</button>
+          <span class="tag-granite">IBM GRANITE</span>
         </div>
       </div>
-      <div class="ai-input-wrapper">
-        <textarea id="aiPromptInput" class="ai-textarea" rows="2" placeholder="Type custom question, rule, or code (e.g., Test ₹50,000 fee, analyze calculateTransferFee, or paste Java)..."></textarea>
-        <button id="btnSubmitPrompt" class="btn-submit" title="Send to LegacyX AI">
-          <span>Run</span> ➔
-        </button>
+      <div class="input-bar">
+        <textarea id="aiPromptInput" class="copilot-input" rows="1" placeholder="Ask rule or paste code snippet..."></textarea>
+        <button id="btnSubmitPrompt" class="btn-run" title="Run analysis">Run ➔</button>
       </div>
-      <div style="font-size: 10px; color: #6b7280; margin-top: 4px; line-height: 1.35;">
-        💡 <b>Pro-Tip:</b> Highlight code on GitHub <i>first</i>, then click popup (auto-grabs!) — or click <b>📌 Float on Page</b> so the panel stays open while you select text.
-      </div>
-      <div class="quick-prompts">
+      <div class="chip-row">
         <button class="quick-pill" data-query="Explain calculateTransferFee() rules and risk score">🔍 Fee Rule</button>
-        <button class="quick-pill" data-query="Why did ₹50,000 fee drop from ₹250.00 to ₹249.99 under HALF_DOWN?">⚠ Explain ₹0.01 Drift</button>
+        <button class="quick-pill" data-query="Why did ₹50,000 fee drop from ₹250.00 to ₹249.99 under HALF_DOWN?">⚠ ₹0.01 Drift</button>
         <button class="quick-pill" data-query="What is the blast radius of modifying FeeCalculation.java?">💥 Blast Radius</button>
-        <button class="quick-pill" data-query="How does RoundingMode.HALF_UP vs HALF_DOWN affect banking calculations?">⚖ Rounding Mode</button>
+        <button class="quick-pill" data-query="How does RoundingMode.HALF_UP vs HALF_DOWN affect banking calculations?">⚖ Rounding</button>
       </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="actions">
-      <div class="btn-row">
-        <button class="btn btn-primary" id="btnVerify">
-          <span class="btn-icon">▶</span> Verify Change (Replay)
-        </button>
-        <button class="btn btn-secondary" id="btnMutate">
-          <span class="btn-icon">🧪</span> <span id="mutateLabel">Inject Drift</span>
-        </button>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" id="btnAnalyze">
-          <span class="btn-icon">🔍</span> 01 — Understand
-        </button>
-        <button class="btn btn-secondary" id="btnImpact">
-          <span class="btn-icon">💥</span> 03 — Blast Radius
-        </button>
-      </div>
+    <!-- Actions -->
+    <div class="action-row">
+      <button class="btn-act btn-verify" id="btnVerify">
+        ▶ Verify Replay
+      </button>
+      <button class="btn-act btn-mutate" id="btnMutate">
+        🧪 <span id="mutateLabel">Inject Drift</span>
+      </button>
     </div>
 
-    <!-- AI Output Box -->
-    <div id="aiAnswer" class="drift-evidence hidden" style="border-color: var(--accent-border);">
-      <div class="drift-title" style="color: var(--accent);">✨ LegacyX Grounded AI Response</div>
-      <div id="aiAnswerText" class="drift-detail" style="font-size: 11.5px; line-height: 1.55;"></div>
+    <!-- Live AI Output -->
+    <div id="aiAnswer" class="ai-card">
+      <div class="ai-card-title">✨ IBM Granite Reasoning</div>
+      <div id="aiAnswerText"></div>
     </div>
 
     <!-- Scenario Replay Table -->
-    <div class="scenario-section">
-      <div class="scenario-header">
-        <span>Dual-Harness Replay Results</span>
+    <div class="scenario-card">
+      <div class="scenario-head">
+        <span>Dual-Harness Replay</span>
         <span id="replayStatus">7/7 EQUIVALENT</span>
       </div>
-      <div id="scenarioBody">
-        <!-- filled by JS -->
-      </div>
-    </div>
-
-    <!-- Drift Evidence (hidden by default) -->
-    <div id="driftEvidence" class="drift-evidence hidden">
-      <div class="drift-title">⚠ BEHAVIORAL DRIFT DETECTED — Scenario #04</div>
-      <div class="drift-detail">
-        <strong>₹50,000 transfer</strong> — Customer: CUST-1042 | Risk Score: 42
-      </div>
-      <div class="drift-grid">
-        <div class="drift-box drift-legacy">
-          <div class="drift-label">Legacy Runtime</div>
-          <div class="drift-val" style="color: var(--text);">₹250.00</div>
-        </div>
-        <div class="drift-box drift-current">
-          <div class="drift-label">Current Runtime</div>
-          <div class="drift-val" style="color: var(--accent);">₹249.99</div>
-        </div>
-      </div>
-      <div class="diff-block">
-        <div class="diff-del">- BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_UP);</div>
-        <div class="diff-add">+ BigDecimal fee = amount.multiply(feeRate).setScale(2, RoundingMode.HALF_DOWN);</div>
-      </div>
-      <div style="margin-top: 6px; font-size: 10.5px; color: var(--text-muted);">
-        <strong>Root Cause:</strong> RoundingMode changed HALF_UP → HALF_DOWN at <code>FeeCalculation.java:45</code>
+      <div id="scenarioBody" class="scenario-list">
+        <!-- populated by popup.js -->
       </div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <div class="footer">
-    <span class="footer-text">Built with IBM Bob • v1.0.0</span>
-    <a class="footer-link" href="https://legacyx-nine.vercel.app/" target="_blank">Open Platform →</a>
+    <span>Built with IBM Bob</span>
+    <a href="https://legacyx-nine.vercel.app/" target="_blank">Open Platform →</a>
   </div>
 
   <script src="popup.js"></script>

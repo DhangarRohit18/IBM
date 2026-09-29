@@ -343,13 +343,13 @@
 .lx-scenario-row:last-child {
   border-bottom: none;
 }
-.lx-tag-ok {
-  font-size: 8px;
+.lx-tag-pass, .lx-tag-ok {
+  font-size: 8.5px;
   font-weight: 700;
-  padding: 1px 4px;
-  border-radius: 3px;
-  background: #fff7ed;
-  color: #e8720c;
+  padding: 1.5px 5px;
+  border-radius: 4px;
+  background: #ecfdf5;
+  color: #059669;
   text-align: center;
 }
 .lx-tag-drift {

@@ -78,18 +78,14 @@
     </div>
 
     <div class="lx-widget-body">
-      <div class="lx-quote-banner">
-        "The compiler said this change was valid. <span>LegacyX said the business decision wasn't.</span>"
-      </div>
-
       <div class="lx-widget-metrics">
         <div class="lx-widget-metric">
           <div class="lx-widget-metric-val">3</div>
-          <div class="lx-widget-metric-lbl">Decisions</div>
+          <div class="lx-widget-metric-lbl">Invariants</div>
         </div>
         <div class="lx-widget-metric">
           <div class="lx-widget-metric-val">7</div>
-          <div class="lx-widget-metric-lbl">Scenarios</div>
+          <div class="lx-widget-metric-lbl">Replays</div>
         </div>
         <div class="lx-widget-metric">
           <div class="lx-widget-metric-val" id="lx-drift-count" style="color: #e8720c;">0</div>
@@ -104,14 +100,14 @@
       <!-- INTERACTIVE CUSTOM INPUT CARD -->
       <div class="lx-input-card">
         <div class="lx-input-header">
-          <span class="lx-input-title">✨ Grounded Copilot</span>
+          <span class="lx-input-title">✨ Assurance Copilot</span>
           <div style="display:flex; align-items:center; gap:4px;">
-            <button id="lx-btn-grab" class="lx-pill" style="border-color:#fed7aa; color:#e8720c; font-weight:700;" title="Grab highlighted text on this webpage">📋 Grab Selection</button>
+            <button id="lx-btn-grab" class="lx-pill" style="border-color:#fed7aa; color:#e8720c; font-weight:700;" title="Grab highlighted text on this webpage">📋 Grab</button>
             <span class="lx-badge-granite">IBM GRANITE</span>
           </div>
         </div>
         <div class="lx-input-row">
-          <textarea id="lx-prompt-input" class="lx-textarea" rows="2" placeholder="Type custom question, rule, or code (e.g. ₹50k fee, calculateTransferFee)..."></textarea>
+          <textarea id="lx-prompt-input" class="lx-textarea" rows="1" placeholder="Ask rule or paste code snippet..."></textarea>
           <button id="lx-btn-submit" class="lx-btn-submit" title="Send to IBM Granite">Run ➔</button>
         </div>
         <div class="lx-quick-pills">
@@ -183,7 +179,7 @@
         <span style="font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${s.name}</span>
         <span style="text-align:right; font-family:monospace;">${s.legacy}</span>
         <span style="text-align:right; font-family:monospace; ${hasDrift ? 'color:#dc2626; font-weight:800;' : ''}">${currentVal}</span>
-        <span class="${hasDrift ? 'lx-tag-drift' : 'lx-tag-ok'}">${hasDrift ? 'DRIFT' : 'OK'}</span>
+        <span class="${hasDrift ? 'lx-tag-drift' : 'lx-tag-ok'}">${hasDrift ? 'DRIFT' : 'PASS'}</span>
       `;
       listEl.appendChild(row);
     });
@@ -345,30 +341,36 @@ Answer the user's specific input with direct, authoritative, grounded technical 
   if (chrome && chrome.runtime) {
     if (chrome.runtime.onMessage) {
       chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+        if (!msg) {
+          sendResponse({ ack: true });
+          return;
+        }
         if (msg.type === 'DRIFT_STATE') {
           applyDriftState(msg.mutated);
+          sendResponse({ ack: true });
+          return;
         }
         if (msg.type === 'GET_SELECTED_TEXT') {
-          const selected = window.getSelection().toString().trim();
+          const selected = window.getSelection ? window.getSelection().toString().trim() : '';
           sendResponse({ text: selected });
-          return true;
+          return;
         }
         if (msg.type === 'OPEN_WIDGET') {
           ensureMounted();
           widget.classList.remove('lx-hidden');
-          const selected = window.getSelection().toString().trim();
+          const selected = window.getSelection ? window.getSelection().toString().trim() : '';
           const pInput = widget.querySelector('#lx-prompt-input');
           if (selected && pInput) {
             pInput.value = selected;
             handleCustomPrompt(selected);
           }
           sendResponse({ opened: true });
-          return true;
+          return;
         }
         if (msg.type === 'ANALYZE_SELECTION') {
           ensureMounted();
           widget.classList.remove('lx-hidden');
-          const text = msg.text || window.getSelection().toString().trim();
+          const text = msg.text || (window.getSelection ? window.getSelection().toString().trim() : '');
           const pInput = widget.querySelector('#lx-prompt-input');
           if (pInput && text) {
             pInput.value = text;
@@ -377,12 +379,14 @@ Answer the user's specific input with direct, authoritative, grounded technical 
             handleCustomPrompt(text);
           }
           sendResponse({ analyzed: true });
-          return true;
+          return;
         }
+        sendResponse({ ack: true });
       });
     }
     if (chrome.runtime.sendMessage) {
       chrome.runtime.sendMessage({ type: 'GET_STATE' }, (resp) => {
+        if (chrome.runtime.lastError) return;
         if (resp && typeof resp.mutationState === 'boolean') {
           applyDriftState(resp.mutationState);
         }
