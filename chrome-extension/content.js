@@ -119,6 +119,7 @@
           <button id="lx-btn-submit" class="lx-btn-submit" title="Send to IBM Granite">Run ➔</button>
         </div>
         <div class="lx-quick-pills">
+          <button class="lx-pill" data-query="Generate an executive behavioral remediation document and spec for FeeCalculation.java">📄 Remediation Spec</button>
           <button class="lx-pill" data-query="Explain calculateTransferFee() rules and risk score">🔍 Fee Rule</button>
           <button class="lx-pill" data-query="Why did ₹50,000 fee drop from ₹250.00 to ₹249.99 under HALF_DOWN?">⚠ ₹0.01 Drift</button>
           <button class="lx-pill" data-query="What is the blast radius of modifying FeeCalculation.java?">💥 Blast Radius</button>
